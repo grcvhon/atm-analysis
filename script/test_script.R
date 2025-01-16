@@ -34,5 +34,4 @@ library(SDMtune)
 
 # Input occurrence data
 occdata <- read_csv("data/ATM_2023_0715-running-master.csv")
-
 occdata
