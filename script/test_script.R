@@ -46,7 +46,9 @@ mapview(eez)
 bathymetry <- rast("../Data/Data from old models/Predictor variables/bathymetry.asc")
 mapview(bathymetry)
 
-
+# Clip the shapefile based on the raster
+sf_clipped <- intersect(vect(eez), vect(ext(bathymetry))) # clip vectorised shapefile to the extent of the vectorised raster
+mapview(sf_clipped) # shapefile clipped to the extent of the raster file (here used bathymetry.asc)
 
 
 # Input occurrence data
