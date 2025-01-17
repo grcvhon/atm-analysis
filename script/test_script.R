@@ -42,9 +42,12 @@ library(lwgeom)
 eez <- st_read("misc/from-LM/australia-eez/Australia_EEZ.shp")
 mapview(eez)
 
+nw_shelf <- st_read("../Data/Data from old models/NWShelf- Bounding Area/NWShelf.shp")
+mapview(nw_shelf)
+
 # Load environmental raster
 bathymetry <- rast("../Data/Data from old models/Predictor variables/bathymetry.asc")
-mapview(bathymetry)
+mapview(bathymetry) + nw_shelf
 
 # Clip the shapefile based on the raster
 eez_clipped <- intersect(vect(eez), vect(ext(bathymetry))) # clip vectorised eez to the extent of the vectorised raster
