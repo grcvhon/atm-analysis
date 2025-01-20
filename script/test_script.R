@@ -88,7 +88,7 @@ folio_sf <- folio %>%
   st_as_sf(coords = c("long", "lat"), crs = 4326) %>% 
   distinct(.keep_all = T)
 
-### Create bias layer ------------------------------------------
+### Create bias layer (for point observations) -----------------
 #### apraefrontalis ####
 aprae_ppp <- aprae_sf %>%
   st_transform(crs = 3577) %>% 
@@ -134,7 +134,7 @@ ggplot() +
 
 # Calculate Gaussian density distribution of points
 folio_pts_bias <- folio_ppp %>% 
-  density(., sigma = 0.1) %>% 
+  density(., sigma = 1) %>% 
   raster()
 
 crs(folio_pts_bias) <- CRS("+init=epsg:3577")
@@ -150,3 +150,9 @@ folio_bias_layer <- folio_pts_bias
 folio_bias_layer[values(folio_bias_layer) < 0] <- NA
 
 mapview(folio_bias_layer)
+
+mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + folio_bias_layer
+
+
+### Create bias layer (for transect lines) ---------------------
+
