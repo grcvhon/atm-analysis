@@ -1,5 +1,5 @@
 <b>General information</b><br>
-Introduction to Species Distribution Models
+Introduction to Species Distribution Models<br>
 [https://support.bccvl.org.au/support/solutions/articles/6000127048-introduction-to-species-distribution-models](https://support.bccvl.org.au/support/solutions/articles/6000127048-introduction-to-species-distribution-models)
 
 <b>Workshops</b><br>
