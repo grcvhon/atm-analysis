@@ -36,7 +36,7 @@ library(terra)
 library(stars)
 library(lwgeom)
 
-### Package list
+### Load package list ---------------------------------------
 packages <- c("sf","leaflet","readr","janitor","dplyr",
               "mapview","spatstat","tidyverse","raster",
               "dismo","lubridate","SDMtune","readxl",
