@@ -36,6 +36,14 @@ library(terra)
 library(stars)
 library(lwgeom)
 
+### Package list
+packages <- c("sf","leaflet","readr","janitor","dplyr",
+              "mapview","spatstat","tidyverse","raster",
+              "dismo","lubridate","SDMtune","readxl",
+              "terra","stars","lwgeom")
+invisible(lapply(packages, library, character.only = TRUE))
+
+
 ### Input model extent ------------------------------------------
 
 # Load Australia EEZ shapefile
