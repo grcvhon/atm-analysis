@@ -134,7 +134,7 @@ ggplot() +
 
 # Calculate Gaussian density distribution of points
 folio_pts_bias <- folio_ppp %>% 
-  density(., sigma = 1) %>% 
+  density(., sigma = 0.05) %>% 
   raster()
 
 crs(folio_pts_bias) <- CRS("+init=epsg:3577")
@@ -153,6 +153,22 @@ mapview(folio_bias_layer)
 
 mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + folio_bias_layer
 
-
 ### Create bias layer (for transect lines) ---------------------
+
+start <- c(-120.0,40.0)
+end <- c(-119.0,40.5)
+
+# create dataframe with start and end coordinates
+transect_coords <- rbind(start,end)
+transect_coords
+
+# create spatial line object
+transect_line <- st_sfc(st_linestring(transect_coords), crs = 4326)
+# convert to sf data frame
+trn_sf <- st_sf(geometry = transect_line)
+# view the transect on a map
+mapview(trn_sf)
+# save shapefile
+st_write(transect_sf,"filename.shp")
+
 
