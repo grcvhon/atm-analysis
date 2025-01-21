@@ -54,32 +54,37 @@ env_init
 # Load occurrence data
 # csv contains combined occurrence data for 
 # Aipysurus apraefrontalis and A. foliosquama
-rawdat <- read_csv("data/spreadsheets/ATM_2023_0715-running-master.csv") # for raw colnames() purposes
+rawdat <- read_csv("data/spreadsheets/ATM_2023_0715-running-master.csv")
 
 # filter for apraefrontalis
-aprae <- read_csv("data/spreadsheets/ATM_2023_0715-running-master.csv") %>%
+aprae <- rawdat %>%
   mutate(
     lat = as.numeric(MidLat),
     lat = if_else(is.na(lat), as.numeric(Latitude), lat),
     long = as.numeric(MidLong),
     long = if_else(is.na(long), as.numeric(Longitude), long),) %>%
-  filter(Species == "apraefrontalis") %>% 
+  filter(Species == "apraefrontalis",
+         !is.na(lat),
+         !is.na(long)) %>% 
   clean_names()
 
 # filter for foliosquama
-folio <- read_csv("data/spreadsheets/ATM_2023_0715-running-master.csv") %>%
+folio <- rawdat %>%
   mutate(
     lat = as.numeric(MidLat),
     lat = if_else(is.na(lat), as.numeric(Latitude), lat),
     long = as.numeric(MidLong),
     long = if_else(is.na(long), as.numeric(Longitude), long),) %>%
-  filter(Species == "foliosquama") %>% 
+  filter(Species == "foliosquama",
+         !is.na(lat),
+         !is.na(long)) %>% 
   clean_names()
 
 # species-specific occurrence map + bounding area
 mapview(aprae, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf  
 mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf
 
+# convert to simple feature (sf) 
 aprae_sf <- aprae %>% 
   st_as_sf(coords = c("long", "lat"), crs = 4326) %>% 
   distinct(.keep_all = T)
