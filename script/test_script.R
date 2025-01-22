@@ -49,6 +49,9 @@ env_init <- stack("data/predictor-variables/sal_mean.asc",
                   "data/predictor-variables/DistToFW.asc")
 env_init
 
+bathymetry <- raster("data/predictor-variables/bathymetry.asc")
+mapview(bathymetry) + nw_shelf
+
 ### 3. Input occurrence data --------------------------------------------------
 
 # Load occurrence data csv contains combined occurrence data for 
