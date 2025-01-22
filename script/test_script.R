@@ -160,20 +160,21 @@ mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + folio_bias_layer
 
 ### Create bias layer (for transect lines) ---------------------
 
-start <- c(-120.0,40.0)
-end <- c(-119.0,40.5)
+sample <- folio %>% 
+  select(c(start_long,start_lat,end_long,end_lat)) %>% 
+  filter(apply(folio[, c("start_long", "start_lat", "end_long", "end_lat")], 1, function(x) all(!is.na(x))))
 
-# create dataframe with start and end coordinates
-transect_coords <- rbind(start,end)
-transect_coords
+# create an empty list to store transect line geometries
+trn_lines <- list()
 
-# create spatial line object
-transect_line <- st_sfc(st_linestring(transect_coords), crs = 4326)
-# convert to sf data frame
-trn_sf <- st_sf(geometry = transect_line)
-# view the transect on a map
+for(i in 1:nrow(sample)) {
+  start_gps <- c(sample$start_long[i], sample$start_lat[i])
+  end_gps <- c(sample$end_long[i], sample$end_lat[i])
+  
+  trn_gps <- rbind(start_gps, end_gps)
+  trn_line <- st_sfc(st_linestring(trn_gps), crs = 4326)
+  trn_lines[[i]] <- trn_line
+}
+
+trn_sf <- st_sf(geometry = do.call(c, trn_lines))
 mapview(trn_sf)
-# save shapefile
-st_write(transect_sf,"filename.shp")
-
-
