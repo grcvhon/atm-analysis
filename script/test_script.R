@@ -87,50 +87,57 @@ convert_2_sf <- function(df_name) {
 # convert dataframe to simple feature (sf)
 aprae_sf <- convert_2_sf(aprae)
 folio_sf <- convert_2_sf(folio)
+seasnake_sf <- bind_rows(aprae_sf,folio_sf) # combine aprae and folio sf occurrence points
 
 ### 3.1 Input transect data
 # shapefiles generated with "Generate and save shapefile 
 # using transect start and end coordinates.R"
 aprae_transect <- st_read("data/shapefiles/apraefrontalis_transect.shp")
 folio_transect <- st_read("data/shapefiles/foliosquama_transect.shp")
+seasnake_trn <- st_read("data/shapefiles/seasnake_transect.shp") # combined aprae and folio transect lines
 
 ### 4. Create Bias Layer ------------------------------------------------------
 # convert points and transect lines into a point pattern object (ppp or psp)
-aprae_occ_ppp <- aprae_sf %>% 
+
+# using combined apraefrontalis and foliosquama occurrence points
+seasnake_occ_ppp <- seasnake_sf %>% 
   st_transform(crs = 3577) %>% 
   as_Spatial() %>% 
   maptools::as.ppp.SpatialPointsDataFrame(.)
-  
-aprae_trn_psp <- aprae_transect %>% 
+
+# using combined apraefrontalis and foliosquama transect lines
+seasnake_trn_psp <- seasnake_trn %>% 
   st_transform(crs = 3577) %>% 
   as_Spatial() %>% 
   maptools::as.psp.SpatialLinesDataFrame(.)
 
 # calculate Gaussian density distribution of points and transects
-aprae_pts_bias <- aprae_occ_ppp %>% 
-  density(., sigma = 0.01) %>% 
+seasnake_pts_bias <- seasnake_occ_ppp %>% 
+  density(., sigma = 0.05) %>% 
   raster()
-crs(aprae_pts_bias) <- CRS("+init=epsg:3577")
-aprae_pts_bias <- aprae_pts_bias %>% 
-  projectRaster(., crs = CRS("+init=epsg:4326")) %>% 
+crs(seasnake_pts_bias) <- CRS(SRS_string = "EPSG:3577")
+seasnake_pts_bias <- seasnake_pts_bias %>% 
+  projectRaster(., crs = CRS(SRS_string = "EPSG:4326")) %>% 
   mask(mask = nw_shelf) %>% 
-  resample(x = ., y = env_init[[1]])
-values(aprae_pts_bias) <- values(aprae_pts_bias) + min(values(aprae_pts_bias), na.rm = T)
+  resample(x = ., y = bathymetry)
+values(seasnake_pts_bias) <- values(seasnake_pts_bias) + min(values(seasnake_pts_bias), na.rm = T)
 
-aprae_trn_bias <- aprae_trn_psp %>% 
-  density(., sigma = 0.01) %>% 
+seasnake_trn_bias <- seasnake_trn_psp %>% 
+  density(., sigma = 0.05) %>% 
   raster()
-crs(aprae_trn_bias) <- CRS("+init=epsg:3577")
-aprae_trn_bias <- aprae_trn_bias %>% 
-  projectRaster(., crs = CRS("+init=epsg:4326")) %>% 
+crs(seasnake_trn_bias) <- CRS(SRS_string = "EPSG:3577")
+seasnake_trn_bias <- seasnake_trn_bias %>% 
+  projectRaster(., crs = CRS(SRS_string = "EPSG:4326")) %>% 
   mask(mask = nw_shelf) %>% 
-  resample(x = ., y = env_init[[1]])
-values(aprae_trn_bias) <- values(aprae_trn_bias) + min(values(aprae_trn_bias), na.rm = T)
+  resample(x = ., y = bathymetry)
+values(seasnake_trn_bias) <- values(seasnake_trn_bias) + min(values(seasnake_trn_bias), na.rm = T)
 
-aprae_bias_layer <- aprae_pts_bias + aprae_trn_bias
-aprae_bias_layer[values(aprae_bias_layer) < 0] <- NA
-plot(aprae_bias_layer)
-mapview(aprae_bias_layer) + aprae_sf
+mapview(seasnake_pts_bias)
+mapview(seasnake_trn_bias)
+
+seasnake_bias_layer <- seasnake_pts_bias + seasnake_trn_bias
+seasnake_bias_layer[values(seasnake_bias_layer) < 0] <- NA
+mapview(seasnake_bias_layer)
 
 
 # species-specific occurrence map + bounding area
