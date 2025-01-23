@@ -32,7 +32,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 ### 1. Input model extent -----------------------------------------------------
 
 # Load Northwest shelf bounding area
-nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp")
+nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp") %>% st_transform(4326)
 mapview(nw_shelf)
 
 ### 2. Input environmental predictors -----------------------------------------
@@ -50,7 +50,8 @@ env_init <- stack("data/predictor-variables/sal_mean.asc",
 env_init
 
 bathymetry <- raster("data/predictor-variables/bathymetry.asc")
-mapview(bathymetry) + nw_shelf
+mapview(bathymetry) + 
+  mapview(nw_shelf)
 
 ### 3. Input occurrence data --------------------------------------------------
 
@@ -100,44 +101,88 @@ seasnake_trn <- st_read("data/shapefiles/seasnake_transect.shp") # combined apra
 # convert points and transect lines into a point pattern object (ppp or psp)
 
 # using combined apraefrontalis and foliosquama occurrence points
-seasnake_occ_ppp <- seasnake_sf %>% 
-  st_transform(crs = 3577) %>% 
-  as_Spatial() %>% 
-  maptools::as.ppp.SpatialPointsDataFrame(.)
+seasnake_occ_ppp <- 
+  seasnake_sf %>% 
+  st_transform(crs = 3577) %>%
+  st_as_sfc() %>% 
+  as.ppp()
+  # as_Spatial () %>% 
+  # maptools::as.ppp.SpatialPointsDataFrame(.)
 
 # using combined apraefrontalis and foliosquama transect lines
-seasnake_trn_psp <- seasnake_trn %>% 
+seasnake_trn_psp <- 
+  seasnake_trn %>% 
   st_transform(crs = 3577) %>% 
-  as_Spatial() %>% 
-  maptools::as.psp.SpatialLinesDataFrame(.)
+  st_as_sfc() %>% 
+  as.psp()
+  # as_Spatial() %>% 
+  # maptools::as.psp.SpatialLinesDataFrame(.)
 
 # calculate Gaussian density distribution of points and transects
-seasnake_pts_bias <- seasnake_occ_ppp %>% 
+seasnake_pts_bias <- 
+  seasnake_occ_ppp %>% 
   density(., sigma = 0.05) %>% 
-  raster()
-crs(seasnake_pts_bias) <- CRS(SRS_string = "EPSG:3577")
-seasnake_pts_bias <- seasnake_pts_bias %>% 
-  projectRaster(., crs = CRS(SRS_string = "EPSG:4326")) %>% 
-  mask(mask = nw_shelf) %>% 
-  resample(x = ., y = bathymetry)
-values(seasnake_pts_bias) <- values(seasnake_pts_bias) + min(values(seasnake_pts_bias), na.rm = T)
+  terra::rast()
 
-seasnake_trn_bias <- seasnake_trn_psp %>% 
-  density(., sigma = 0.05) %>% 
-  raster()
-crs(seasnake_trn_bias) <- CRS(SRS_string = "EPSG:3577")
-seasnake_trn_bias <- seasnake_trn_bias %>% 
-  projectRaster(., crs = CRS(SRS_string = "EPSG:4326")) %>% 
-  mask(mask = nw_shelf) %>% 
-  resample(x = ., y = bathymetry)
-values(seasnake_trn_bias) <- values(seasnake_trn_bias) + min(values(seasnake_trn_bias), na.rm = T)
+crs(seasnake_pts_bias) <- "EPSG:3577"
 
+seasnake_pts_bias <-
+  seasnake_pts_bias %>% 
+  terra::project(., y = "EPSG:4326") %>% 
+  terra::mask(mask = vect(nw_shelf)) %>% 
+  terra::resample(x = ., y = rast(bathymetry)) %>% 
+  terra::scale() 
+
+seasnake_pts_bias[values(seasnake_pts_bias) < 0] <- NA
+
+## normalise the bias layer (rescale between 0 and 1)
+nx <- minmax(seasnake_pts_bias)    
+seasnake_pts_bias <- (seasnake_pts_bias - nx[1,]) / (nx[2,] - nx[1,])
+
+# plot(seasnake_pts_bias)
 mapview(seasnake_pts_bias)
+
+## We used the scale function to scale it and normalised the raster, so no need for this now!
+# values(seasnake_pts_bias) <- values(seasnake_pts_bias) + min(values(seasnake_pts_bias), na.rm = T)
+
+seasnake_trn_bias <- 
+  seasnake_trn_psp %>% 
+  density(., sigma = 0.05) %>% 
+  terra::rast()
+
+crs(seasnake_trn_bias) <- "EPSG:3577"
+
+seasnake_trn_bias <- 
+  seasnake_trn_bias %>% 
+  terra::project(., y = "EPSG:4326") %>% 
+  terra::mask(mask = vect(nw_shelf)) %>% 
+  terra::resample(x = ., y = rast(bathymetry)) %>% 
+  terra::scale()
+
+seasnake_trn_bias[values(seasnake_trn_bias) < 0] <- NA
+
+## normalise the bias layer (rescale between 0 and 1)
+nx <- minmax(seasnake_trn_bias)    
+seasnake_trn_bias <- (seasnake_trn_bias - nx[1,]) / (nx[2,] - nx[1,])
+
+# plot(seasnake_trn_bias)
 mapview(seasnake_trn_bias)
 
-seasnake_bias_layer <- seasnake_pts_bias + seasnake_trn_bias
-seasnake_bias_layer[values(seasnake_bias_layer) < 0] <- NA
-mapview(seasnake_bias_layer)
+## We used the scale function to scale it, so no need for this now!
+# values(seasnake_trn_bias) <- values(seasnake_trn_bias) + min(values(seasnake_trn_bias), na.rm = T)
+
+## Lets combine the points and transect bias layers (average between the two)
+seasnake_bias_layer <- mean(seasnake_pts_bias, seasnake_trn_bias, na.rm = T)
+# seasnake_bias_layer[values(seasnake_bias_layer) < 0] <- NA
+seasnake_bias_layer <-
+  terra::mask(seasnake_bias_layer, mask = vect(nw_shelf))
+
+mapview(seasnake_bias_layer, na.color = NA) +
+  mapview(nw_shelf, alpha.regions = 0) +
+  mapview(seasnake_sf)
+
+## save bias layer as a raster file
+# writeRaster(seasnake_bias_layer, "data/bias_layer.tiff")
 
 
 # species-specific occurrence map + bounding area
