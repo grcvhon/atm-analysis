@@ -31,3 +31,7 @@ st_write(aprae_trn, "./data/shapefiles/apraefrontalis_transect.shp")
 folio_trn <- transect_to_shp(folio)
 mapview(folio_trn)
 st_write(folio_trn, "./data/shapefiles/foliosquama_transect.shp")
+
+trn <- bind_rows(folio_trn,aprae_trn)
+mapview(trn)
+st_write(trn, "./data/shapefiles/seasnake_transect.shp")
