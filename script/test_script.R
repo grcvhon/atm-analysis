@@ -101,13 +101,13 @@ seasnake_trn <- st_read("data/shapefiles/seasnake_transect.shp") # combined apra
 # convert points and transect lines into a point pattern object (ppp or psp)
 
 # using combined apraefrontalis and foliosquama occurrence points
-seasnake_occ_ppp <- 
-  seasnake_sf %>% 
-  st_transform(crs = 3577) %>%
-  st_as_sfc() %>% 
-  as.ppp()
-  # as_Spatial () %>% 
-  # maptools::as.ppp.SpatialPointsDataFrame(.)
+#seasnake_occ_ppp <- 
+#  seasnake_sf %>% 
+#  st_transform(crs = 3577) %>%
+#  st_as_sfc() %>% 
+#  as.ppp()
+#  # as_Spatial () %>% 
+#  # maptools::as.ppp.SpatialPointsDataFrame(.)
 
 # using combined apraefrontalis and foliosquama transect lines
 seasnake_trn_psp <- 
@@ -119,31 +119,67 @@ seasnake_trn_psp <-
   # maptools::as.psp.SpatialLinesDataFrame(.)
 
 # calculate Gaussian density distribution of points and transects
-seasnake_pts_bias <- 
-  seasnake_occ_ppp %>% 
+#seasnake_pts_bias <- 
+#  seasnake_occ_ppp %>% 
+#  density(., sigma = 0.05) %>% 
+#  terra::rast()
+#
+#crs(seasnake_pts_bias) <- "EPSG:3577"
+#
+#seasnake_pts_bias <-
+#  seasnake_pts_bias %>% 
+#  terra::project(., y = "EPSG:4326") %>% 
+#  terra::mask(mask = vect(nw_shelf)) %>% 
+#  terra::resample(x = ., y = rast(bathymetry)) %>% 
+#  terra::scale() 
+#
+#seasnake_pts_bias[values(seasnake_pts_bias) < 0] <- NA
+
+## normalise the bias layer (rescale between 0 and 1)
+#nx <- minmax(seasnake_pts_bias)    
+#seasnake_pts_bias <- (seasnake_pts_bias - nx[1,]) / (nx[2,] - nx[1,])
+#
+## plot(seasnake_pts_bias)
+#mapview(seasnake_pts_bias)
+
+## We used the scale function to scale it and normalised the raster, so no need for this now!
+# values(seasnake_pts_bias) <- values(seasnake_pts_bias) + min(values(seasnake_pts_bias), na.rm = T)
+
+# using the SnakeOcc.csv data set
+effort_csv <- read_csv("data/spreadsheets/2020-05-20_SnakeOcc.csv")
+colnames(effort_csv) <- c("species", "long", "lat", "source")
+effort_sf <- convert_2_sf(effort_csv)
+effort_vect <- vect(effort_sf)
+effort_nwshelf_sf <- mask(effort_vect, mask = vect(nw_shelf))
+effort_nwshelf_sf <- st_as_sf(effort_nwshelf_sf)
+mapview(effort_nwshelf_sf)
+
+ss_effort_occ_ppp <- 
+  effort_nwshelf_sf %>% 
+  st_transform(crs = 3577) %>% 
+  st_as_sf() %>% 
+  as.ppp()
+
+ss_effort_pts_bias <- 
+  ss_effort_occ_ppp %>% 
   density(., sigma = 0.05) %>% 
   terra::rast()
 
-crs(seasnake_pts_bias) <- "EPSG:3577"
+crs(ss_effort_pts_bias) <- "EPSG:3577"
 
-seasnake_pts_bias <-
-  seasnake_pts_bias %>% 
+ss_effort_pts_bias <-
+  ss_effort_pts_bias %>% 
   terra::project(., y = "EPSG:4326") %>% 
   terra::mask(mask = vect(nw_shelf)) %>% 
   terra::resample(x = ., y = rast(bathymetry)) %>% 
   terra::scale() 
 
-seasnake_pts_bias[values(seasnake_pts_bias) < 0] <- NA
+ss_effort_pts_bias[values(ss_effort_pts_bias) < 0] <- NA
 
-## normalise the bias layer (rescale between 0 and 1)
-nx <- minmax(seasnake_pts_bias)    
-seasnake_pts_bias <- (seasnake_pts_bias - nx[1,]) / (nx[2,] - nx[1,])
-
-# plot(seasnake_pts_bias)
-mapview(seasnake_pts_bias)
-
-## We used the scale function to scale it and normalised the raster, so no need for this now!
-# values(seasnake_pts_bias) <- values(seasnake_pts_bias) + min(values(seasnake_pts_bias), na.rm = T)
+nx_effort <- minmax(ss_effort_pts_bias)    
+ss_effort_pts_bias <- (ss_effort_pts_bias - nx_effort[1,]) / (nx_effort[2,] - nx_effort[1,])
+mapview(ss_effort_pts_bias) +
+  mapview(nw_shelf, alpha.region = 0)
 
 seasnake_trn_bias <- 
   seasnake_trn_psp %>% 
