@@ -2,7 +2,13 @@
 title: "MaxEnt modelling for Short-nosed and Leaf-scaled sea snakes"
 author: "Vhon Garcia and Vinay Udyawer"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+    toc_depth: 3
+    toc_expand: true
 ---
 
 ```{=html}
