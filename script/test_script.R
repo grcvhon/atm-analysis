@@ -32,7 +32,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 ### 1. Input model extent -----------------------------------------------------
 
 # Load Northwest shelf bounding area
-nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp") %>% st_transform(4326)
+nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
 mapview(nw_shelf)
 
 ### 2. Input environmental predictors -----------------------------------------
@@ -78,6 +78,10 @@ filter_species <- function(species_name) {
 aprae <- filter_species("apraefrontalis")
 folio <- filter_species("foliosquama")
 
+# species-specific occurrence map + bounding area
+mapview(aprae, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf  
+mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf
+
 # function to convert dataframe to simple feature (sf) 
 convert_2_sf <- function(df_name) {
   df_name %>% 
@@ -93,9 +97,9 @@ seasnake_sf <- bind_rows(aprae_sf,folio_sf) # combine aprae and folio sf occurre
 ### 3.1 Input transect data
 # shapefiles generated with "Generate and save shapefile 
 # using transect start and end coordinates.R"
-aprae_transect <- st_read("data/shapefiles/apraefrontalis_transect.shp")
-folio_transect <- st_read("data/shapefiles/foliosquama_transect.shp")
-seasnake_trn <- st_read("data/shapefiles/seasnake_transect.shp") # combined aprae and folio transect lines
+aprae_transect <- st_read("data/shapefiles/apraefrontalis_transect.shp", quiet = TRUE)
+folio_transect <- st_read("data/shapefiles/foliosquama_transect.shp", quiet = TRUE)
+seasnake_trn <- st_read("data/shapefiles/seasnake_transect.shp", quiet = TRUE) # combined aprae and folio transect lines
 
 ### 4. Create Bias Layer ------------------------------------------------------
 # convert points and transect lines into a point pattern object (ppp or psp)
@@ -208,19 +212,51 @@ mapview(seasnake_trn_bias)
 # values(seasnake_trn_bias) <- values(seasnake_trn_bias) + min(values(seasnake_trn_bias), na.rm = T)
 
 ## Lets combine the points and transect bias layers (average between the two)
-seasnake_bias_layer <- mean(seasnake_pts_bias, seasnake_trn_bias, na.rm = T)
+#seasnake_bias_layer <- mean(seasnake_pts_bias, seasnake_trn_bias, na.rm = T)
 # seasnake_bias_layer[values(seasnake_bias_layer) < 0] <- NA
+#seasnake_bias_layer <-
+#  terra::mask(seasnake_bias_layer, mask = vect(nw_shelf))
+
+#mapview(seasnake_bias_layer, na.color = NA) +
+#  mapview(nw_shelf, alpha.regions = 0) #+
+  #mapview(seasnake_sf)
+
+# Combine the points and transect bias layers by taking the average
+seasnake_bias_layer <- mean(ss_effort_pts_bias, seasnake_trn_bias, na.rm = T)
+
 seasnake_bias_layer <-
   terra::mask(seasnake_bias_layer, mask = vect(nw_shelf))
 
+# Visualise combined bias layer
 mapview(seasnake_bias_layer, na.color = NA) +
-  mapview(nw_shelf, alpha.regions = 0) +
-  mapview(seasnake_sf)
+  mapview(nw_shelf, alpha.regions = 0)
 
 ## save bias layer as a raster file
 # writeRaster(seasnake_bias_layer, "data/bias_layer.tiff")
 
+### 5. Pseudo-absence generation ----------------------------------------------
 
-# species-specific occurrence map + bounding area
-mapview(aprae, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf  
-mapview(folio, xcol = "long", ycol = "lat", crs = 4326) + nw_shelf
+# Pseudo-absence data or background points
+
+# from: https://damariszurell.github.io/EEC-MGC/b5_pseudoabsence.html
+
+#### 5.1 Random selection of points within study area but excluding the presence location ----
+
+# Randomly select background points from study region/model extent
+
+# Convert sf object to SpatVector for terra compatibility
+nw_shelf_vect <- terra::vect(nw_shelf) # model extent
+effort_nwshelf_vect <- terra::vect(effort_nwshelf_sf) # occurrence points from bias layer 
+
+# Generate 500 random background/pseudo-absence points
+background_random <- spatSample(nw_shelf_vect, 500, "random")
+
+# Visualise 500 random points with occurrence points from bias layer
+plot(nw_shelf_vect, col="grey", legend = F)
+points(effort_nwshelf_vect, col = "orangered", pch = 19, cex = 0.5)
+points(background_random, col = "grey50", pch = 19, cex = 0.5)
+
+
+nw_shelf_vect <- terra::vect(nw_shelf) # model extent
+nw_shelf_rast <- terra::rast(nw_shelf_vect)
+
