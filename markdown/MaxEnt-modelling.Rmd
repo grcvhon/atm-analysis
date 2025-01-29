@@ -19,6 +19,15 @@ output:
 </style>
 ```
 
+```{css style settings, echo = FALSE}
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    border-left: 5px solid #eee;
+}
+```
+
 ------------------------------------------------------------------------
 
 This markdown document outlines analyses and associated code for the project: Tracking Species Trajectories of Short-nosed sea snake (*Aipysurus apraefrontalis*) and Leaf-scaled sea snake (*A*. *foliosquama*); funded by the Department of Climate Change, Energy, the Environment, and Water (ATM_2023_0715).
@@ -85,7 +94,7 @@ The occurrence data set contains records from DPIRD surveys, records from Atlas 
 
 ####       3.1 Load point occurrence data
 
-The point occurrence data were taken as point coordinates of records. For trawled samples, their point coordinates were taken as the mid-latitude and mid-longitude and were calculated by taking the mean of the start and end latitudes/longitudes of the trawl where the specimen was collected.
+The point occurrence data were taken as point coordinates of samples. For trawled samples, their point coordinates were taken as the mid-latitude and mid-longitude and were calculated by taking the mean of the start and end latitudes/longitudes of the trawl where the specimen was collected.
 
 ```{r input occurrence data, message=FALSE, warning=FALSE}
 # Combined occurrence data for Aipysurus apraefrontalis and A. foliosquama
@@ -153,6 +162,12 @@ mapview(seasnake_trn)
  
 
 ### 4. Generate bias layer
+
+ 
+
+One way to look at bias layer (from: *https://scottrinnan.wordpress.com/2015/08/31/how-to-construct-a-bias-file-with-r-for-use-in-maxent-modeling/*)
+
+> *We will account for the bias in the data by constructing a bias layer. Basically, this layer leverages occurrence data from species in a similar taxon as the one of interest. The Christmas Bird Count is an excellent example: every Christmas, thousands of citizen scientists go out and record every bird they can find, which results in millions of observations. Let’s say that Ms. Birdbrain spent her Christmas hiking  around in the mountains, and saw a northern spotted owl and two barred owls, each in a different location. Essentially, we can treat the presence of the barred owl as a “pseudo-absence” of the spotted owl, because if there had been a spotted owl there, presumably Ms. Birdbrain would have recorded it as well. Thus, if we look at the collective records of all birds, we’d have a good idea of the geographical sampling bias, which we can then use to account for the bias in a single species.*
 
  
 
