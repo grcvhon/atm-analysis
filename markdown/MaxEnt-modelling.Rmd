@@ -57,7 +57,7 @@ mapview(nw_shelf)
 
  
 
-### 2. Input environmetal rasters
+### 2. Input environmental rasters
 
 ```{r input environmental rasters, message=FALSE, warning=FALSE, results=FALSE}
 # Load single environmental raster
