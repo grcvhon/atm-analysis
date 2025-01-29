@@ -258,5 +258,10 @@ points(background_random, col = "grey50", pch = 19, cex = 0.5)
 
 
 nw_shelf_vect <- terra::vect(nw_shelf) # model extent
-nw_shelf_rast <- terra::rast(nw_shelf_vect)
-
+nw_shelf_rast <- terra::rast(nw_shelf_vect, ncols = 500, nrows = 500)
+nw_shelf_rasterize <- rasterize(nw_shelf_vect, nw_shelf_rast)
+mapview(nw_shelf_rasterize)
+lines(nw_shelf_vect)
+bg_rand <- terra::spatSample(nw_shelf_rasterize, 1000, "random", na.rm=T, as.points=TRUE)
+plot(nw_shelf_vect)
+points(bg_rand)
