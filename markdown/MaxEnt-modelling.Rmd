@@ -34,7 +34,7 @@ This markdown document outlines analyses and associated code for the project: Tr
 
  
 
-### i. Packages
+### **i. Packages**
 
 Install the listed packages (if not already) before running the following code.
 
@@ -52,7 +52,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 
  
 
-### 1. Input model extent
+### **1. Input model extent**
 
 ```{r input model extent, message=FALSE, warning=FALSE}
 # Load Northwest shelf bounding area
@@ -61,12 +61,12 @@ nw_shelf <-
   st_transform(4326)
 
 # View Northwest shelf bounding area
-mapview(nw_shelf)
+mapview(nw_shelf, legend = F)
 ```
 
  
 
-### 2. Input environmental rasters
+### **2. Input environmental rasters**
 
 ```{r input environmental rasters, message=FALSE, warning=FALSE, results=FALSE}
 # Load single environmental raster
@@ -86,7 +86,7 @@ env_init <- stack("../data/predictor-variables/sal_mean.asc",
 
  
 
-### 3. Input occurrence data
+### **3. Input occurrence data**
 
 The occurrence data set contains records from DPIRD surveys, records from Atlas of Living Australia (downloaded 21 January 2025), and from the `trawled_seasnakes.xlsx` spreadsheet. Data types are either point coordinates or start and end coordinates of trawls/transects.
 
@@ -134,7 +134,8 @@ folio_sf <- convert_2_sf(folio)
 seasnake_sf <- bind_rows(aprae_sf,folio_sf)
 
 # Visualise
-mapview(seasnake_sf)
+mapview(seasnake_sf, col.regions = "orangered", alpha = 0, cex = 5, legend = F) +
+  mapview(nw_shelf, alpha.regions = 0, legend = F)
 ```
 
  
@@ -156,18 +157,18 @@ folio_transect <- st_read("../data/shapefiles/foliosquama_transect.shp", quiet =
 seasnake_trn <- st_read("../data/shapefiles/seasnake_transect.shp", quiet = TRUE) 
 
 # Visualise
-mapview(seasnake_trn)
+mapview(seasnake_trn, color = "orangered", legend = F)
 ```
 
  
 
-### 4. Generate bias layer
+### **4. Generate bias layer**
 
  
 
-One way to look at bias layer (from: *https://scottrinnan.wordpress.com/2015/08/31/how-to-construct-a-bias-file-with-r-for-use-in-maxent-modeling/*)
+One way to look at bias layer (from: [*https://scottrinnan.wordpress.com/2015/08/31/how-to-construct-a-bias-file-with-r-for-use-in-maxent-modeling/*](https://scottrinnan.wordpress.com/2015/08/31/how-to-construct-a-bias-file-with-r-for-use-in-maxent-modeling/){.uri})
 
-> *We will account for the bias in the data by constructing a bias layer. Basically, this layer leverages occurrence data from species in a similar taxon as the one of interest. The Christmas Bird Count is an excellent example: every Christmas, thousands of citizen scientists go out and record every bird they can find, which results in millions of observations. Let’s say that Ms. Birdbrain spent her Christmas hiking  around in the mountains, and saw a northern spotted owl and two barred owls, each in a different location. Essentially, we can treat the presence of the barred owl as a “pseudo-absence” of the spotted owl, because if there had been a spotted owl there, presumably Ms. Birdbrain would have recorded it as well. Thus, if we look at the collective records of all birds, we’d have a good idea of the geographical sampling bias, which we can then use to account for the bias in a single species.*
+> *We will account for the bias in the data by constructing a bias layer. Basically, this layer leverages occurrence data from species in a similar taxon as the one of interest. The Christmas Bird Count is an excellent example: every Christmas, thousands of citizen scientists go out and record every bird they can find, which results in millions of observations. Let’s say that Ms. Birdbrain spent her Christmas hiking around in the mountains, and saw a northern spotted owl and two barred owls, each in a different location. Essentially, we can treat the presence of the barred owl as a “pseudo-absence” of the spotted owl, because if there had been a spotted owl there, presumably Ms. Birdbrain would have recorded it as well. Thus, if we look at the collective records of all birds, we’d have a good idea of the geographical sampling bias, which we can then use to account for the bias in a single species.*
 
  
 
@@ -191,7 +192,8 @@ effort_nwshelf_sf <- mask(effort_vect, mask = vect(nw_shelf))
 effort_nwshelf_sf <- st_as_sf(effort_nwshelf_sf)
 
 # Visualise bias layer from point occurrence data
-mapview(effort_nwshelf_sf)
+mapview(effort_nwshelf_sf, col.regions = "orangered", alpha = 0, cex = 5, legend = F) +
+  mapview(nw_shelf, alpha.regions = 0, legend = F)
 ```
 
  
@@ -229,7 +231,7 @@ ss_effort_pts_bias <- (ss_effort_pts_bias - nx_effort[1,]) / (nx_effort[2,] - nx
 
 # Visualise points bias layer
 mapview(ss_effort_pts_bias) +
-  mapview(nw_shelf, alpha.region = 0)
+  mapview(nw_shelf, alpha.region = 0, legend = F)
 ```
 
  
@@ -270,7 +272,8 @@ nx <- minmax(seasnake_trn_bias)
 seasnake_trn_bias <- (seasnake_trn_bias - nx[1,]) / (nx[2,] - nx[1,])
 
 # plot(seasnake_trn_bias)
-mapview(seasnake_trn_bias)
+mapview(seasnake_trn_bias) +
+  mapview(nw_shelf, alpha.regions = 0, legend = F)
 ```
 
  
@@ -286,7 +289,7 @@ seasnake_bias_layer <-
 
 # Visualise combined bias layer
 mapview(seasnake_bias_layer, na.color = NA) +
-  mapview(nw_shelf, alpha.regions = 0)
+  mapview(nw_shelf, alpha.regions = 0, legend = F)
 ```
 
  
@@ -300,4 +303,4 @@ writeRaster(seasnake_bias_layer, "../data/bias_layer.tiff")
 
  
 
-***...to be continued with generating pseudo-absence data***
+### **5. Generate pseudo-absence data**
