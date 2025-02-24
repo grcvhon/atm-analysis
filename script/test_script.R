@@ -265,3 +265,16 @@ lines(nw_shelf_vect)
 bg_rand <- terra::spatSample(nw_shelf_rasterize, 1000, "random", na.rm=T, as.points=TRUE)
 plot(nw_shelf_vect)
 points(bg_rand)
+
+#### 5.2 Pseudo-abs gen script from VU ----
+
+bias_pts_bias <- 
+  dismo::randomPoints(mask = seasnake_bias_layer, 
+                      n = 1000, p = as_Spatial(effort_nwshelf_sf),
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x","y"), crs = 4326)
+
+
+
+
