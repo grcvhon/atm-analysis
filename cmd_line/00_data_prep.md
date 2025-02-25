@@ -6,7 +6,7 @@ The goal of this collation is to generate a sample sheet that has at least the f
 
 * `order` corresponds to the DaRT order number (`DNote##-####`)
 * `dart_id` corresponds to the `.FASTQ.gz` prefix
-* `id_clean` for example, <i>Hydrophis major</i> with KLS#1010 and FASTQ prefix 1234567: `HMA-KLS1010-1234567`
+* `id_clean` for example, <i>Hydrophis major</i> with KLS 1010 and FASTQ prefix 1234567: `HMA-KLS1010-1234567` (no whitespaces)
 
 This format will improve efficiency when processing samples prior to any analyses and when using the workflow in genomics analyses.<br>
 
@@ -73,11 +73,13 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
 
-From above, we can see <i>A. apraefrontalis</i> samples with RADseq data that we want to use (i.e., yes). We can take the command further to produce our desired format for the `id_clean` column of our sample sheet.
+From above, we can see samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes). We can take the command further to produce the desired format for the `id_clean` column of our sample sheet file.
 
 ```bash
 $ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { gsub(/ /,"_"); print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv
+```
 
+```nginx
 # output
 AAP-Aaprae_4.12.01-2562202
 AAP-KLS0834-2562130
