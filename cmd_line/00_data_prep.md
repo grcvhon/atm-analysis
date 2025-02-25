@@ -46,9 +46,12 @@ These commands will print out row information of these columns: `SampleID`, `Gen
 * if column 4 (`Species`) contains `apraefrontalis`/`foliosquama`, and 
 * if column 11 (`Use`) says "yes" i.e., good quality/usable sample.
 <br>
+
 Doing this for <i>A. apraefrontalis</i>:
-```
-    awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+
+```shellscript
+
+awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
 SS171013-03 Aipysurus apraefrontalis 2562139 yes
@@ -64,6 +67,7 @@ KLS1465 Aipysurus apraefrontalis 3593393 yes
 KLS1468 Aipysurus apraefrontalis 3593397 yes
 KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
+
 ```
 <br>
 
