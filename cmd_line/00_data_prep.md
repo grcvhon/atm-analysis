@@ -51,4 +51,5 @@ This step has been done manually and output is shown below:
 |DPIRD_Fisheries_June2024|KLS1702       |Aipysurus|foliosquama   |Shark Bay   |-25.5985585 |113.2126165|DNote24-9763|4013442 |                                     |yes|
 |DPIRD_Fisheries_June2024|KLS1707       |Aipysurus|foliosquama   |Shark Bay   |-25.020975  |113.336883 |DNote24-9763|4013447 |                                     |yes|
 |DPIRD_Fisheries_June2024|KLS1708       |Aipysurus|foliosquama   |Shark Bay   |-24.926183  |113.2711835|DNote24-9763|4013448 |                                     |yes|
-|DPIRD_Fisheries_June2024|KLS1710       |Aipysurus|foliosquama   |Shark Bay   |-24.9617915 |113.19455  |DNote24-9763|4013450 |
+|DPIRD_Fisheries_June2024|KLS1710       |Aipysurus|foliosquama   |Shark Bay   |-24.9617915 |113.19455  |DNote24-9763|4013450 |                                     |yes|
+
