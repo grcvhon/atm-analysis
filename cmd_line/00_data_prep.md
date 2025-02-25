@@ -48,6 +48,8 @@ These commands will print out row information of these columns: `SampleID`, `Gen
 
 ```
 $ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+
+# output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
 SS171013-03 Aipysurus apraefrontalis 2562139 yes
@@ -64,6 +66,25 @@ KLS1468 Aipysurus apraefrontalis 3593397 yes
 KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
+<br>
+Running the command below will produce our desired format for `id_clean` column.
+```
+$ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9} }' atm_genetic_dataset.csv
 
-awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print substr($3,1,1),substr($4,1,2)} }' atm_genetic_dataset.csv | tail -n +2
-
+# output
+AAP-Aaprae 4.12.01-2562202
+AAP-KLS0834-2562130
+AAP-SS171013-03-2562139
+AAP-KLS1484-3517861
+AAP-KLS1486-3517868
+AAP-KLS1490-3517879
+AAP-KLS1435-3593375
+AAP-KLS1436-3593362
+AAP-KLS1454-3593372
+AAP-KLS1457-3593394
+AAP-KLS1459-3593395
+AAP-KLS1465-3593393
+AAP-KLS1468-3593397
+AAP-KLS1477-3593356
+AAP-KLS1509-3593337
+```
