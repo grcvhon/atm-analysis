@@ -33,4 +33,9 @@ This step has been done manually and output is shown below (first 10 entries):
 
 <i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> file not stored in this repo.</i>
 
-#### 2) 
+#### 2) Use `awk` to filter and arrange subset data
+In bash, we use the following commands to further manipulate our subset data:
+* `awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
+* `awk -F, '{ if ($4 ~ /foliosquama/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
+These commands will print out rows under columns 2, 3, 4, 9, and 11 (SampleID, Genus, Species, FASTQ.gz prefix, Use) if column 4 (Species) contains apraefrontalis/foliosquama and if column 11 (Use) says "yes" as in good quality/usable sample.
+
