@@ -31,4 +31,4 @@ This step has been done manually and output (first 10 entries) is shown below:
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2562209 |WA Coast apraefrontalis_contamination|no |
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2584016 |WA Coast apraefrontalis_contamination|no |
 
-<i>NB: For complete output, see: `atm_genetic_dataset.csv`; not stored in this repo.</i>
+<i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> not stored in this repo.</i>
