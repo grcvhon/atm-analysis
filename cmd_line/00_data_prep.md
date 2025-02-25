@@ -15,4 +15,4 @@ This format will improve efficiency when processing samples prior to any analyse
 ---
 
 #### 1) Extract information from DaRTseq master spreadsheet
-First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025)
+First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025). Then we filter for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may be contaminated or other outright low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.
