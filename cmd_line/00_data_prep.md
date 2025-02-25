@@ -67,7 +67,9 @@ KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
+
 Running the command below will produce our desired format for `id_clean` column.
+
 ```
 $ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9} }' atm_genetic_dataset.csv
 
