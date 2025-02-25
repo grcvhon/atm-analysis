@@ -4,9 +4,9 @@ This step involves collating information regarding samples of <i>Aipysurus aprae
 
 The goal of this collation is to generate a sample sheet that has at least the following information: `order`,`dart_id`,`id_clean` (for an example, see https://github.com/a-lud/sea-snake-dart/blob/main/data/sample-sheets/240524-sample-linkage.csv).<br>
 
-* `order` corresponds to the DaRT order number (DNote##-####)
-* `dart_id` corresponds to the .FASTQ.gz prefix
-* `id_clean` for example, Hydrophis major with KLS#1010 and FASTQ prefix 1234567: HMA-KLS1010-1234567
+* `order` corresponds to the DaRT order number (`DNote##-####`)
+* `dart_id` corresponds to the `.FASTQ.gz` prefix
+* `id_clean` for example, Hydrophis major with KLS#1010 and FASTQ prefix 1234567: `HMA-KLS1010-1234567`
 
 This format will improve efficiency when processing samples prior to any analyses and when using the workflow in genomics analyses.<br>
 
