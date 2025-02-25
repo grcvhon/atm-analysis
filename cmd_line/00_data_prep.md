@@ -65,4 +65,5 @@ KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 
+awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print substr($3,1,1),substr($4,1,2)} }' atm_genetic_dataset.csv | tail -n +2
 
