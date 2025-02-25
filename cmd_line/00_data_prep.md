@@ -12,12 +12,12 @@ This format will improve efficiency when processing samples prior to any analyse
 
 <i>NB: Scripts were not used entirely to collate information and some manual manipulation is required (e.g., via MS Excel).</i><br>
 
----
+----
 
 #### 1) Extract information from DaRTseq master spreadsheet
-First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025; not stored in this repo). We then filter for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may be contaminated or other outright low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
+First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025; file not stored in this repo). We then filter, in MS Excel, for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may be contaminated or other outright low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
 
-This step has been done manually and output (first 10 entries) is shown below:
+This step has been done manually and output is shown below (first 10 entries):
 
 |Source                  |SampleID      |Genus    |Species       |Location    |Latitude    |Longitude  |DaRT_set    |FASTQ.gz|Comments                             |Use|
 |------------------------|--------------|---------|--------------|------------|------------|-----------|------------|--------|-------------------------------------|---|
@@ -31,4 +31,6 @@ This step has been done manually and output (first 10 entries) is shown below:
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2562209 |WA Coast apraefrontalis_contamination|no |
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2584016 |WA Coast apraefrontalis_contamination|no |
 
-<i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> not stored in this repo.</i>
+<i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> file not stored in this repo.</i>
+
+#### 2) 
