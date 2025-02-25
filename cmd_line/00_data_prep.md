@@ -6,7 +6,7 @@ The goal of this collation is to generate a sample sheet that has at least the f
 
 * `order` corresponds to the DaRT order number (`DNote##-####`)
 * `dart_id` corresponds to the `.FASTQ.gz` prefix
-* `id_clean` for example, Hydrophis major with KLS#1010 and FASTQ prefix 1234567: `HMA-KLS1010-1234567`
+* `id_clean` for example, <i>Hydrophis major</i> with KLS#1010 and FASTQ prefix 1234567: `HMA-KLS1010-1234567`
 
 This format will improve efficiency when processing samples prior to any analyses and when using the workflow in genomics analyses.<br>
 
