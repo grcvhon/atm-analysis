@@ -37,7 +37,7 @@ This step has been done manually and output is shown below (first 10 entries):
 
 <br>
 
-#### 2) Use `awk` to filter and arrange subset data (`atm_genetic_dataset.csv`)
+#### 2) Use command line to filter and arrange subset data (`atm_genetic_dataset.csv`)
 In bash, we use the following commands to further manipulate our subset data:
 * `awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
 * `awk -F, '{ if ($4 ~ /foliosquama/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
@@ -50,8 +50,9 @@ These commands will print out row information of these columns: `SampleID`, `Gen
 Doing this for <i>A. apraefrontalis</i>:
 
 ```bash
-$ 
-awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv$
+$ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+
+# output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
 SS171013-03 Aipysurus apraefrontalis 2562139 yes
@@ -70,9 +71,9 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
 
-Running the command below will produce our desired format for `id_clean` column.
+We can see <i>A. apraefrontalis</i> samples with RADseq data that we want to use (i.e., yes). We can take the command further to produce our desired format for the `id_clean` column.
 
-```
+```bash
 $ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9} }' atm_genetic_dataset.csv
 
 # output
