@@ -2,7 +2,8 @@
 
 This step involves collating information regarding samples of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> that have available RADseq data (i.e., available in Phoenix HPC:/uofaresstor/sanders_lab/).<br>
 
-The goal of this collation is to generate a sample sheet that has at least the following information: `DaRTseq order number`,`DaRT ID`,`ID clean` (for an example, see https://github.com/a-lud/sea-snake-dart/blob/main/data/sample-sheets/240524-sample-linkage.csv).
+The goal of this collation is to generate a sample sheet that has at least the following information: `DaRTseq order number`,`DaRT ID`,`ID clean` (for an example, see https://github.com/a-lud/sea-snake-dart/blob/main/data/sample-sheets/240524-sample-linkage.csv).<br>
+
 This format will improve efficiency when processing samples prior to any analyses and when using the workflow in genomics analyses.<br>
 
 <i>NB: Scripts were not used entirely to collate information and some manual manipulation is required (e.g., via MS Excel).</i><br>
