@@ -51,7 +51,9 @@ Doing this for <i>A. apraefrontalis</i>:
 
 ```bash
 $ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+```
 
+```nginx
 # output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
@@ -71,13 +73,13 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
 
-We can see <i>A. apraefrontalis</i> samples with RADseq data that we want to use (i.e., yes). We can take the command further to produce our desired format for the `id_clean` column.
+From above, we can see <i>A. apraefrontalis</i> samples with RADseq data that we want to use (i.e., yes). We can take the command further to produce our desired format for the `id_clean` column of our sample sheet.
 
 ```bash
-$ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) {print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9} }' atm_genetic_dataset.csv
+$ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { gsub(/ /,"_"); print toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv
 
 # output
-AAP-Aaprae 4.12.01-2562202
+AAP-Aaprae_4.12.01-2562202
 AAP-KLS0834-2562130
 AAP-SS171013-03-2562139
 AAP-KLS1484-3517861
