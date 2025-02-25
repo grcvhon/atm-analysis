@@ -49,8 +49,7 @@ These commands will print out row information of these columns: `SampleID`, `Gen
 
 Doing this for <i>A. apraefrontalis</i>:
 
-```shellscript
-
+```bash
 awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
@@ -67,7 +66,6 @@ KLS1465 Aipysurus apraefrontalis 3593393 yes
 KLS1468 Aipysurus apraefrontalis 3593397 yes
 KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
-
 ```
 <br>
 
