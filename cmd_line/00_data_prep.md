@@ -45,7 +45,22 @@ These commands will print out row information of these columns: `SampleID`, `Gen
 * if column 11 (`Use`) says "yes" i.e., good quality/usable sample.
 
 ```
-Hello
+$ awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
+KLS0834 Aipysurus apraefrontalis 2562130 yes
+SS171013-03 Aipysurus apraefrontalis 2562139 yes
+KLS1484 Aipysurus apraefrontalis 3517861 yes
+KLS1486 Aipysurus apraefrontalis 3517868 yes
+KLS1490 Aipysurus apraefrontalis 3517879 yes
+KLS1435 Aipysurus apraefrontalis 3593375 yes
+KLS1436 Aipysurus apraefrontalis 3593362 yes
+KLS1454 Aipysurus apraefrontalis 3593372 yes
+KLS1457 Aipysurus apraefrontalis 3593394 yes
+KLS1459 Aipysurus apraefrontalis 3593395 yes
+KLS1465 Aipysurus apraefrontalis 3593393 yes
+KLS1468 Aipysurus apraefrontalis 3593397 yes
+KLS1477 Aipysurus apraefrontalis 3593356 yes
+KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 
 
