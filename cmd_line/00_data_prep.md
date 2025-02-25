@@ -1,6 +1,7 @@
 ### Determine samples of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> with RADseq data
 
-This step involves collating information regarding samples of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> that have available RADseq data (i.e., available in Phoenix HPC:/uofaresstor/sanders_lab/). 
+This step involves collating information regarding samples of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> that have available RADseq data (i.e., available in Phoenix HPC:/uofaresstor/sanders_lab/).<br>
+
 The goal of this collation is to generate a sample sheet that has at least the following information: `DaRTseq order number`,`DaRT ID`,`ID clean` (for an example, see https://github.com/a-lud/sea-snake-dart/blob/main/data/sample-sheets/240524-sample-linkage.csv).
 This format is improves efficiency when using workflow in genomics analyses.<br>
 
