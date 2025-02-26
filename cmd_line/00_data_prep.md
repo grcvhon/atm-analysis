@@ -44,8 +44,7 @@ In bash, we use the following commands to further manipulate our subset data:
 * `awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
 * `awk -F, '{ if ($4 ~ /foliosquama/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
 
-These commands will print out row information of these columns:<br>
-`SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use` - <b>IF</b>: 
+These commands will print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use`; <b>IF</b>: 
 * column 4 (`Species`) contains `apraefrontalis`/`foliosquama`, and 
 * column 11 (`Use`) says "yes" i.e., good quality/usable sample.
 <br>
