@@ -78,7 +78,7 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can expand the command to produce our sample sheet file.
 
 ```bash
-echo "order","dart_id","id_clean" > aap-sample-sheet.csv
+echo "order","dart_id","id_clean" > aap-sample-sheet.csv # generate headers of our file
 awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { gsub(/ /,"_"); print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv >> aap-sample-sheet.csv
 ```
 
