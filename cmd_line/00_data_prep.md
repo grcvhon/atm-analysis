@@ -80,5 +80,23 @@ Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADs
 ```bash
 echo "order","dart_id","id_clean" > aap-sample-sheet.csv
 awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { gsub(/ /,"_"); print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv >> aap-sample-sheet.csv
-less aap-sample-sheet.csv
 ```
+
+Preview our `aap-sample-sheet.csv`:
+|order       |dart_id|id_clean                  |
+|------------|-------|--------------------------|
+|DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|
+|DNote21-6332|2562130|AAP-KLS0834-2562130       |
+|DNote21-6332|2562139|AAP-SS171013-03-2562139   |
+|DNote23-8556|3517861|AAP-KLS1484-3517861       |
+|DNote23-8556|3517868|AAP-KLS1486-3517868       |
+|DNote23-8556|3517879|AAP-KLS1490-3517879       |
+|Dnote23-8773|3593375|AAP-KLS1435-3593375       |
+|Dnote23-8773|3593362|AAP-KLS1436-3593362       |
+|Dnote23-8773|3593372|AAP-KLS1454-3593372       |
+|Dnote23-8773|3593394|AAP-KLS1457-3593394       |
+|Dnote23-8773|3593395|AAP-KLS1459-3593395       |
+|Dnote23-8773|3593393|AAP-KLS1465-3593393       |
+|Dnote23-8773|3593397|AAP-KLS1468-3593397       |
+|Dnote23-8773|3593356|AAP-KLS1477-3593356       |
+|Dnote23-8773|3593337|AAP-KLS1509-3593337       |
