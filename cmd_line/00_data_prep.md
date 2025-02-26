@@ -39,7 +39,7 @@ This step has been done manually and output is shown below (first 10 entries):
 
 <br>
 
-#### 2) Use command line to filter and arrange subset data (`atm_genetic_dataset.csv`)
+#### 2) Use command line to generate our sample sheet file (`atm_genetic_dataset.csv`)
 In bash, we use the following commands to further manipulate our subset data:
 * `awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
 * `awk -F, '{ if ($4 ~ /foliosquama/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
@@ -75,7 +75,7 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
 
-Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can take the command further to produce our sample sheet file.
+Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can expand the command to produce our sample sheet file.
 
 ```bash
 echo "order","dart_id","id_clean" > aap-sample-sheet.csv
