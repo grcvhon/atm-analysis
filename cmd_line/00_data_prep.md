@@ -45,7 +45,7 @@ From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 colum
 ```bash
 awk -F, '{ if ( $11 ~ /yes/ ) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
 ```
-This command goes: if column 11 (`Use`) says "yes" i.e., good quality/usable sample, print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz`, `Use`<br>
+This command goes: if column 11 (`Use`) is "yes", print out information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz`, `Use`<br>
 ```
 # output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
