@@ -138,35 +138,47 @@ The commands above copied the `targets_*.csv` file from the relevant `DaRT-DNote
 
 Now we can use our existing `sample-sheet.csv` and the `targets_*.csv` files we downloaded to get the relevant `barcode9l` and `barcode` information.<br>
 
-We use the following commands to do so:
-* For order ID `6332`: 
+We use the following command to do so:
 ```bash
-for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./6332/*.csv; done
+echo targetid,barcode9l,barcode > barcodes.csv
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); 
+    do awk -F, '$1==dart_id {print $1","$15","$16}' dart_id="$i" ./*/*.csv; 
+        done >> barcodes.csv
 ```
-* For order ID `8556`: 
-```bash
-for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8556/*.csv; done
-```
-* For order ID `8773`: 
-```bash
-for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8773/*.csv; done
-```
-* For order ID `9763`: 
-```bash
-for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./9763/*.csv; done
-```
+The first part of the command just above lists the values in `dart_id` column of our `sample-sheet.csv` file. 
+The next part of the command uses this list by going through each value and finding a match in the first column of the downloaded `targets_*.csv` files. 
+It searches through each of the `targets_*.csv` files in each of the order directories and, if it finds a match, prints the `targetid` (i.e., `dart_id`), the `barcode9l`, and `barcode` columns (columns 15 and 16 in `targets_*.csv`).<br>
+The output is then written as `barcodes.csv`
 
-Preview the output of the first one:
-```
-# output
-2562202,TACCGCTCCATATTG,TACCGCTCCATAT
-2562130,ACACTTCGTTCTTGC,ACACTTCGTTCT
-2562139,TCTTCCTAGGTTGCA,TCTTCCTAGGT
-2562140,CTCTCTCTCTAGTAT,CTCTCTCTCTAGTA
-2562249,CTTGTGTGTATGCAG,CTTGTGTGTA
-2571080,TTGGTGCGGCGGATT,TTGGTGCGGCGGAT
-2562167,ATGAGTAGTCTAATG,ATGAGTAGTCTAA
-```
+Preview `barcodes.csv`:
+|targetid|barcode9l      |barcode       |
+|--------|---------------|--------------|
+|2562202 |TACCGCTCCATATTG|TACCGCTCCATAT |
+|2562130 |ACACTTCGTTCTTGC|ACACTTCGTTCT  |
+|2562139 |TCTTCCTAGGTTGCA|TCTTCCTAGGT   |
+|2562140 |CTCTCTCTCTAGTAT|CTCTCTCTCTAGTA|
+|2562249 |CTTGTGTGTATGCAG|CTTGTGTGTA    |
+|2571080 |TTGGTGCGGCGGATT|TTGGTGCGGCGGAT|
+|2562167 |ATGAGTAGTCTAATG|ATGAGTAGTCTAA |
+|3517861 |TCGCATAGTGTGCAG|TCGCATAGTG    |
+|3517868 |TGCGTATAGGTGCAG|TGCGTATAGG    |
+|3517879 |AGGATACATCCTTGC|AGGATACATCCT  |
+|3593375 |TATGCTCCACATTGC|TATGCTCCACAT  |
+|3593362 |TCTACATCCGCTCTT|TCTACATCCGCTCT|
+|3593372 |CCGTGAGGTCACCGT|CCGTGAGGTCACCG|
+|3593394 |GCCTGCTATGCGGAT|GCCTGCTATGCGGA|
+|3593395 |TACAATGTGCGTAAT|TACAATGTGCGTAA|
+|3593393 |ATCTCCACCTATTGC|ATCTCCACCTAT  |
+|3593397 |CGGACTTCTCGGAGT|CGGACTTCTCGGAG|
+|3593356 |AATGTGCCGTCGCTT|AATGTGCCGTCGCT|
+|3593337 |TATACAGAGGCTTAT|TATACAGAGGCTTA|
+|3593377 |GTCATGGAGTGTGTG|GTCATGGAGTGTG |
+|4013436 |ATTACGTCAGTATTG|ATTACGTCAGTAT |
+|4013440 |GTCTTAGCAATGCAG|GTCTTAGCAA    |
+|4013441 |GAACCGAGGTATGCA|GAACCGAGGTA   |
+|4013442 |AAGATCAGGAATGCA|AAGATCAGGAA   |
+|4013447 |CTCTAACTATGAGTG|CTCTAACTATGAG |
+|4013448 |AACGATGACGTGCAG|AACGATGACG    |
+|4013450 |GTGCAGTTCCATGCA|GTGCAGTTCCA   |
 
-for i in 2562202; do awk -F, '$1 ==col1 {print $2}' col1="$i" targets_HLCFMDRXY_1.csv; done
-for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1,$15","$16}' targetid="$i" ./6332/targets_HLCFMDRXY_1.csv; done
+<i>NB: I included the `targetid` so I can compare it with the `dart_id` from the `sample-sheet.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample. We can check that using this command:</i> `paste -d, sample-sheet.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` <i>which prints "yes" if `dart_id` ($2) in `sample-sheet.csv` matches with `targetid` in `barcodes.csv` ($4).</i>
