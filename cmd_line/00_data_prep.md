@@ -40,9 +40,7 @@ This step has been done manually and output is shown below (first 10 entries):
 <br>
 
 #### 2) Use command line to initialise our sample sheet file
-From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 columns of our sample sheet in the desired format.
-<br>
-Using the following command, let us extract the samples that have a "yes" (i.e., usable) in the `Use` column of our `atm_genetic_dataset.csv`.
+From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 columns of our sample sheet in the desired format. Using the following command, let us extract the samples that have a "yes" (i.e., usable) in the `Use` column of our `atm_genetic_dataset.csv`.
 <br>
 ```bash
 awk -F, '{ if ( $11 ~ /yes/ ) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
@@ -78,9 +76,8 @@ KLS1707 Aipysurus foliosquama 4013447 yes
 KLS1708 Aipysurus foliosquama 4013448 yes
 KLS1710 Aipysurus foliosquama 4013450 yes
 ```
-<br>
 
-Knowing that the command takes the samples that we want, we can expand the command to produce the first three columns of our sample sheet file.
+Knowing that the command takes the samples we want, we can expand the command to produce the first 3 columns of our sample sheet file.
 
 ```bash
 echo "order","dart_id","id_clean" > sample-sheet.csv
@@ -117,6 +114,8 @@ Preview our `sample-sheet.csv`:
 |DNote24-9763|4013447|AFO-KLS1707-4013447       |
 |DNote24-9763|4013448|AFO-KLS1708-4013448       |
 |DNote24-9763|4013450|AFO-KLS1710-4013450       |
+
+<br>
 
 #### 3) Extract `barcode9l`,`barcode` information from DaRTseq targets file
 Each DaRTseq order comes with a `targets_*.csv` file which includes information about the specific run. This file contains `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine to get our raw sequences into usable form. We need to extract sample-specific information from these columns and then add them to our species 
