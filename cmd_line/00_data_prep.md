@@ -139,10 +139,22 @@ The commands above copied the `targets_*.csv` file from the relevant `DaRT-DNote
 Now we can use our existing `sample-sheet.csv` and the `targets_*.csv` files we downloaded to get the relevant `barcode9l` and `barcode` information.<br>
 
 We use the following commands to do so:
-* For order ID `6332`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./6332/*.csv; done`
-* For order ID `8556`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8556/*.csv; done`
-* For order ID `8773`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8773/*.csv; done`
-* For order ID `9763`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./9763/*.csv; done`
+* For order ID `6332`: 
+```bash
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./6332/*.csv; done
+```
+* For order ID `8556`: 
+```bash
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8556/*.csv; done
+```
+* For order ID `8773`: 
+```bash
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8773/*.csv; done
+```
+* For order ID `9763`: 
+```bash
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./9763/*.csv; done
+```
 
 Preview the output of the first one:
 ```
