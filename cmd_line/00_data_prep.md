@@ -101,7 +101,7 @@ Preview our `aap-sample-sheet.csv`:
 |Dnote23-8773|3593356|AAP-KLS1477-3593356       |
 |Dnote23-8773|3593337|AAP-KLS1509-3593337       |
 
-Similarly, this file can be generated for <i>A. foliosquama</i> by modifying the command (i.e., `($4~ /foliosquama/`...).<br>
+Similarly, this file can be generated for <i>A. foliosquama</i> by modifying the command (i.e., `($4 ~ /foliosquama/`...).<br>
 <i>NB: This step has been done and file was saved as `afo-sample-sheet.csv` (file not stored in this repo).</i><br>
 <br>
 
