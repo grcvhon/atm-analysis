@@ -16,7 +16,7 @@ This format will improve efficiency when processing samples prior to any analyse
 
 ---
 
-#### 1) Extract information from DArTseq master spreadsheet
+### 1) Extract information from DArTseq master spreadsheet
 First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025; file not stored in this repo). We then filter, in MS Excel, for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may have been contaminated or of just low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
 
 We also added columns to contain information on latitude and longitude (if present, obtained from `The_One_Spreadsheet` and other field data sheets; files not stored in this repo), and if sample is usable (yes/no) based on information from `DARTseq_master.xlsx`.<br>
@@ -39,7 +39,7 @@ This step has been done manually and output is shown below (first 10 entries):
 
 <br>
 
-#### 2) Use command line to initialise our sample sheet file
+### 2) Use command line to initialise our sample sheet file
 From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 columns of our sample sheet in the desired format. Using the following command, let us extract the samples that have a "yes" (i.e., usable) in the `Use` column of our `atm_genetic_dataset.csv`.
 <br>
 ```bash
@@ -120,7 +120,7 @@ Preview our `sample-sheet.csv`:
 We will add the `barcode9l` and `barcode` columns in the next steps.<br>
 <br>
 
-#### 3) Extract `barcode9l`,`barcode` information from DArTseq targets file
+### 3) Extract `barcode9l`,`barcode` information from DArTseq targets file
 Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are additional bases appended specifically to each sample during the RAD sequencing protocol. We need to determine these barcodes to get raw sequences into usable form.
 
 From our `sample-sheet.csv` so far, we know the DArTseq order information. Taking the last for digits we have: `6332`,`8556`,`8773`, and `9763`. We will look into the targets file of these orders which are stored in `PhoenixHPC:/uofaresstor/sanders_lab/sequencing-datasets/radseq/`.<br>
