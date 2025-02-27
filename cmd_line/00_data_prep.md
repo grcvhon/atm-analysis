@@ -121,13 +121,11 @@ We will add the `barcode9l` and `barcode` columns in the next steps.<br>
 <br>
 
 #### 3) Extract `barcode9l`,`barcode` information from DArTseq targets file
-Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine in order to get raw sequences into usable form. We need to extract sample-specific `barcode9l` and `barcode` info from these columns and then add them to the `sample-sheet.csv`.<br>
+Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are additional bases appended specifically to each sample during the RAD sequencing protocol. We need to determine these barcodes to get our raw sequences into usable form.
 
-From our `sample-sheet.csv` so far, we know the DArTseq order information. Taking the last for digits we have: `6332`,`8556`,`8773`, and `9763`.<br>
+From our `sample-sheet.csv` so far, we know the DArTseq order information. Taking the last for digits we have: `6332`,`8556`,`8773`, and `9763`. We will look into the targets file of these orders which are stored in `PhoenixHPC:/uofaresstor/sanders_lab/sequencing-datasets/radseq/`.<br>
 
-We can use the `order` and `dart_id` columns to extract the `barcode9l` and `barcode` information from the order's respective `targets_*.csv` file.<br>
-
-To avoid any accidental modifications in the command line (which is irreversible), let us download the specific `target_*.csv` files from the Phoenix HPC into our local machine.<br>
+To avoid any accidental/unwanted modifications to original files in the HPC server line (which are irreversible), let us download the `target_*.csv` files specific to each order from the Phoenix HPC into our local machine.<br>
 
 ```bash
 rsync -at a1235304@p2-log-1.hpc.adelaide.edu.au:/uofaresstor/sanders_lab/sequencing-datasets/radseq/DaRT-DNote21-6332/targets_HLCFMDRXY_1.csv ./6332/
