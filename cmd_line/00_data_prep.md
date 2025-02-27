@@ -134,5 +134,27 @@ rsync -at a1235304@p2-log-1.hpc.adelaide.edu.au:/uofaresstor/sanders_lab/sequenc
 rsync -at a1235304@p2-log-1.hpc.adelaide.edu.au:/uofaresstor/sanders_lab/sequencing-datasets/radseq/DaRT-DNote24-9763/targets_22* ./9763/
 ```
 
+The commands above copied the `targets_*.csv` file from the relevant `DaRT-DNote##-##` directory into individual directories in our local machine corresponding to the last 4 digits of the order ID. (`6332`,`8556`,`8773`,`9763`).<br>
+
+Now we can use our existing `sample-sheet.csv` and the `targets_*.csv` files we downloaded to get the relevant `barcode9l` and `barcode` information.<br>
+
+We use the following commands to do so:
+* For order ID `6332`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./6332/*.csv; done`
+* For order ID `8556`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8556/*.csv; done`
+* For order ID `8773`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./8773/*.csv; done`
+* For order ID `9763`: `for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1","$15","$16}' targetid="$i" ./9763/*.csv; done`
+
+Preview the output of the first one:
+```
+# output
+2562202,TACCGCTCCATATTG,TACCGCTCCATAT
+2562130,ACACTTCGTTCTTGC,ACACTTCGTTCT
+2562139,TCTTCCTAGGTTGCA,TCTTCCTAGGT
+2562140,CTCTCTCTCTAGTAT,CTCTCTCTCTAGTA
+2562249,CTTGTGTGTATGCAG,CTTGTGTGTA
+2571080,TTGGTGCGGCGGATT,TTGGTGCGGCGGAT
+2562167,ATGAGTAGTCTAATG,ATGAGTAGTCTAA
+```
+
 for i in 2562202; do awk -F, '$1 ==col1 {print $2}' col1="$i" targets_HLCFMDRXY_1.csv; done
 for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1,$15","$16}' targetid="$i" ./6332/targets_HLCFMDRXY_1.csv; done
