@@ -121,7 +121,7 @@ We will add the `barcode9l` and `barcode` columns in the next steps.<br>
 <br>
 
 #### 3) Extract `barcode9l`,`barcode` information from DArTseq targets file
-Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are additional bases appended specifically to each sample during the RAD sequencing protocol. We need to determine these barcodes to get our raw sequences into usable form.
+Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are additional bases appended specifically to each sample during the RAD sequencing protocol. We need to determine these barcodes to get raw sequences into usable form.
 
 From our `sample-sheet.csv` so far, we know the DArTseq order information. Taking the last for digits we have: `6332`,`8556`,`8773`, and `9763`. We will look into the targets file of these orders which are stored in `PhoenixHPC:/uofaresstor/sanders_lab/sequencing-datasets/radseq/`.<br>
 
