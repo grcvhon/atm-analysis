@@ -75,7 +75,7 @@ KLS1509 Aipysurus apraefrontalis 3593337 yes
 ```
 <br>
 
-Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can expand the command to produce our sample sheet file.
+Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can expand the command to produce the first three columns of our sample sheet file.
 
 ```bash
 echo "order","dart_id","id_clean" > aap-sample-sheet.csv
@@ -100,3 +100,11 @@ Preview our `aap-sample-sheet.csv`:
 |Dnote23-8773|3593397|AAP-KLS1468-3593397       |
 |Dnote23-8773|3593356|AAP-KLS1477-3593356       |
 |Dnote23-8773|3593337|AAP-KLS1509-3593337       |
+
+Similarly, this file can be generated for <i>A. foliosquama</i> by modifying the command (i.e., "($4~ /foliosquama/...")
+<br>
+
+#### 3) Extract `barcode9l`,`barcode` information from DaRTseq targets file
+Each DaRTseq order comes with a `targets_*.csv` file which includes information about the specific run. This file contains `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine to get our raw sequences into usable form. We need to extract sample-specific information from these columns and then add them to our `aap-sample-sheet.csv` (also `afo-sample-sheet` for <i>A. foliosquama</i>)
+
+for i in 2562202; do awk -F, '$1 ==col1 {print $2}' col1="$i" targets_HLCFMDRXY_1.csv; done
