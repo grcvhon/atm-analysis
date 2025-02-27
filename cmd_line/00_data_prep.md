@@ -187,8 +187,9 @@ Preview `barcodes.csv`:
 I included the `targetid` so I can compare it with the `dart_id` from the `individuals.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample.<br>
 
 To check, this command was used: `paste -d, individuals.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` which prints "yes" if `dart_id` ($2) in `individuals.csv` matches with `targetid` in `barcodes.csv` ($4).<br>
+<br>
 
-### Finalise the `sample-sheet.csv` file in the desired format
+### 4) Finalise the `sample-sheet.csv` file in the desired format
 The goal of this exercise is to generate a sample sheet that follows this format: https://github.com/a-lud/sea-snake-dart/blob/main/data/sample-sheets/240524-sample-linkage.csv<br>
 
 We will now put together the two `.csv` files we have generated: `individuals.csv` and `barcodes.csv`; and finalise our sample sheet.<br>
