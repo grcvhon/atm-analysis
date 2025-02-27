@@ -182,5 +182,5 @@ Preview `barcodes.csv`:
 |4013448 |AACGATGACGTGCAG|AACGATGACG    |
 |4013450 |GTGCAGTTCCATGCA|GTGCAGTTCCA   |
 
-<i>NB: I included the `targetid` so I can compare it with the `dart_id` from the `sample-sheet.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample.<br>
-To check, this command was used:</i> `paste -d, sample-sheet.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` <i>which prints "yes" if `dart_id` ($2) in `sample-sheet.csv` matches with `targetid` in `barcodes.csv` ($4).</i>
+I included the `targetid` so I can compare it with the `dart_id` from the `sample-sheet.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample.<br>
+To check, this command was used:</i> `paste -d, sample-sheet.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` <i>which prints "yes" if `dart_id` ($2) in `sample-sheet.csv` matches with `targetid` in `barcodes.csv` ($4).
