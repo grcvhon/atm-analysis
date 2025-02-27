@@ -45,7 +45,7 @@ From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 colum
 ```bash
 awk -F, '{ if ( $11 ~ /yes/ ) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
 ```
-This command should print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use`; if column 11 (`Use`) says "yes" i.e., good quality/usable sample.
+This command should print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use`; if column 11 (`Use`) says "yes" i.e., good quality/usable sample.<br>
 ```
 # output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
@@ -76,7 +76,6 @@ KLS1707 Aipysurus foliosquama 4013447 yes
 KLS1708 Aipysurus foliosquama 4013448 yes
 KLS1710 Aipysurus foliosquama 4013450 yes
 ```
-
 Knowing that the command takes the samples we want, we can expand the command to produce the first 3 columns of our sample sheet file.
 
 ```bash
@@ -115,6 +114,7 @@ Preview our `sample-sheet.csv`:
 |DNote24-9763|4013448|AFO-KLS1708-4013448       |
 |DNote24-9763|4013450|AFO-KLS1710-4013450       |
 
+<br>
 <br>
 
 #### 3) Extract `barcode9l`,`barcode` information from DaRTseq targets file
