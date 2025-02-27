@@ -146,9 +146,9 @@ for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2);
         done >> barcodes.csv
 ```
 The first part of the command just above lists the values in `dart_id` column of our `sample-sheet.csv` file.<br>
-<br>
+
 The next part uses this list by going through each value and finding a match in the first column of the downloaded `targets_*.csv` files. It searches through each of the `targets_*.csv` files in each of the order directories and, if it finds a match, prints the `targetid` (i.e., `dart_id`), the `barcode9l`, and `barcode` columns (columns 15 and 16 in `targets_*.csv`).<br>
-<br>
+
 The output is then written as `barcodes.csv`
 
 Preview `barcodes.csv`:
@@ -182,4 +182,5 @@ Preview `barcodes.csv`:
 |4013448 |AACGATGACGTGCAG|AACGATGACG    |
 |4013450 |GTGCAGTTCCATGCA|GTGCAGTTCCA   |
 
-<i>NB: I included the `targetid` so I can compare it with the `dart_id` from the `sample-sheet.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample. We can check that using this command:</i> `paste -d, sample-sheet.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` <i>which prints "yes" if `dart_id` ($2) in `sample-sheet.csv` matches with `targetid` in `barcodes.csv` ($4).</i>
+<i>NB: I included the `targetid` so I can compare it with the `dart_id` from the `sample-sheet.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample.<br>
+To check, this command was used:</i> `paste -d, sample-sheet.csv barcodes.csv | awk '{ if ($2 == $4) print "yes" }'` <i>which prints "yes" if `dart_id` ($2) in `sample-sheet.csv` matches with `targetid` in `barcodes.csv` ($4).</i>
