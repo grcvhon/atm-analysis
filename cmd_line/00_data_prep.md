@@ -139,7 +139,10 @@ Now we can use our existing `sample-sheet.csv` and the `targets_*.csv` files we 
 
 We use the following command to do so:
 ```bash
+# generate column headers for `barcodes.csv`
 echo targetid,barcode9l,barcode > barcodes.csv
+
+# main for-loop
 for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); 
     do awk -F, '$1==dart_id {print $1","$15","$16}' dart_id="$i" ./*/*.csv; 
         done >> barcodes.csv
