@@ -36,7 +36,6 @@ This step has been done manually and output is shown below (first 10 entries):
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2584016 |WA Coast apraefrontalis_contamination|no |
 
 <i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> file not stored in this repo.</i>
-
 <br>
 
 ### 2) Use command line to initialise our sample sheet file
