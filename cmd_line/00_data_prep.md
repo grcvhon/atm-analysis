@@ -145,9 +145,10 @@ for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2);
     do awk -F, '$1==dart_id {print $1","$15","$16}' dart_id="$i" ./*/*.csv; 
         done >> barcodes.csv
 ```
-The first part of the command just above lists the values in `dart_id` column of our `sample-sheet.csv` file. 
-The next part of the command uses this list by going through each value and finding a match in the first column of the downloaded `targets_*.csv` files. 
-It searches through each of the `targets_*.csv` files in each of the order directories and, if it finds a match, prints the `targetid` (i.e., `dart_id`), the `barcode9l`, and `barcode` columns (columns 15 and 16 in `targets_*.csv`).<br>
+The first part of the command just above lists the values in `dart_id` column of our `sample-sheet.csv` file.<br>
+<br>
+The next part uses this list by going through each value and finding a match in the first column of the downloaded `targets_*.csv` files. It searches through each of the `targets_*.csv` files in each of the order directories and, if it finds a match, prints the `targetid` (i.e., `dart_id`), the `barcode9l`, and `barcode` columns (columns 15 and 16 in `targets_*.csv`).<br>
+<br>
 The output is then written as `barcodes.csv`
 
 Preview `barcodes.csv`:
