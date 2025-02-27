@@ -39,27 +39,24 @@ This step has been done manually and output is shown below (first 10 entries):
 
 <br>
 
-#### 2) Use command line to generate our sample sheet file (`atm_genetic_dataset.csv`)
-In bash, we use the following commands to further manipulate our subset data:
-* `awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
-* `awk -F, '{ if ($4 ~ /foliosquama/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv`
-
-These commands will print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use`; <b>IF</b>: 
-* column 4 (`Species`) contains `apraefrontalis`/`foliosquama`, and 
-* column 11 (`Use`) says "yes" i.e., good quality/usable sample.
+#### 2) Use command line to initialise our sample sheet file
+From our `atm_genetic_dataset.csv` file, we want to initialise the first 3 columns of our sample sheet in the desired format.
 <br>
-
-Doing this for <i>A. apraefrontalis</i>:
-
+Using the following command, let us extract the samples that have a "yes" (i.e., usable) in the `Use` column of our `atm_genetic_dataset.csv`.
+<br>
 ```bash
-awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
+awk -F, '{ if ( $11 ~ /yes/ ) { print $2, $3, $4, $9, $11 } }' atm_genetic_dataset.csv
 ```
-
+This command should print out row information for these columns: `SampleID`, `Genus`, `Species`, `FASTQ.gz prefix`, `Use`; if column 11 (`Use`) says "yes" i.e., good quality/usable sample.
 ```
 # output
 Aaprae 4.12.01 Aipysurus apraefrontalis 2562202 yes
 KLS0834 Aipysurus apraefrontalis 2562130 yes
 SS171013-03 Aipysurus apraefrontalis 2562139 yes
+Afo1 Aipysurus foliosquama 2562140 yes
+Afo8 Aipysurus foliosquama 2562249 yes
+Afo8 Aipysurus foliosquama 2571080 yes
+SS171014-02 Aipysurus foliosquama 2562167 yes
 KLS1484 Aipysurus apraefrontalis 3517861 yes
 KLS1486 Aipysurus apraefrontalis 3517868 yes
 KLS1490 Aipysurus apraefrontalis 3517879 yes
@@ -72,22 +69,34 @@ KLS1465 Aipysurus apraefrontalis 3593393 yes
 KLS1468 Aipysurus apraefrontalis 3593397 yes
 KLS1477 Aipysurus apraefrontalis 3593356 yes
 KLS1509 Aipysurus apraefrontalis 3593337 yes
+KLS1202 Aipysurus foliosquama 3593377 yes
+KLS1696 Aipysurus foliosquama 4013436 yes
+KLS1700 Aipysurus foliosquama 4013440 yes
+KLS1701 Aipysurus foliosquama 4013441 yes
+KLS1702 Aipysurus foliosquama 4013442 yes
+KLS1707 Aipysurus foliosquama 4013447 yes
+KLS1708 Aipysurus foliosquama 4013448 yes
+KLS1710 Aipysurus foliosquama 4013450 yes
 ```
 <br>
 
-Knowing that the command takes the samples of <i>A. apraefrontalis</i> with RADseq data (and their FASTQ.gz prefix) that we want to use (i.e., yes), we can expand the command to produce the first three columns of our sample sheet file.
+Knowing that the command takes the samples that we want, we can expand the command to produce the first three columns of our sample sheet file.
 
 ```bash
-echo "order","dart_id","id_clean" > aap-sample-sheet.csv
-awk -F, '{ if ($4 ~ /apraefrontalis/ && $11 ~ /yes/) { gsub(/ /,"_"); print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv >> aap-sample-sheet.csv
+echo "order","dart_id","id_clean" > sample-sheet.csv
+awk -F, '{ if ( $11 ~ /yes/ ) { gsub(/ /,"_"); print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9 } }' atm_genetic_dataset.csv >> sample-sheet.csv
 ```
 
-Preview our `aap-sample-sheet.csv`:
+Preview our `sample-sheet.csv`:
 |order       |dart_id|id_clean                  |
 |------------|-------|--------------------------|
 |DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|
 |DNote21-6332|2562130|AAP-KLS0834-2562130       |
 |DNote21-6332|2562139|AAP-SS171013-03-2562139   |
+|DNote21-6332|2562140|AFO-Afo1-2562140          |
+|DNote21-6332|2562249|AFO-Afo8-2562249          |
+|DNote21-6332|2571080|AFO-Afo8-2571080          |
+|DNote21-6332|2562167|AFO-SS171014-02-2562167   |
 |DNote23-8556|3517861|AAP-KLS1484-3517861       |
 |DNote23-8556|3517868|AAP-KLS1486-3517868       |
 |DNote23-8556|3517879|AAP-KLS1490-3517879       |
@@ -100,12 +109,16 @@ Preview our `aap-sample-sheet.csv`:
 |Dnote23-8773|3593397|AAP-KLS1468-3593397       |
 |Dnote23-8773|3593356|AAP-KLS1477-3593356       |
 |Dnote23-8773|3593337|AAP-KLS1509-3593337       |
-
-Similarly, this file can be generated for <i>A. foliosquama</i> by modifying the command (i.e., `($4 ~ /foliosquama/`...).<br>
-<i>NB: This step has been done and file was saved as `afo-sample-sheet.csv` (file not stored in this repo).</i><br>
-<br>
+|Dnote23-8773|3593377|AFO-KLS1202-3593377       |
+|DNote24-9763|4013436|AFO-KLS1696-4013436       |
+|DNote24-9763|4013440|AFO-KLS1700-4013440       |
+|DNote24-9763|4013441|AFO-KLS1701-4013441       |
+|DNote24-9763|4013442|AFO-KLS1702-4013442       |
+|DNote24-9763|4013447|AFO-KLS1707-4013447       |
+|DNote24-9763|4013448|AFO-KLS1708-4013448       |
+|DNote24-9763|4013450|AFO-KLS1710-4013450       |
 
 #### 3) Extract `barcode9l`,`barcode` information from DaRTseq targets file
-Each DaRTseq order comes with a `targets_*.csv` file which includes information about the specific run. This file contains `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine to get our raw sequences into usable form. We need to extract sample-specific information from these columns and then add them to our `aap-sample-sheet.csv` (also `afo-sample-sheet` for <i>A. foliosquama</i>)
+Each DaRTseq order comes with a `targets_*.csv` file which includes information about the specific run. This file contains `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine to get our raw sequences into usable form. We need to extract sample-specific information from these columns and then add them to our species 
 
 for i in 2562202; do awk -F, '$1 ==col1 {print $2}' col1="$i" targets_HLCFMDRXY_1.csv; done
