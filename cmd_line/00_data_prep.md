@@ -121,9 +121,9 @@ We will add the `barcode9l` and `barcode` columns in the next steps.<br>
 <br>
 
 #### 3) Extract `barcode9l`,`barcode` information from DArTseq targets file
-Each DArTseq order comes with a `targets_*.csv` file which includes information about the specific run. This file contains `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine in order to get raw sequences into usable form. We need to extract sample-specific `barcode9l` and `barcode` info from these columns and then add them to the `sample-sheet.csv`.<br>
+Each DArTseq order comes with a `targets_*.csv` file. This file has `barcode9l` and `barcode` columns which are adapter sequences/cut sites we need to determine in order to get raw sequences into usable form. We need to extract sample-specific `barcode9l` and `barcode` info from these columns and then add them to the `sample-sheet.csv`.<br>
 
-From our `sample-sheet.csv` so far, we know the DArTseq order information. In this case, taking the last for digits: `6332`,`8556`,`8773`, and `9763`.<br>
+From our `sample-sheet.csv` so far, we know the DArTseq order information. Taking the last for digits we have: `6332`,`8556`,`8773`, and `9763`.<br>
 
 We can use the `order` and `dart_id` columns to extract the `barcode9l` and `barcode` information from the order's respective `targets_*.csv` file.<br>
 
@@ -137,3 +137,4 @@ rsync -at a1235304@p2-log-1.hpc.adelaide.edu.au:/uofaresstor/sanders_lab/sequenc
 ```
 
 for i in 2562202; do awk -F, '$1 ==col1 {print $2}' col1="$i" targets_HLCFMDRXY_1.csv; done
+for i in $(awk -F, '{print $2}' sample-sheet.csv | tail -n +2); do awk -F, '$1==targetid {print $1,$15","$16}' targetid="$i" ./6332/targets_HLCFMDRXY_1.csv; done
