@@ -5,7 +5,13 @@
 
 *.Rproj
 
-data/
+
+data/predictor-variables/
+data/shapefiles/
+data/spreadsheets/*
+data/*.tiff
+!data/spreadsheets/dart
+
 misc/
 rosm.cache/
 markdown/*.html
