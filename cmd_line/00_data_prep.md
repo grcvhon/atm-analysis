@@ -17,7 +17,7 @@ This format will improve efficiency when processing samples prior to any analyse
 ---
 
 ### 1) Extract information from DArTseq master spreadsheet
-First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025; file not stored in this repo). We then filter, in MS Excel, for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may have been contaminated or of just low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
+First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025). We then filter, in MS Excel, for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may have been contaminated or of just low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
 
 We also added columns to contain information on latitude and longitude (if present, obtained from `The_One_Spreadsheet` and other field data sheets; files not stored in this repo), and if sample is usable (yes/no) based on information from `DARTseq_master.xlsx`.<br>
 
@@ -35,7 +35,7 @@ This spreadsheet was assembled manually and output is shown below (first 10 entr
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2562209 |WA Coast apraefrontalis_contamination|no |
 |PreATM_sampling         |KLS1001       |Aipysurus|foliosquama   |            |            |           |DNote21-6332|2584016 |WA Coast apraefrontalis_contamination|no |
 
-<i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`;<i> file not stored in this repo.</i>
+<i>NB: For complete output, see: </i>`atm_genetic_dataset.csv`.
 <br>
 
 ### 2) Use command line to initialise our sample sheet file
@@ -231,6 +231,6 @@ Preview `sample-sheet.csv`:
 |DNote24-9763|4013448|AFO-KLS1708-4013448       |AACGATGACGTGCAG|AACGATGACG    |Aipysurus  |foliosquama |113.2711835 |-24.926183  |Shark_Bay   |
 |DNote24-9763|4013450|AFO-KLS1710-4013450       |GTGCAGTTCCATGCA|GTGCAGTTCCA   |Aipysurus  |foliosquama |113.19455   |-24.9617915 |Shark_Bay   |
 
-
-
+We can use now use this file as input in genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main)<br>
+<br>
 
