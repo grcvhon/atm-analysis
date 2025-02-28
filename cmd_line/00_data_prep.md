@@ -195,10 +195,40 @@ The goal of this exercise is to generate a sample sheet that follows this format
 
 We will now put together the two `.csv` files we have generated: `individuals.csv` and `barcodes.csv`; and finalise our sample sheet.<br>
 
-We can also add the rest of the information from our `atm_genetic_dataset.csv` (e.g., latitude, longitude, etc.)
+```bash
+paste -d, individuals.csv barcodes.csv | awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-sheet.csv
+```
 
-
-
+Preview `sample-sheet.csv`:
+|order       |dart_id|id_clean                  |barcode9l|barcode       |Genus      |Species     |Longitude   |Latitude    |Locality    |
+|------------|-------|--------------------------|---------|--------------|-----------|------------|------------|------------|------------|
+|DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|TACCGCTCCATATTG|TACCGCTCCATAT |Aipysurus  |apraefrontalis|123.04166   |-12.24174549|Ashmore_Reef|
+|DNote21-6332|2562130|AAP-KLS0834-2562130       |ACACTTCGTTCTTGC|ACACTTCGTTCT  |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|DNote21-6332|2562139|AAP-SS171013-03-2562139   |TCTTCCTAGGTTGCA|TCTTCCTAGGT   |Aipysurus  |apraefrontalis|118.220874  |-19.6889305 |Pilbara     |
+|DNote21-6332|2562140|AFO-Afo1-2562140          |CTCTCTCTCTAGTAT|CTCTCTCTCTAGTA|Aipysurus  |foliosquama |123.04166   |-12.24174549|Ashmore_Reef|
+|DNote21-6332|2562249|AFO-Afo8-2562249          |CTTGTGTGTATGCAG|CTTGTGTGTA    |Aipysurus  |foliosquama |123.04166   |-12.24174549|Ashmore_Reef|
+|DNote21-6332|2571080|AFO-Afo8-2571080          |TTGGTGCGGCGGATT|TTGGTGCGGCGGAT|Aipysurus  |foliosquama |123.04166   |-12.24174549|Ashmore_Reef|
+|DNote21-6332|2562167|AFO-SS171014-02-2562167   |ATGAGTAGTCTAATG|ATGAGTAGTCTAA |Aipysurus  |foliosquama |117.8305545 |-19.709453  |Pilbara     |
+|DNote23-8556|3517861|AAP-KLS1484-3517861       |TCGCATAGTGTGCAG|TCGCATAGTG    |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|DNote23-8556|3517868|AAP-KLS1486-3517868       |TGCGTATAGGTGCAG|TGCGTATAGG    |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|DNote23-8556|3517879|AAP-KLS1490-3517879       |AGGATACATCCTTGC|AGGATACATCCT  |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|Dnote23-8773|3593375|AAP-KLS1435-3593375       |TATGCTCCACATTGC|TATGCTCCACAT  |Aipysurus  |apraefrontalis|114.20917   |-22.10533   |Exmouth_Gulf|
+|Dnote23-8773|3593362|AAP-KLS1436-3593362       |TCTACATCCGCTCTT|TCTACATCCGCTCT|Aipysurus  |apraefrontalis|114.321     |-22.120333  |Exmouth_Gulf|
+|Dnote23-8773|3593372|AAP-KLS1454-3593372       |CCGTGAGGTCACCGT|CCGTGAGGTCACCG|Aipysurus  |apraefrontalis|114.134833  |-22.1245    |Exmouth_Gulf|
+|Dnote23-8773|3593394|AAP-KLS1457-3593394       |GCCTGCTATGCGGAT|GCCTGCTATGCGGA|Aipysurus  |apraefrontalis|114.13483   |-22.1245    |Exmouth_Gulf|
+|Dnote23-8773|3593395|AAP-KLS1459-3593395       |TACAATGTGCGTAAT|TACAATGTGCGTAA|Aipysurus  |apraefrontalis|114.2005    |-22.134833  |Exmouth_Gulf|
+|Dnote23-8773|3593393|AAP-KLS1465-3593393       |ATCTCCACCTATTGC|ATCTCCACCTAT  |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|Dnote23-8773|3593397|AAP-KLS1468-3593397       |CGGACTTCTCGGAGT|CGGACTTCTCGGAG|Aipysurus  |apraefrontalis|114.246667  |-22.090333  |Exmouth_Gulf|
+|Dnote23-8773|3593356|AAP-KLS1477-3593356       |AATGTGCCGTCGCTT|AATGTGCCGTCGCT|Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|Dnote23-8773|3593337|AAP-KLS1509-3593337       |TATACAGAGGCTTAT|TATACAGAGGCTTA|Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
+|Dnote23-8773|3593377|AFO-KLS1202-3593377       |GTCATGGAGTGTGTG|GTCATGGAGTGTG |Aipysurus  |foliosquama |118.288886  |-20.050212  |Pilbara     |
+|DNote24-9763|4013436|AFO-KLS1696-4013436       |ATTACGTCAGTATTG|ATTACGTCAGTAT |Aipysurus  |foliosquama |113.4100415 |-25.24705   |Shark_Bay   |
+|DNote24-9763|4013440|AFO-KLS1700-4013440       |GTCTTAGCAATGCAG|GTCTTAGCAA    |Aipysurus  |foliosquama |113.1631085 |-25.623425  |Shark_Bay   |
+|DNote24-9763|4013441|AFO-KLS1701-4013441       |GAACCGAGGTATGCA|GAACCGAGGTA   |Aipysurus  |foliosquama |113.1631085 |-25.623425  |Shark_Bay   |
+|DNote24-9763|4013442|AFO-KLS1702-4013442       |AAGATCAGGAATGCA|AAGATCAGGAA   |Aipysurus  |foliosquama |113.2126165 |-25.5985585 |Shark_Bay   |
+|DNote24-9763|4013447|AFO-KLS1707-4013447       |CTCTAACTATGAGTG|CTCTAACTATGAG |Aipysurus  |foliosquama |113.336883  |-25.020975  |Shark_Bay   |
+|DNote24-9763|4013448|AFO-KLS1708-4013448       |AACGATGACGTGCAG|AACGATGACG    |Aipysurus  |foliosquama |113.2711835 |-24.926183  |Shark_Bay   |
+|DNote24-9763|4013450|AFO-KLS1710-4013450       |GTGCAGTTCCATGCA|GTGCAGTTCCA   |Aipysurus  |foliosquama |113.19455   |-24.9617915 |Shark_Bay   |
 
 
 
