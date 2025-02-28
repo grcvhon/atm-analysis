@@ -1,0 +1,46 @@
+﻿Source,SampleID,Genus,Species,Location,Latitude,Longitude,DaRT_set,FASTQ.gz,Comments,Use
+PreATM_sampling,Aaprae 4.12.01,Aipysurus,apraefrontalis,Ashmore Reef,-12.24174549,123.04166,DNote21-6332,2562202,Coordinates approximate,yes
+PreATM_sampling,KLS0834,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,DNote21-6332,2562130,Coordinates approximate,yes
+PreATM_sampling,SAM R68142,Aipysurus,apraefrontalis,,,,DNote21-6332,2571051,Low quality DaRT,no
+PreATM_sampling,SS171013-03,Aipysurus,apraefrontalis,Pilbara,-19.6889305,118.220874,DNote21-6332,2562139,,yes
+PreATM_sampling,Afo1,Aipysurus,foliosquama,Ashmore Reef,-12.24174549,123.04166,DNote21-6332,2562140,Coordinates approximate,yes
+PreATM_sampling,Afo8,Aipysurus,foliosquama,Ashmore Reef,-12.24174549,123.04166,DNote21-6332,2562249,Coordinates approximate,yes
+PreATM_sampling,Afo8,Aipysurus,foliosquama,Ashmore Reef,-12.24174549,123.04166,DNote21-6332,2571080,Coordinates approximate,yes
+PreATM_sampling,KLS1001,Aipysurus,foliosquama,,,,DNote21-6332,2562209,WA Coast apraefrontalis_contamination,no
+PreATM_sampling,KLS1001,Aipysurus,foliosquama,,,,DNote21-6332,2584016,WA Coast apraefrontalis_contamination,no
+PreATM_sampling,KLS1006,Aipysurus,foliosquama,,,,DNote21-6332,2562240,Failed DaRT,no
+PreATM_sampling,SS171014-02,Aipysurus,foliosquama,Pilbara,-19.709453,117.8305545,DNote21-6332,2562167,,yes
+PreATM_sampling,KLS1484,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,DNote23-8556,3517861,Coordinates approximate,yes
+PreATM_sampling,KLS1486,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,DNote23-8556,3517868,Coordinates approximate,yes
+PreATM_sampling,KLS1490,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,DNote23-8556,3517879,Coordinates approximate,yes
+PreATM_sampling,KLS1435,Aipysurus,apraefrontalis,Exmouth Gulf,-22.10533,114.20917,Dnote23-8773,3593375,,yes
+PreATM_sampling,KLS1436,Aipysurus,apraefrontalis,Exmouth Gulf,-22.120333,114.321,Dnote23-8773,3593362,,yes
+PreATM_sampling,KLS1454,Aipysurus,apraefrontalis,Exmouth Gulf,-22.1245,114.134833,Dnote23-8773,3593372,,yes
+PreATM_sampling,KLS1457,Aipysurus,apraefrontalis,Exmouth Gulf,-22.1245,114.13483,Dnote23-8773,3593394,,yes
+PreATM_sampling,KLS1459,Aipysurus,apraefrontalis,Exmouth Gulf,-22.134833,114.2005,Dnote23-8773,3593395,,yes
+PreATM_sampling,KLS1465,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,Dnote23-8773,3593393,Coordinates approximate,yes
+PreATM_sampling,KLS1468,Aipysurus,apraefrontalis,Exmouth Gulf,-22.090333,114.246667,Dnote23-8773,3593397,,yes
+PreATM_sampling,KLS1477,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,Dnote23-8773,3593356,Coordinates approximate,yes
+PreATM_sampling,KLS1509,Aipysurus,apraefrontalis,Exmouth Gulf,-22.166666,114.2999988,Dnote23-8773,3593337,Coordinates approximate,yes
+PreATM_sampling,KLS1202,Aipysurus,foliosquama,Pilbara,-20.050212,118.288886,Dnote23-8773,3593377,,yes
+DPIRD_Fisheries_June2024,KLS1696,Aipysurus,foliosquama,Shark Bay,-25.24705,113.4100415,DNote24-9763,4013436,,yes
+DPIRD_Fisheries_June2024,KLS1700,Aipysurus,foliosquama,Shark Bay,-25.623425,113.1631085,DNote24-9763,4013440,,yes
+DPIRD_Fisheries_June2024,KLS1701,Aipysurus,foliosquama,Shark Bay,-25.623425,113.1631085,DNote24-9763,4013441,,yes
+DPIRD_Fisheries_June2024,KLS1702,Aipysurus,foliosquama,Shark Bay,-25.5985585,113.2126165,DNote24-9763,4013442,,yes
+DPIRD_Fisheries_June2024,KLS1707,Aipysurus,foliosquama,Shark Bay,-25.020975,113.336883,DNote24-9763,4013447,,yes
+DPIRD_Fisheries_June2024,KLS1708,Aipysurus,foliosquama,Shark Bay,-24.926183,113.2711835,DNote24-9763,4013448,,yes
+DPIRD_Fisheries_June2024,KLS1710,Aipysurus,foliosquama,Shark Bay,-24.9617915,113.19455,DNote24-9763,4013450,,yes
+DPIRD_Fisheries_Sept2024,KLS1723,Aipysurus,apraefrontalis,Exmouth Gulf,-22.004825,114.357258,,,,
+DPIRD_Fisheries_Nov2024,KLS1815,Aipysurus,foliosquama,Shark Bay,-25.4530085,113.5916085,,,,
+DPIRD_Fisheries_Nov2024,KLS1823,Aipysurus,foliosquama,Shark Bay,-25.6964835,113.1516415,,,,
+DPIRD_Fisheries_Nov2024,KLS1826,Aipysurus,foliosquama,Shark Bay,-25.57255,113.2212835,,,,
+DPIRD_Fisheries_Nov2024,KLS1827,Aipysurus,foliosquama,Shark Bay,-25.4787335,113.4141415,,,,
+DPIRD_Fisheries_Nov2024,KLS1828,Aipysurus,foliosquama,Shark Bay,-25.39095,113.4123665,,,,
+DPIRD_Fisheries_Nov2024,KLS1830,Aipysurus,foliosquama,Shark Bay,-25.391633,113.439475,,,,
+DPIRD_Fisheries_Nov2024,KLS1831,Aipysurus,foliosquama,Shark Bay,-25.2487085,113.449675,,,,
+DPIRD_Fisheries_Nov2024,KLS1835,Aipysurus,foliosquama,Shark Bay,-24.930208,113.29775,,,,
+DPIRD_Fisheries_Nov2024,KLS1836,Aipysurus,foliosquama,Shark Bay,-24.9264085,113.27085,,,,
+DPIRD_Fisheries_Nov2024,KLS1837,Aipysurus,foliosquama,Shark Bay,-24.931383,113.249217,,,,
+DPIRD_Fisheries_Nov2024,KLS1838,Aipysurus,foliosquama,Shark Bay,-24.96325,113.1951585,,,,
+DPIRD_Fisheries_Nov2024,KLS1840,Aipysurus,foliosquama,Shark Bay,-24.797667,113.2356,,,,
+DPIRD_Fisheries_Nov2024,KLS1841,Aipysurus,foliosquama,Shark Bay,-24.8219,113.36405,,,,
