@@ -196,7 +196,8 @@ The goal of this exercise is to generate a sample sheet that follows this format
 We will now put together the two `.csv` files we have generated: `individuals.csv` and `barcodes.csv`; and finalise our sample sheet.<br>
 
 ```bash
-paste -d, individuals.csv barcodes.csv | awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-sheet.csv
+paste -d, individuals.csv barcodes.csv |\
+awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-sheet.csv
 ```
 
 Preview `sample-sheet.csv`:
