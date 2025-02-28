@@ -233,5 +233,5 @@ Preview `sample-sheet.csv`:
 
 We can use now use this file as input in genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main)<br>
 <br>
-
+---
 <i>Last updated: 28 February 2025</i>
