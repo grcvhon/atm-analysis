@@ -1,4 +1,4 @@
-### Setting up `pixi` package manager
+## Setting up `pixi` package manager
 This document describes steps for setting up `pixi` in your Phoenix HPC account (instructions from Alastair Ludington)
 <br>
 From https://github.com/prefix-dev/pixi:<br>
