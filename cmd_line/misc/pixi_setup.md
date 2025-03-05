@@ -11,7 +11,7 @@ The main benefit of using `pixi` is the freedom to call commands from conda pack
 
 ---
 
-#### Set-up
+### Set-up
 
 ##### 1) Install `pixi` as per website
 ```bash
@@ -46,8 +46,8 @@ To apply changes, run `source .bashrc` or restart terminal.
 
 ---
 
-#### Install a conda package globally
-Here is an example on how to install a conda package globally with pixi.
+### Install a conda package globally
+Here is an example on how to install a conda package globally with `pixi`.
 ```bash
 pixi global install fastp
 ```
