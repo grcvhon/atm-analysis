@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 #SBATCH --job-name=qc
 #SBATCH -p icelake
 #SBATCH -N 1
@@ -7,11 +8,11 @@
 #SBATCH -a 1-497%25
 #SBATCH --time=02:00:00
 #SBATCH --mem=60GB
-#SBATCH -o ./joblogs/qc/%x_%a_%A_%j.log
+#SBATCH -o /hpcfs/users/a1235304/atm/slurm/02_qc_log/%x_%a_%A_%j.log
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=alastair.ludington@adelaide.edu.au
+#SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
-DIR='/home/a1645424/hpcfs/analysis/shannon'
+DIR='/hpcfs/users/a1235304/atm'
 FQDIR="${DIR}/data/fastq"
 OUTDIR="${DIR}/results/qc"
 MULTIQC="${OUTDIR}/multiqc"
@@ -27,13 +28,13 @@ SEQ_RUN=$(grep --no-filename "${BN}" ${DIR}/data/sample-sheets/*.csv | head -n 1
 echo "SAMPLE: ${BN} RUN: ${SEQ_RUN}"
 mkdir -p "${OUTDIR}" "${MULTIQC}" "${OUTDIR}/fastp" "${OUTDIR}/kraken2" "${OUTDIR}/bbduk"
 
-source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
+#source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
 
 # Newer DaRT runs remove barcodes and adapter content
-micromamba activate bbmap
+#micromamba activate bbmap
 if [[ "${SEQ_RUN}" =~ ("DNote23-8392"|"DNote23-8556"|"DNote23-8773"|"DNote24-9763") ]]; then
   # DON'T use hard filter to trim adapter (already removed)
-  bbduk.sh \
+  bbduk \
     --in="${FQ}" \
     --out="${OUTDIR}/bbduk/${BN}.fastq.gz" \
     --ref="${UNIVEC}" \
@@ -42,10 +43,10 @@ if [[ "${SEQ_RUN}" =~ ("DNote23-8392"|"DNote23-8556"|"DNote23-8773"|"DNote24-976
     --threads="${SLURM_CPUS_PER_TASK}" 2> "${MULTIQC}/${BN}.bbduk.log"
 else
   # Get total length of barcode and cut site overhang
-  B9l=$(grep "${BN}" ${DIR}/data/sample-sheets/*.csv | head -n 1 | cut -d',' -f 4)
+  B9l=$(grep "${BN}" ${DIR}/data/sample-sheet.csv | head -n 1 | cut -d',' -f 4)
   LENGTH=$(echo -n "${B9l}" | wc -c)
 
-  bbduk.sh \
+  bbduk \
     --in="${FQ}" \
     --out="${OUTDIR}/bbduk/${BN}.fastq.gz" \
     --ref="${UNIVEC}" \
@@ -54,10 +55,10 @@ else
     --ftl="${LENGTH}" \
     --threads="${SLURM_CPUS_PER_TASK}" 2> "${MULTIQC}/${BN}.bbduk.log"
 fi
-micromamba deactivate
+#micromamba deactivate
 
 # Kraken
-micromamba activate kraken2
+#micromamba activate kraken2
 kraken2 \
   --db "${KDB}" \
   --threads "${SLURM_CPUS_PER_TASK}" \
@@ -68,7 +69,7 @@ kraken2 \
   "${OUTDIR}/bbduk/${BN}.fastq.gz"
 pigz -p "${SLURM_CPUS_PER_TASK}" "${OUTDIR}/kraken2/${BN}-unclassified.fastq"
 
-micromamba activate fastp
+#micromamba activate fastp
 fastp \
   -i "${OUTDIR}/kraken2/${BN}-unclassified.fastq.gz" \
   -o "${OUTDIR}/fastp/${BN}.fastq.gz" \
@@ -76,7 +77,7 @@ fastp \
   --length_required 25 \
   --thread "${SLURM_CPUS_PER_TASK}" \
   --json "${MULTIQC}/${BN}.fastp.json"
-micromamba deactivate
+#micromamba deactivate
 
 if [[ -f "${OUTDIR}/bbduk/${BN}.fastq.gz" ]]; then rm -v "${OUTDIR}/bbduk/${BN}.fastq.gz"; fi
 if [[ -f "${OUTDIR}/kraken2/${BN}-unclassified.fastq.gz" ]]; then rm -v "${OUTDIR}/kraken2/${BN}-unclassified.fastq.gz"; fi
