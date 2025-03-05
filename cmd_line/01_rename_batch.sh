@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+#SBATCH -p 01_rename_batch
+#SBATCH -N 1
+#SBATCH -n 16
+#SBATCH --time=72:00:00
+#SBATCH --mem=32GB
+#SBATCH -o /hpcfs/users/a1235304/atm/slurm/%x_%j.log
+
+# Notification configuration
+#SBATCH --mail-type=BEGIN
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=vhon.garcia@adelaide.edu.au
+
 RESSTORE='/uofaresstor/sanders_lab/sequencing-datasets/radseq'
 FQDIR="/hpcfs/users/${USER}/atm/data/fastq"
 
