@@ -12,6 +12,7 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
+###
 # Before proceeding with the script below...
 #
 # Download the database from:
@@ -20,9 +21,12 @@
 #
 # Run first in command line:
 # wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20241228.tar.gz
-# Then ungzip:
-# gzip -dk k2_standard_20241228.tar.gz
 #
+# Then ungzip:
+# tar -zxvf k2_standard_20241228.tar.gz
+#
+# This command should output the files in a directory with the same name.
+###
 
 DIR='/hpcfs/users/a1235304/atm'
 FQDIR="${DIR}/data/fastq"
