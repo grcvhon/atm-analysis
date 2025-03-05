@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#SBATCH -p 01_rename_batch
+#SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 16
 #SBATCH --time=72:00:00
