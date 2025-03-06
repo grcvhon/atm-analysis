@@ -12,22 +12,6 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
-###
-# Before proceeding with the script below...
-#
-# Download the database from:
-# https://benlangmead.github.io/aws-indexes/k2
-# Under Collection: Standard: copy URL link of `tar.gz` file
-#
-# Run first in command line:
-# wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20241228.tar.gz
-#
-# Then ungzip:
-# tar -zxvf k2_standard_20241228.tar.gz -C k2_standard_20241228
-#
-# This command should output the files in a directory with the same name.
-###
-
 DIR='/hpcfs/users/a1235304/atm'
 FQDIR="${DIR}/data/fastq"
 OUTDIR="${DIR}/results/qc"
