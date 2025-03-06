@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=qc
-#SBATCH -p icelake
+#SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 4
@@ -18,12 +18,12 @@ OUTDIR="${DIR}/results/qc"
 MULTIQC="${OUTDIR}/multiqc"
 
 # Databases
-UNIVEC='/home/a1645424/al-biohub/database/univec/univec.fasta'
-KDB='/home/a1645424/al-biohub/database/k2_standard_20210517'
+UNIVEC='/hpcfs/users/a1235304/atm/databases/univec/univec.fasta'
+KDB='/hpcfs/users/a1235304/atm/databases/k2_standard_20241228'
 
 FQ=$(find "${FQDIR}" -type f -name '*.gz' | tr '\n' ' ' | cut -d' ' -f "${SLURM_ARRAY_TASK_ID}")
 BN=$(basename "${FQ%%.*}")
-SEQ_RUN=$(grep --no-filename "${BN}" ${DIR}/data/sample-sheets/*.csv | head -n 1 | cut -d',' -f 1)
+SEQ_RUN=$(grep --no-filename "${BN}" ${DIR}/data/sample-sheet.csv | head -n 1 | cut -d',' -f 1)
 
 echo "SAMPLE: ${BN} RUN: ${SEQ_RUN}"
 mkdir -p "${OUTDIR}" "${MULTIQC}" "${OUTDIR}/fastp" "${OUTDIR}/kraken2" "${OUTDIR}/bbduk"
