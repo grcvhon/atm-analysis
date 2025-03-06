@@ -23,7 +23,7 @@
 # wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20241228.tar.gz
 #
 # Then ungzip:
-# tar -zxvf k2_standard_20241228.tar.gz
+# tar -zxvf k2_standard_20241228.tar.gz -C k2_standard_20241228
 #
 # This command should output the files in a directory with the same name.
 ###
