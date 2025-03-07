@@ -82,10 +82,12 @@ Knowing that the command takes the samples we want, we can expand the command to
 echo "order","dart_id","id_clean","Genus","Species","Longitude","Latitude","Locality" > individuals.csv
 
 # append output of command below on to the `individuals.csv` file
-awk -F, '{ if ( $11 ~ /yes/ ) { gsub(/ /,"_");gsub("\\.","_"); \
+awk -F, '{ if ( $11 ~ /yes/ ) { gsub(/ /,"_");\
 print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9","\
 $3","$4","$7","$6","$5 } }' atm_genetic_dataset.csv >> individuals.csv
 ```
+
+<i>NB: I had to manually replace the dot in the `id_clean` of the first entry to an underscore. From `4.12.01` to `4_12_01`</i>
 
 Preview our `individuals.csv`:
 |order       |dart_id|id_clean                  |Genus    |Species       |Longitude  |Latitude    |Locality    |
