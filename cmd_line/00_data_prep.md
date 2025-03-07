@@ -206,7 +206,7 @@ awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-s
 Preview `sample-sheet.csv`:
 |order       |dart_id|id_clean                  |barcode9l|barcode       |Genus      |Species     |Longitude   |Latitude    |Locality    |
 |------------|-------|--------------------------|---------|--------------|-----------|------------|------------|------------|------------|
-|DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|TACCGCTCCATATTG|TACCGCTCCATAT |Aipysurus  |apraefrontalis|123.04166   |-12.24174549|Ashmore_Reef|
+|DNote21-6332|2562202|AAP-Aaprae_4_12_01-2562202|TACCGCTCCATATTG|TACCGCTCCATAT |Aipysurus  |apraefrontalis|123.04166   |-12.24174549|Ashmore_Reef|
 |DNote21-6332|2562130|AAP-KLS0834-2562130       |ACACTTCGTTCTTGC|ACACTTCGTTCT  |Aipysurus  |apraefrontalis|114.2999988 |-22.166666  |Exmouth_Gulf|
 |DNote21-6332|2562139|AAP-SS171013-03-2562139   |TCTTCCTAGGTTGCA|TCTTCCTAGGT   |Aipysurus  |apraefrontalis|118.220874  |-19.6889305 |Pilbara     |
 |DNote21-6332|2562140|AFO-Afo1-2562140          |CTCTCTCTCTAGTAT|CTCTCTCTCTAGTA|Aipysurus  |foliosquama |123.04166   |-12.24174549|Ashmore_Reef|
