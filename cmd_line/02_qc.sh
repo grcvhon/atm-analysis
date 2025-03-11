@@ -5,9 +5,9 @@
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 4
-#SBATCH -a 1-497%25
+#SBATCH -a 1-27
 #SBATCH --time=02:00:00
-#SBATCH --mem=60GB
+#SBATCH --mem=80GB
 #SBATCH -o /hpcfs/users/a1235304/atm/slurm/02_qc_log/%x_%a_%A_%j.log
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
