@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Note: this bash script is used to rename the processed fastq files (= undergone QC i.e., 02_qc.sh)
-# however, the `02_qc.sh` step was done separately in a different Phoenix session/account (a1645424)
+# however, the `02_qc.sh` step was done separately in a different Phoenix session/account (with a1645424)
 # because the `kraken2` produces output with incorrect format with a1235304 Phoenix session/account
 #
 # so as a workaround, a1645424 ran the `02_qc.sh` script on fastq files of interest
