@@ -265,7 +265,6 @@ Check for file integrity:
 wget https://genome-idx.s3.amazonaws.com/kraken/standard_20241228/standard.md5
 md5sum -c standard.md5 # run where the extracted files are located
 ```
-<br>
 
 #### 2) Download the UniVec fasta file
 The UniVec fasta file can be downloaded from the NCBI database:
