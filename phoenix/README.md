@@ -24,8 +24,6 @@ This format will improve efficiency when processing samples prior to any analyse
 
 <i>NB: Scripts were not used entirely to collate information and some manual manipulation is required (e.g., via MS Excel).</i><br>
 
-----
-
 #### 1) Extract information from DArTseq master spreadsheet
 First, we refer to the file: `DARTseq_master.xlsx` (version as of 11 February 2025). We then filter, in MS Excel, for <i>A. apraefrontalis</i> and <i>A. foliosquama</i>. Take note of some of the comments as some samples may have been contaminated or of just low quality. Nonetheless, we take all rows that are either <i>A. apraefrontalis</i> or <i>A. foliosquama</i>.<br>
 
@@ -244,5 +242,38 @@ Preview `sample-sheet.csv`:
 
 We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
 <br>
+---
+
+### On `kraken2` and UniVec databases
+
+Before running `02_qc.sh`, make sure to download:
+* latest `kraken2` standard database, and
+* UniVec fasta file
+
+#### 1) Download the latest `kraken2` standard database
+Download the database from: https://benlangmead.github.io/aws-indexes/k2<br>
+<br>
+Under Collection > Standard, copy URL link of `tar.gz` file and run the following:
+```bash
+wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20241228.tar.gz
+tar -zxvf k2_standard_20241228.tar.gz -C k2_standard_20241228 # make sure the value supplied for `-C` exists
+# Command just above should output the files in the directory name supplied.
+```
+Check for file integrity:
+```bash
+wget https://genome-idx.s3.amazonaws.com/kraken/standard_20241228/standard.md5
+md5sum -c standard.md5 # run where the extracted files are located
+```
+<br>
+
+#### 2) Download the UniVec fasta file
+The UniVec fasta file can be downloaded from the NCBI database:
+```bash
+wget -O univec.fasta https://ftp.ncbi.nlm.nih.gov/pub/UniVec/UniVec
+```
+
+Proceed with running `02_qc.sh`
+
+<i>NB: Be aware that, in some instances, the `kraken2` step in `02_qc.sh` will output a `fastq` file in the incorrect format resulting in an empty `fastq` file at the end of the script run. This error is still being troubleshooted.</i>
 
 <i>Last updated: 02 April 2025</i>
