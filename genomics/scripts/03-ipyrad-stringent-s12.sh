@@ -21,7 +21,7 @@ cd "${DIR}/results/ipyrad" || exit 1
 # Use the '--ipcluster' argument to connect to the cluster we started above
 ipyrad \
     -s 12 \
-    -p '${PARAMS}params-all_samples_stringent-s12.txt' \
+    -p '${PARAMS}/params-all_samples_stringent-s12.txt' \
     -c "${SLURM_CPUS_PER_TASK}"
 
 #micromamba deactivate
