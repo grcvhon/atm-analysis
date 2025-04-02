@@ -1,0 +1,1 @@
+This directory contains associated files used in the `ipyrad` step of the pipeline.
