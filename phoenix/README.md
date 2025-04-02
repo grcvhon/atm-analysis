@@ -272,8 +272,6 @@ The UniVec fasta file can be downloaded from the NCBI database:
 wget -O univec.fasta https://ftp.ncbi.nlm.nih.gov/pub/UniVec/UniVec
 ```
 
-Proceed with running `02_qc.sh`
-
-<i>NB: Be aware that, in some instances, the `kraken2` step in `02_qc.sh` will output a `fastq` file in the incorrect format resulting in an empty `fastq` file at the end of the script run. This error is still being troubleshooted.</i>
+Proceed with running `02_qc.sh`. However, be aware that in some instances the `kraken2` step in `02_qc.sh` will output a `fastq` file in the incorrect format resulting in an empty `fastq` file at the end of the script run. This error is still being troubleshooted.</i>
 
 <i>Last updated: 02 April 2025</i>
