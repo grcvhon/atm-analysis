@@ -12,7 +12,7 @@
 # ***Troubleshooting ongoing as to why the same script, same `kraken2` version produces two different outputs***
 
 PROCESSEDIR="/hpcfs/users/a1235304/atm/temp-vhon"
-RENAMEDIR="/hpcfs/users/a1235304/atm/data/rename_processed_fastq"
+RENAMEDIR="/hpcfs/users/a1235304/atm/results/qc/fastp"
 
 mkdir -p "${RENAMEDIR}"
 
