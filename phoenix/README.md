@@ -1,4 +1,4 @@
-## Integrating genomics in species distribution modelling
+# Integrating genomics in species distribution modelling
 <br>
 This directory contains scripts for genomic analyses as part of species distribution modelling.<br>
 <br>
@@ -242,8 +242,7 @@ Preview `sample-sheet.csv`:
 |DNote24-9763|4013448|AFO-KLS1708-4013448       |AACGATGACGTGCAG|AACGATGACG    |Aipysurus  |foliosquama |113.2711835 |-24.926183  |Shark_Bay   |
 |DNote24-9763|4013450|AFO-KLS1710-4013450       |GTGCAGTTCCATGCA|GTGCAGTTCCA   |Aipysurus  |foliosquama |113.19455   |-24.9617915 |Shark_Bay   |
 
-We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main)<br>
+We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
 <br>
-Or begin with `01_rename_batch.sh` in this repository.<br>
-<br>
-<i>Last updated: 28 February 2025</i>
+
+<i>Last updated: 02 April 2025</i>
