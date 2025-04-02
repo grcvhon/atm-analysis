@@ -11,16 +11,17 @@
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
 # Variables
-DIR='/home/a1645424/hpcfs/analysis/shannon'
+DIR='/hpcfs/users/a1235304/atm'
+PARAMS="${DIR}/results/ipyrad/params"
 cd "${DIR}/results/ipyrad" || exit 1
 
-source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
-micromamba activate ipyrad
+#source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
+#micromamba activate ipyrad
 
 # Use the '--ipcluster' argument to connect to the cluster we started above
 ipyrad \
     -s 12 \
-    -p 'params-all_samples_stringent-s12.txt' \
+    -p '${PARAMS}params-all_samples_stringent-s12.txt' \
     -c "${SLURM_CPUS_PER_TASK}"
 
-micromamba deactivate
+#micromamba deactivate
