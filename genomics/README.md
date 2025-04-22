@@ -7,9 +7,9 @@ The idea here is to develop ancestry probability maps or calculate genetic dista
 <i>NB: Data used are stored in the Phoenix HPC (University of Adelaide).</i>
 
 Outline
-- [Prepare sample sheet of containing individuals of target species](### Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data)
-
-
+- [Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data](#prepare-sample-sheet-of-aipysurus-apraefrontalis-and-a-foliosquama-individuals-with-radseq-data)
+- [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
+- [Running ipyrad](#running-ipyrad)
 
 ---
 
