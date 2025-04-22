@@ -6,7 +6,8 @@ The idea here is to develop ancestry probability maps or calculate genetic dista
 <br>
 <i>NB: Data used are stored in the Phoenix HPC (University of Adelaide).</i>
 
-Outline
+<br>
+## Outline
 - [Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data](#prepare-sample-sheet-of-aipysurus-apraefrontalis-and-a-foliosquama-individuals-with-radseq-data)
 - [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
 - [Running ipyrad](#running-ipyrad)
@@ -247,6 +248,9 @@ Preview `sample-sheet.csv`:
 
 We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
 <br>
+
+<br>
+[🔼 Back to top]
 
 ---
 
