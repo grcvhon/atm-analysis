@@ -302,6 +302,7 @@ The command above will generate `AFO-stringent.json` as well as a `params` file 
 
 <br>
 <b>Workflow tree:</b>
+
 ```
 All_samples_s12
     |
