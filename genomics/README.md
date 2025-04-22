@@ -6,6 +6,11 @@ The idea here is to develop ancestry probability maps or calculate genetic dista
 <br>
 <i>NB: Data used are stored in the Phoenix HPC (University of Adelaide).</i>
 
+Outline
+- [Prepare sample sheet of containing individuals of target species](### Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data)
+
+
+
 ---
 
 ### Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data
