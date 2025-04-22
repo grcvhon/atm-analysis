@@ -251,7 +251,6 @@ Preview `sample-sheet.csv`:
 We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
 <br>
 
-<br><hr>
 [Back to top](#outline)
 
 ---
