@@ -296,7 +296,11 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 First thing I did in `ipyrad` is run `03-ipyrad-stringent-s12.sh` using `params-all_samples_stringent-s12.txt` for the `params` file.<br>
 <br>
-Then, 
+Then, I ran the following command to branch the existing Assembly (i.e., `all_samples_stringent_12.json`) to only include samples of <i>A. foliosquama</i>:
+```
+ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
+``` 
+The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`. I modified this `params` file and changed parameters for `## [5] [assembly_method]` and `## [6] [reference_sequence]`. The modified file is named as `params-AFO-stringent-ref.txt` and was ran with the script: `04-ipyrad-s3_7-AFO-stringent-ref.sh`.
 
 ```
 All_samples_s12
