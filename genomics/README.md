@@ -294,7 +294,7 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 ### Running `ipyrad`
 
-```bash
+```
 All_samples_s12 ---|---|--- AFO_s34567_denovo 
                    |   |
                    |   |--- AFO_s34567_reference
