@@ -12,7 +12,6 @@
 
 # Variables
 DIR='/hpcfs/users/a1235304/atm'
-PARAMS="${DIR}/results/ipyrad/params"
 cd "${DIR}/results/ipyrad" || exit 1
 
 #source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
@@ -21,7 +20,7 @@ cd "${DIR}/results/ipyrad" || exit 1
 # Use the '--ipcluster' argument to connect to the cluster we started above
 ipyrad \
     -s 12 \
-    -p "${PARAMS}/params-all_samples_stringent-s12.txt" \
+    -p 'params-all_samples_stringent-s12.txt' \
     -c "${SLURM_CPUS_PER_TASK}"
 
 #micromamba deactivate
