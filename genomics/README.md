@@ -304,11 +304,11 @@ The command above will generate `AFO-stringent.json` as well as a `params` file 
 <b>Workflow tree:</b>
 
 ```
-All_samples_s12
+All_samples_s12 (params-all_samples_stringent-s12.txt, 03-ipyrad-stringent-s12.sh)
     |
     |---|--- AFO_s34567_denovo 
     |   |
-    |   |--- AFO_s34567_reference
+    |   |--- AFO_s34567_reference (params-AFO-stringent-ref.txt, 04-ipyrad-s3_7-AFO-stringent-ref.sh)
     |
     |---|--- AAP_s34567_denovo
         |
