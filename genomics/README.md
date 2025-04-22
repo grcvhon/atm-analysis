@@ -300,7 +300,8 @@ ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
 ``` 
 The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`. I modified this `params` file and changed parameters for `## [5] [assembly_method]` and `## [6] [reference_sequence]`. The modified file is named as `params-AFO-stringent-ref.txt` and was ran with the script: `04-ipyrad-s3_7-AFO-stringent-ref.sh`.
 
-Workflow tree:
+<br>
+<b>Workflow tree:</b>
 ```
 All_samples_s12
     |
