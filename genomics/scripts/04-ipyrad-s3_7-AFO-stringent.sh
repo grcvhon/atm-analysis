@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=AFO-sringent-s3_7
+#SBATCH --job-name=AFO-stringent-s3_7
 #SBATCH -p icelake
 #SBATCH -N 1
 #SBATCH -n 1
