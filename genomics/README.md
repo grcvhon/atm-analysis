@@ -4,6 +4,8 @@ This directory contains scripts for genomic analyses as part of species distribu
 <br>
 The idea here is to develop ancestry probability maps or calculate genetic distances which will be used to generate a raster layer that will inform the species distribution model.<br>
 <br>
+This README file is quite detailed as I treat it as a logbook to keep track of what I am doing in the command line.<br>
+<br>
 <i>NB: Data used are stored in the Phoenix HPC (University of Adelaide).</i>
 
 <br>
