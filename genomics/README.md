@@ -295,13 +295,15 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 ### Running `ipyrad`
 
 ```
-All_samples_s12 ---|---|--- AFO_s34567_denovo 
-                   |   |
-                   |   |--- AFO_s34567_reference
-                   |
-                   |---|--- AAP_s34567_denovo
-                       |
-                       |--- AAP_s34567_reference
+All_samples_s12
+    |
+    |---|--- AFO_s34567_denovo 
+    |   |
+    |   |--- AFO_s34567_reference
+    |
+    |---|--- AAP_s34567_denovo
+        |
+        |--- AAP_s34567_reference
 ```
 
 <i>Last updated: 22 April 2025</i>
