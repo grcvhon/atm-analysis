@@ -294,6 +294,10 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 ### Running `ipyrad`
 
+First thing I did in `ipyrad` is run `03-ipyrad-stringent-s12.sh` using `params-all_samples_stringent-s12.txt` for the `params` file.<br>
+<br>
+Then, 
+
 ```
 All_samples_s12
     |
@@ -305,5 +309,8 @@ All_samples_s12
         |
         |--- AAP_s34567_reference
 ```
+<br>
+
+[Back to top](#outline)
 
 <i>Last updated: 22 April 2025</i>
