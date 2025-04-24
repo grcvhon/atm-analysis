@@ -298,22 +298,8 @@ First thing I did in `ipyrad` is run `03-ipyrad-stringent-s12.sh` using `params-
 ```
 ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
 ``` 
-The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`. I modified this `params` file and changed parameters for `## [5] [assembly_method]` and `## [6] [reference_sequence]`. The modified file is named as `params-AFO-stringent-ref.txt` and was ran with the script: `04-ipyrad-s3_7-AFO-stringent-ref.sh`.
+The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`.
 
-<br>
-<b>Workflow tree:</b>
-
-```
-All_samples_s12 (params-all_samples_stringent-s12.txt, 03-ipyrad-stringent-s12.sh)
-    |
-    |---|--- AFO_s34567_denovo 
-    |   |
-    |   |--- AFO_s34567_reference (params-AFO-stringent-ref.txt, 04-ipyrad-s3_7-AFO-stringent-ref.sh)
-    |
-    |---|--- AAP_s34567_denovo
-        |
-        |--- AAP_s34567_reference
-```
 <br>
 
 [Back to top](#outline)
