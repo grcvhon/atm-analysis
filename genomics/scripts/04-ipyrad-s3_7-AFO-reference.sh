@@ -16,10 +16,16 @@ cd "${DIR}/results/ipyrad" || exit 1
 
 #source "/home/a1645424/hpcfs/micromamba/etc/profile.d/micromamba.sh"
 #micromamba activate ipyrad
+
+source "/gpfs/apps/icl/software/Anaconda3/2024.06-1/etc/profile.d/conda.sh"
+
 conda activate ipyrad
+
 ipyrad \
     -s 34567 \
     -p 'params-AFO-reference.txt' \
     -c "${SLURM_CPUS_PER_TASK}"
+
 conda deactivate
+
 #micromamba deactivate
