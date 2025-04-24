@@ -294,11 +294,11 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 ### Running `ipyrad`
 
-So far, all scripts were run using `pixi` package manager. But issues with `ipyrad` steps and runs were persistent so I had to uninstall `pixi` and run `ipyrad` via `Anaconda`. See Troubleshoot note below.<br>
+Originally went with `pixi` package manager to run scripts. But issues with `ipyrad` steps (e.g. 3 to 7) were persistent so I had to uninstall `pixi` and run `ipyrad` via `Anaconda`. See Troubleshoot note below.<br>
 
 #### <i>Troubleshooting note</i>:
 
->For some reason, the running `ipyrad` steps 3 through 7 encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
+>For some reason, running `ipyrad` steps 3 through 7 under `denovo` assembly method encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
 >```
 >rm ~/.pixi/bin/pixi # removes binaries
 >rm -r ~/.pixi # removes installed packages
