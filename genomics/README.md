@@ -303,20 +303,20 @@ The command above will generate `AFO-stringent.json` as well as a `params` file 
 
 #### <i>Troubleshooting note</i>:
 
-For some reason, the running `ipyrad` steps 3 through 7 encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
-```
-rm ~/.pixi/bin/pixi # removes binaries
-rm -r ~/.pixi # removes installed packages
-```
-Then I commented out the lines associated with `pixi` and `Anaconda` in my `~/.bashrc` file. I also removed the existing `ipyrad` conda environment that failed to install just to reset.<br>
-<br>
-I restarted Phoenix to apply changes and then ran the commands:
-```
-conda init
-conda create -n ipyrad
-conda activate ipyrad
-conda install ipyrad -c conda-forge -c bioconda
-```
+>For some reason, the running `ipyrad` steps 3 through 7 encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
+>```
+>rm ~/.pixi/bin/pixi # removes binaries
+>rm -r ~/.pixi # removes installed packages
+>```
+>Then I commented out the lines associated with `pixi` and `Anaconda` in my `~/.bashrc` file. I also removed the existing `ipyrad` conda environment that failed to install just to reset.<br>
+><br>
+>I restarted Phoenix to apply changes and then ran the commands:
+>```
+>conda init
+>conda create -n ipyrad
+>conda activate ipyrad
+>conda install ipyrad -c conda-forge -c bioconda
+>```
 
 
 
