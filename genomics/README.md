@@ -298,9 +298,15 @@ First thing I did in `ipyrad` is run `03-ipyrad-stringent-s12.sh` using `params-
 ```
 ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
 ``` 
-The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`.
-
+The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`.<br>
 <br>
+For some reason, the running `ipyrad` steps 3 through 7 encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
+```
+rm ~/.pixi/bin/pixi # removes binaries
+rm -r ~/.pixi # removes installed packages
+```
+Then I commented out the lines associated with `pixi` in my `~/.bashrc` file.<br>
+
 
 [Back to top](#outline)
 
