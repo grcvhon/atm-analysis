@@ -294,7 +294,7 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 ### Running `ipyrad`
 
-So far all scripts were run using `pixi`. But issues with `ipyrad` runs and steps were persistent, I had to uninstall `pixi` and run `ipyrad` via `Anaconda`. See Troubleshoot note below.<br>
+So far all scripts were run using `pixi`. But issues with `ipyrad` steps and runs were persistent so I had to uninstall `pixi` and run `ipyrad` via `Anaconda`. See Troubleshoot note below.<br>
 
 #### <i>Troubleshooting note</i>:
 
