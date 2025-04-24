@@ -294,12 +294,7 @@ Proceed with running `02_qc.sh`. However, be aware that in some instances the `k
 
 ### Running `ipyrad`
 
-First thing I did in `ipyrad` is run `03-ipyrad-stringent-s12.sh` using `params-all_samples_stringent-s12.txt` for the `params` file. Then, I ran the following command to branch the existing Assembly (i.e., `all_samples_stringent_12.json`) to only include samples of <i>A. foliosquama</i>:
-```
-ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
-``` 
-The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`.<br>
-<br>
+So far all scripts were run using `pixi`. But issues with `ipyrad` runs and steps were persistent, I had to uninstall `pixi` and run `ipyrad` via `Anaconda`. See Troubleshoot note below.<br>
 
 #### <i>Troubleshooting note</i>:
 
@@ -318,7 +313,23 @@ The command above will generate `AFO-stringent.json` as well as a `params` file 
 >conda install ipyrad -c conda-forge -c bioconda
 >```
 
+With that out of the way, let us actually run `ipyrad`:
+```
+# Step 1: Run steps 1 and 2 on all data
+ipyrad -p params-all_samples_stringent-s12.txt -s 12
 
+# Step 2: Create two branches - reference and denovo
+ipyrad -p params-all_samples_stringent-s12.txt -b AFO-denovo AFO-samples.txt
+ipyrad -p params-all_samples_stringent-s12.txt -b AFO-reference AFO-samples.txt
+
+# Step 3: Edit the two new params files 
+> Edit denovo argument in params-AFO-denovo.txt <
+> Edit reference argument in params-AFO-reference.txt <
+
+# Step 4: Run the remaining steps for each branch
+ipyrad -p params-AFO-denovo.txt -s 34567
+ipyrad -p params-AFO-reference.txt -s 34567
+```
 
 [Back to top](#outline)
 
