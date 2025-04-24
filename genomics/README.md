@@ -300,6 +300,9 @@ ipyrad -p params-all_samples_stringent-s12.txt -b AFO-stringent AFO-samples.txt
 ``` 
 The command above will generate `AFO-stringent.json` as well as a `params` file named `params-AFO-stringent.txt`.<br>
 <br>
+
+#### Troubleshooting note:
+<br>
 For some reason, the running `ipyrad` steps 3 through 7 encounters an error. This issue does not occur when supplying a reference genome (`reference ## [5] assembly_method`). ALud suspects the issue is with `pixi`. So I uninstalled `pixi` and removed all packages installed with it using commands below:
 ```
 rm ~/.pixi/bin/pixi # removes binaries
