@@ -305,7 +305,15 @@ For some reason, the running `ipyrad` steps 3 through 7 encounters an error. Thi
 rm ~/.pixi/bin/pixi # removes binaries
 rm -r ~/.pixi # removes installed packages
 ```
-Then I commented out the lines associated with `pixi` in my `~/.bashrc` file.<br>
+Then I commented out the lines associated with `pixi` and `Anaconda` in my `~/.bashrc` file. (I also removed the existing `ipyrad` conda environment that failed to install - just to reset)<br>
+I restarted Phoenix to apply changes and then ran the commands:
+```
+conda init
+conda create -n ipyrad
+conda activate ipyrad
+conda install ipyrad -c conda-forge -c bioconda
+```
+
 
 
 [Back to top](#outline)
