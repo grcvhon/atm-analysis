@@ -16,6 +16,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data](#prepare-sample-sheet-of-aipysurus-apraefrontalis-and-a-foliosquama-individuals-with-radseq-data)
 - [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
 - [Running ipyrad](#running-ipyrad)
+- [Running API: ipyrad analysis tools](#running-api-ipyrad-analysis-tools)
 
 ---
 
