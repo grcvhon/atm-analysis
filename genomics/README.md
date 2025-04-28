@@ -334,10 +334,10 @@ Can then repeat from step 2 for <i>A. apraefrontalis</i> (e.g. `...-b AAP-denovo
 <br>
 
 After running these commands, the VCF files and other output will be stored in one of the following directories:
-* AFO-denovo_outfiles
-* AFO-reference_outfiles
-* AAP-denovo_outfiles
-* AAP-reference_outfiles
+* `AFO-denovo_outfiles`
+* `AFO-reference_outfiles`
+* `AAP-denovo_outfiles`
+* `AAP-reference_outfiles`
 
 [Back to top](#outline)
 
