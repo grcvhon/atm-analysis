@@ -356,7 +356,7 @@ bgzip AAP-reference.vcf
 bgzip AFO-denovo.vcf
 bgzip AFO-reference.vcf
 ```
-And `tabix` index the compressed VCF (creates .vcf.gz.tbi)
+And `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
 ```
 tabix AAP-denovo.vcf
 tabix AAP-reference.vcf
