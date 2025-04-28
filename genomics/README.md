@@ -351,22 +351,22 @@ After running these commands, the VCF files and other output will be stored in o
 
 Compress the VCF file
 ```
-bgzip AAP-denovo.vcf
-bgzip AAP-reference.vcf
-bgzip AFO-denovo.vcf
-bgzip AFO-reference.vcf
+bgzip -c AAP-denovo.vcf > AAP-denovo.vcf.gz 
+bgzip -c AAP-reference.vcf > AAP-reference.vcf.gz 
+bgzip -c AFO-denovo.vcf > AFO-denovo.vcf.gz 
+bgzip -c AFO-reference.vcf > AFO-reference.vcf.gz
 ```
 And `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
 ```
-tabix AAP-denovo.vcf
-tabix AAP-reference.vcf
-tabix AFO-denovo.vcf
-tabix AFO-reference.vcf
+tabix AAP-denovo.vcf.gz
+tabix AAP-reference.vcf.gz
+tabix AFO-denovo.vcf.gz
+tabix AFO-reference.vcf.gz
 ```
 Use the `sample-sheet.csv` to generate the required species-specific `popmap` file
 ```
-awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.txt
-awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.txt
+awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
+awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
 
 
