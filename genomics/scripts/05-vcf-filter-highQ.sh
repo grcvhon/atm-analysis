@@ -8,4 +8,10 @@ for D in $DENOVO; do
     BN=$(basename "${D}" -denovo.vcf.gz)
 
     echo "${BN}"
+
+    OUT="${DIR}/results/ipyrad/${BN}-denovo_outfiles"
+    POP="${DIR}/data/popmaps/${BN}-popmap.tsv"
+
+    echo "${OUT}"
+    echo "${POP}"
 done
