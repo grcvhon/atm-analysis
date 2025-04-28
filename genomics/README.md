@@ -349,7 +349,25 @@ After running these commands, the VCF files and other output will be stored in o
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 <br>
 
-
+Compress the VCF file
+```
+bgzip AAP-denovo.vcf
+bgzip AAP-reference.vcf
+bgzip AFO-denovo.vcf
+bgzip AFO-reference.vcf
+```
+And `tabix` index the compressed VCF (creates .vcf.gz.tbi)
+```
+tabix AAP-denovo.vcf
+tabix AAP-reference.vcf
+tabix AFO-denovo.vcf
+tabix AFO-reference.vcf
+```
+Use the `sample-sheet.csv` to generate the required species-specific `popmap` file
+```
+awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.txt
+awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.txt
+```
 
 
 
