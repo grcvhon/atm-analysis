@@ -5,7 +5,7 @@ DENOVO=$(find "${DIR}/results/ipyrad" -name '*-denovo.vcf.gz')
 REFERENCE=$(find "${DIR}/results/ipyrad" -name '*-reference.vcf.gz')
 
 for D in $DENOVO; do
-    BN=$(basename "${V}" -denovo.vcf.gz)
+    BN=$(basename "${D}" -denovo.vcf.gz)
 
     echo "${BN}"
 done
