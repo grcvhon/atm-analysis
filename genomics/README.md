@@ -341,4 +341,10 @@ After running these commands, the VCF files and other output will be stored in o
 
 [Back to top](#outline)
 
-<i>Last updated: 24 April 2025</i>
+---
+
+### Running `API: ipyrad analysis tools`
+
+>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more. [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]
+
+<i>Last updated: 28 April 2025</i>
