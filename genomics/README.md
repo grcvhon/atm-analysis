@@ -330,7 +330,14 @@ ipyrad -p params-all_samples_stringent-s12.txt -b AFO-reference AFO-samples.txt
 ipyrad -p params-AFO-denovo.txt -s 34567
 ipyrad -p params-AFO-reference.txt -s 34567
 ```
-Can then repeat from step 2 for <i>A. apraefrontalis</i> (e.g. `...-b AAP-denovo AAP-samples.txt` and so on).
+Can then repeat from step 2 for <i>A. apraefrontalis</i> (e.g. `...-b AAP-denovo AAP-samples.txt` and so on).<br>
+<br>
+
+After running these commands, the VCF files and other output will be stored in one of the following directories:
+* AFO-denovo_outfiles
+* AFO-reference_outfiles
+* AAP-denovo_outfiles
+* AAP-reference_outfiles
 
 [Back to top](#outline)
 
