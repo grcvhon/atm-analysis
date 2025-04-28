@@ -330,6 +330,7 @@ ipyrad -p params-all_samples_stringent-s12.txt -b AFO-reference AFO-samples.txt
 ipyrad -p params-AFO-denovo.txt -s 34567
 ipyrad -p params-AFO-reference.txt -s 34567
 ```
+Can then repeat from step 2 for <i>A. apraefrontalis</i> (e.g. `...-b AAP-denovo AAP-samples.txt` and so on).
 
 [Back to top](#outline)
 
