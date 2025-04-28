@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
+#SBATCH --job-name=05-vcf-filter-highQ
+#SBATCH -p icelake
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 8
+#SBATCH --time=1:00:00
+#SBATCH --mem=60GB
+#SBATCH -o /hpcfs/users/a1235304/atm/slurm/05-bcftools/%x_%j.log
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
+# Variables
 DIR='/hpcfs/users/a1235304/atm'
 DENOVO=$(find "${DIR}/results/ipyrad" -name '*-denovo.vcf.gz')
 REFERENCE=$(find "${DIR}/results/ipyrad" -name '*-reference.vcf.gz')
