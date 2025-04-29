@@ -6,7 +6,7 @@
 #SBATCH -c 8
 #SBATCH --time=1:00:00
 #SBATCH --mem=60GB
-#SBATCH -o /hpcfs/users/a1235304/atm/slurm/ipyrad-s37/%x_%j.log
+#SBATCH -o /hpcfs/users/a1235304/atm/slurm/04-ipyrad-s37/%x_%j.log
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
