@@ -368,7 +368,8 @@ Use the `sample-sheet.csv` to generate the required species-specific `popmap` fi
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
-From here, I ran `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.
+From here, I ran `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.<br>
+Proceed with using `ipyrad analysis toolkit` under Python (using Python3).
 
 ```python
 # Import the ipyrad analysis toolkit module
