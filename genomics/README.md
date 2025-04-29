@@ -369,12 +369,48 @@ awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
 From here, I ran `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.<br>
+<br>
 Proceed with using `ipyrad analysis toolkit` under Python (using Python3).
 
+I converted `ipyrad` VCF output into an `hdf5` file using `ipyrad` analysis tools `converter.run()`. The basic script structure is below:
 ```python
 # Import the ipyrad analysis toolkit module
 import ipyrad.analysis as ipa
-```
 
+## Aipysurus foliosquama - reference - Unfiltered ipyrad output
+converter = ipa.vcf_to_hdf5(
+    name="AFO-reference.LD50k",
+    data="/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/AFO-reference.vcf.gz",
+    workdir='/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/',
+    ld_block_size=50000
+)
+converter.run()
+```
+I did this for <i>A. foliosquama</i> (reference, raw and filtered; de novo, raw and filtered) and <i>A. apraefrontalis</i> (reference, raw and filtered; de novo, raw and filtered). The stored the commands in a python script (`06-vcf2hdf5.py`) and then ran said script as a batch job (`06-vcf2hdf5.sh`).<br>
+<br>
+Part of the job log is shown below:
+
+```bash
+Starting conversion of vcf to hdf5 for Aipysurus foliosquama...
+ 
+### CONVERTING: AFO - reference - Unfiltered ipyrad output to hdf5 ###
+Indexing VCF to HDF5 database file
+hdf5 file exists. Use `force=True` to overwrite.
+### COMPLETE: AFO - reference - Unfiltered ###
+
+...
+
+Starting conversion of vcf to hdf5 for Aipysurus apraefrontalis...
+ 
+### CONVERTING: AAP - reference - Unfiltered ipyrad output to hdf5 ###
+Indexing VCF to HDF5 database file
+VCF: 20189 SNPs; 252 scaffolds
+[                    ]   0% 0:00:00 | converting VCF to HDF5 /home/a1235304/.conda/envs/ipyrad/lib/python3.12/site-packages/ipyrad/analysis/vcf_to_hdf5.py:525: FutureWarning: Series.view is deprecated and will be removed in a future version. Use ``astype`` as an alternative to change the dtype.
+  ref = chunkdf.iloc[:, 3].astype(bytes).view(np.int8).values
+[####################] 100% 0:00:14 | converting VCF to HDF5 
+HDF5: 20189 SNPs; 7628 linkage group
+SNP database written to /hpcfs/users/a1235304/atm/results/ipyrad/AAP-reference_outfiles/AAP-reference.LD50k.snps.hdf5
+### COMPLETE: AAP - reference - Unfiltered ###
+```
 
 <i>Last updated: 28 April 2025</i>
