@@ -13,7 +13,7 @@
 source "/gpfs/apps/icl/software/Anaconda3/2024.06-1/etc/profile.d/conda.sh"
 conda activate ipyrad
 
-python3
+source "/home/a1235304/.conda/envs/ipyrad/bin/python3"
 
 import ipyrad.analysis as ipa
 
