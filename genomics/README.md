@@ -390,7 +390,7 @@ I did this for <i>A. foliosquama</i> (reference, raw and filtered; de novo, raw 
 <br>
 Part of the job log is shown below:
 
-```bash
+```
 Starting conversion of vcf to hdf5 for Aipysurus foliosquama...
  
 ### CONVERTING: AFO - reference - Unfiltered ipyrad output to hdf5 ###
@@ -405,7 +405,8 @@ Starting conversion of vcf to hdf5 for Aipysurus apraefrontalis...
 ### CONVERTING: AAP - reference - Unfiltered ipyrad output to hdf5 ###
 Indexing VCF to HDF5 database file
 VCF: 20189 SNPs; 252 scaffolds
-[                    ]   0% 0:00:00 | converting VCF to HDF5 /home/a1235304/.conda/envs/ipyrad/lib/python3.12/site-packages/ipyrad/analysis/vcf_to_hdf5.py:525: FutureWarning: Series.view is deprecated and will be removed in a future version. Use ``astype`` as an alternative to change the dtype.
+[                    ]   0% 0:00:00 | converting VCF to HDF5 /home/a1235304/.conda/envs/ipyrad/lib/python3.12/site-packages/ipyrad/analysis/vcf_to_hdf5.py:525: 
+FutureWarning: Series.view is deprecated and will be removed in a future version. Use ``astype`` as an alternative to change the dtype.
   ref = chunkdf.iloc[:, 3].astype(bytes).view(np.int8).values
 [####################] 100% 0:00:14 | converting VCF to HDF5 
 HDF5: 20189 SNPs; 7628 linkage group
