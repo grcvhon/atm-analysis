@@ -16,7 +16,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data](#prepare-sample-sheet-of-aipysurus-apraefrontalis-and-a-foliosquama-individuals-with-radseq-data)
 - [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
 - [Running ipyrad](#running-ipyrad)
-- [Running API: ipyrad analysis tools](#running-api-ipyrad-analysis-tools)
+- [Running ipyrad analysis tools](#running-api-ipyrad-analysis-tools)
 
 ---
 
@@ -344,7 +344,7 @@ After running these commands, the VCF files and other output will be stored in o
 
 ---
 
-### Running `API: ipyrad analysis tools`
+### Running `ipyrad analysis tools`
 
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 <br>
@@ -369,6 +369,10 @@ awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
 From here, I ran `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.
+
+```python
+import ipyrad.analysis as ipa
+```
 
 
 <i>Last updated: 28 April 2025</i>
