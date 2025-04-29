@@ -1,11 +1,10 @@
 import ipyrad.analysis as ipa
 
 # Aipysurus foliosquama
-print("Starting conversion of vcf to hdf5 for Aipysurus foliosquama")
+print("Starting conversion of vcf to hdf5 for Aipysurus foliosquama...")
 print(" ")
 
-print("~~~ CONVERTING: AFO - reference - Unfiltered ipyrad output to hdf5 ~~~")
-print(" ")
+print("### CONVERTING: AFO - reference - Unfiltered ipyrad output to hdf5 ###")
 ## AFO - reference - Unfiltered ipyrad output
 converter = ipa.vcf_to_hdf5(
     name="AFO-reference.LD50k",
@@ -14,13 +13,11 @@ converter = ipa.vcf_to_hdf5(
     ld_block_size=50000
 )
 converter.run()
-print(" ")
-print("COMPLETE: AFO - reference - Unfiltered")
+print("### COMPLETE: AFO - reference - Unfiltered ###")
 
 print(" ")
 
-print("~~~ CONVERTING: AFO - reference - Filtered ipyrad output to hdf5 ~~~")
-print(" ")
+print("### CONVERTING: AFO - reference - Filtered ipyrad output to hdf5 ###")
 ## AFO - reference - Filtered ipyrad output
 converter = ipa.vcf_to_hdf5(
     name="AFO-reference.highQ.filtered.LD50k",
@@ -29,13 +26,11 @@ converter = ipa.vcf_to_hdf5(
     ld_block_size=50000
 )
 converter.run()
-print(" ")
-print("COMPLETE: AFO - reference - Filtered")
+print("### COMPLETE: AFO - reference - Filtered ###")
 
 print(" ")
 
-print("~~~ CONVERTING: AFO - de novo - Unfiltered ipyrad output to hdf5 ~~~")
-print(" ")
+print("### CONVERTING: AFO - de novo - Unfiltered ipyrad output to hdf5 ###")
 ## AFO - de novo - Unfiltered ipyrad output
 converter = ipa.vcf_to_hdf5(
     name="AFO-denovo.LD50k",
@@ -44,13 +39,11 @@ converter = ipa.vcf_to_hdf5(
     ld_block_size=50000
 )
 converter.run()
-print(" ")
-print("COMPLETE: AFO - de novo - Unfiltered")
+print("### COMPLETE: AFO - de novo - Unfiltered ###")
 
 print(" ")
 
-print("~~~ CONVERTING: AFO - de novo - Filtered ipyrad output to hdf5 ~~~")
-print(" ")
+print("### CONVERTING: AFO - de novo - Filtered ipyrad output to hdf5 ###")
 ## AFO - de novo - Filtered ipyrad output
 converter = ipa.vcf_to_hdf5(
     name="AFO-denovo.highQ.filtered.LD50k",
@@ -59,8 +52,7 @@ converter = ipa.vcf_to_hdf5(
     ld_block_size=50000
 )
 converter.run()
-print(" ")
-print("COMPLETE: AFO - de novo - Filtered")
+print("### COMPLETE: AFO - de novo - Filtered ###")
 
 print(" ")
 print("All conversion complete.")
