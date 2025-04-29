@@ -9,6 +9,7 @@ converter = ipa.vcf_to_hdf5(
     workdir='/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/',
     ld_block_size=50000
 )
+converter.run()
 
 ## AFO - reference - Filtered ipyrad output
 converter = ipa.vcf_to_hdf5(
@@ -17,5 +18,4 @@ converter = ipa.vcf_to_hdf5(
     workdir='/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/',
     ld_block_size=50000
 )
-
 converter.run()
