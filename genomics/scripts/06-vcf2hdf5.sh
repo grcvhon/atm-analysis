@@ -10,11 +10,9 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
+CONV=/hpcfs/users/a1235304/atm/scripts/06-vcf2hdf5.py
+
 source "/gpfs/apps/icl/software/Anaconda3/2024.06-1/etc/profile.d/conda.sh"
 conda activate ipyrad
 
-source "/home/a1235304/.conda/envs/ipyrad/bin/python3"
-
-import ipyrad.analysis as ipa
-
-converter.run()
+python ${CONV}
