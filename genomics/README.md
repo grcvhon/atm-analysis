@@ -441,10 +441,9 @@ Listing the HDF5 files we just generated:
 [Back to top](#outline)
 
 #### <ins>PCA</ins>
-In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below.<br>
-<br>
+In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below. All result files from this section are written in the `results/ipyrad/population-structure/pca` directory.<br>
 
-All result files are saved in the `results/ipyrad/population-structure/pca` directory.<br>
+I used the HDF5 files which were generated using a reference genome (<i>Aipysurus laevis</i>) (i.e., `reference ## [5] assembly_method` in `ipyrad`).
 
 [Back to top](#outline)
 <i>Last updated: 30 April 2025</i>
