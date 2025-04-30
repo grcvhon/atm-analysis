@@ -345,7 +345,7 @@ After running these commands, the VCF files and other output will be stored in o
 
 ---
 
-### Running `ipyrad` analysis tools`
+### Running `ipyrad` analysis tools
 
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 
@@ -373,11 +373,14 @@ awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
 
-We can now run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs (= filtered).<br>
+We can now run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` (= raw/unfiltered) to only contain high quality SNPs (= filtered).<br>
 <br>
 
 
-Now, we have VCF files as follows for both species: raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ). We can now convert these to HDF5 objects so that `ipyrad` analysis tools can take them as input. I converted these VCF files to HDF5 format using `converter.run()` under `ipyrad` analysis tools. The basic script structure is below:
+Now, we have VCF files as follows for both species: raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ. We can now convert these to HDF5 objects so that `ipyrad` analysis tools can take them as input. I converted these VCF files to HDF5 format using `converter.run()` under `ipyrad` analysis tools. This script also includes sampling SNPs at linkage disequilibrium block sizes to theoretically sample unlinked SNPs (important for downstream analyses like PCA and STRUCTURE).<br>
+<br>
+
+The basic script structure is below:
 ```python
 # Import the ipyrad analysis toolkit module
 import ipyrad.analysis as ipa
@@ -417,6 +420,21 @@ FutureWarning: Series.view is deprecated and will be removed in a future version
 HDF5: 20189 SNPs; 7628 linkage group
 SNP database written to /hpcfs/users/a1235304/atm/results/ipyrad/AAP-reference_outfiles/AAP-reference.LD50k.snps.hdf5
 ### COMPLETE: AAP - reference - Unfiltered ###
+```
+
+Listing the HDF5 files we just generated:
+```
+# Aipysurus foliosquama
+|---AFO-reference.LD50k.snps.hdf5
+|---AFO-reference.highQ.filtered.LD50k.snps.hdf5
+|---AFO-denovo.LD50k.snps.hdf5
+|---AFO-denovo.highQ.filtered.LD50k.snps.hdf5
+
+# Aipysurus apraefrontalis
+|---AAP-reference.LD50k.snps.hdf5
+|---AAP-reference.highQ.filtered.LD50k.snps.hdf5
+|---AAP-denovo.LD50k.snps.hdf5
+|---AAP-denovo.highQ.filtered.LD50k.snps.hdf5
 ```
 
 [Back to top](#outline)
