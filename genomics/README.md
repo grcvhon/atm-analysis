@@ -17,6 +17,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
 - [Running ipyrad](#running-ipyrad)
 - [Running ipyrad analysis tools](#running-ipyrad-analysis-tools)
+  - [Convert VCF to HDF5](#running-ipyrad-analysis-tools)
 
 ---
 
