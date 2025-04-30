@@ -349,7 +349,7 @@ After running these commands, the VCF files and other output will be stored in o
 
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 
-#### <u>Convert VCF to HDF5 format</u>
+#### <ins>Convert VCF to HDF5 format</ins>
 Since `ipyrad` analysis tools use HDF5 format as input, we need to convert our VCF files into such format. But before we start converting VCF files (= raw/unfiltered), let us first generate a couple more VCF files containing high quality SNPs (= filtered). To do that, let us first compress the VCF file and `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
 
 ```
