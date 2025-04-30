@@ -441,9 +441,16 @@ Listing the HDF5 files we just generated:
 [Back to top](#outline)
 
 #### <ins>PCA</ins>
-In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below. All result files from this section are written in the `results/ipyrad/population-structure/pca` directory.<br>
+In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below. I used the HDF5 files which were generated using a reference genome (<i>Aipysurus laevis</i>) (i.e., `reference ## [5] assembly_method` in `ipyrad`). All result files from this section are written in the `results/ipyrad/population-structure/pca` directory.<br>
 
-I used the HDF5 files which were generated using a reference genome (<i>Aipysurus laevis</i>) (i.e., `reference ## [5] assembly_method` in `ipyrad`).
+To produce the PCA plot, I contained the workflow in `06-pca.py` following https://github.com/a-lud/sea-snake-dart/blob/main/scripts/06-pca.ipynb, then ran this Python script as a batch job in `06-pca.sh`. Note that the packages `scikit-learn` and `numpy` are required. Please install these in the same environment where `ipyrad` was installed.<br>
+```
+conda activate ipyrad
+
+# now install the additional packages inside the activated ipyrad environment
+conda install scikit-learn -c conda-forge
+conda install -c conda-forge "numpy <2.0.0"
+```
 
 [Back to top](#outline)
 <i>Last updated: 30 April 2025</i>
