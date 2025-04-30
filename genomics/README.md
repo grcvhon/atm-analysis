@@ -18,6 +18,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Running ipyrad](#running-ipyrad)
 - [Running ipyrad analysis tools](#running-ipyrad-analysis-tools)
   - [Convert VCF to HDF5](#running-ipyrad-analysis-tools)
+  - [PCA](#pca)
 
 ---
 
@@ -439,4 +440,11 @@ Listing the HDF5 files we just generated:
 
 [Back to top](#outline)
 
+#### <ins>PCA</ins>
+In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below.<br>
+<br>
+
+All result files are saved in the `results/ipyrad/population-structure/pca` directory.<br>
+
+[Back to top](#outline)
 <i>Last updated: 30 April 2025</i>
