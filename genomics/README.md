@@ -349,30 +349,29 @@ After running these commands, the VCF files and other output will be stored in o
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 <br>
 
-Compress the VCF file
+Compress the VCF file and `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
 ```
+# Compress the VCF
 bgzip -c AAP-denovo.vcf > AAP-denovo.vcf.gz 
 bgzip -c AAP-reference.vcf > AAP-reference.vcf.gz 
 bgzip -c AFO-denovo.vcf > AFO-denovo.vcf.gz 
 bgzip -c AFO-reference.vcf > AFO-reference.vcf.gz
-```
-And `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
-```
+
+# tabix index the compressed VCF
 tabix AAP-denovo.vcf.gz
 tabix AAP-reference.vcf.gz
 tabix AFO-denovo.vcf.gz
 tabix AFO-reference.vcf.gz
 ```
-Use the `sample-sheet.csv` to generate the required species-specific `popmap` file
+Use the `sample-sheet.csv` to generate the species-specific `popmap` file required in `05-vcf-filter-highQ.sh`.
 ```
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
-From here, I ran `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.<br>
+Run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.<br>
 <br>
-Proceed with using `ipyrad analysis toolkit` under Python (using Python3).
 
-I converted `ipyrad` VCF output into an `hdf5` file using `ipyrad` analysis tools `converter.run()`. The basic script structure is below:
+One more thing is converting the VCF files we just generated (raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ) to HDF5 objects so that `ipyrad` analysis tools can take it as input. I converted these VCF output into an HDF5 format using `converter.run()` under `ipyrad` analysis tools. The basic script structure is below:
 ```python
 # Import the ipyrad analysis toolkit module
 import ipyrad.analysis as ipa
@@ -386,7 +385,7 @@ converter = ipa.vcf_to_hdf5(
 )
 converter.run()
 ```
-I did this for <i>A. foliosquama</i> (reference, raw and filtered; de novo, raw and filtered) and <i>A. apraefrontalis</i> (reference, raw and filtered; de novo, raw and filtered). The stored the commands in a python script (`06-vcf2hdf5.py`) and then ran said script as a batch job (`06-vcf2hdf5.sh`).<br>
+I did this for <i>A. foliosquama</i> (reference, raw and filtered; de novo, raw and filtered) and <i>A. apraefrontalis</i> (reference, raw and filtered; de novo, raw and filtered). Then stored the commands in a python script (`06-vcf2hdf5.py`) and then ran said script as a batch job (`06-vcf2hdf5.sh`).<br>
 <br>
 Part of the job log is shown below:
 
@@ -414,4 +413,4 @@ SNP database written to /hpcfs/users/a1235304/atm/results/ipyrad/AAP-reference_o
 ### COMPLETE: AAP - reference - Unfiltered ###
 ```
 
-<i>Last updated: 28 April 2025</i>
+<i>Last updated: 30 April 2025</i>
