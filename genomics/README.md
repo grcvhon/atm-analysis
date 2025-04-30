@@ -345,12 +345,14 @@ After running these commands, the VCF files and other output will be stored in o
 
 ---
 
-### Running `ipyrad analysis tools`
+### Running `ipyrad` analysis tools`
 
 ><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
 <br>
 
-Compress the VCF file and `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
+#### Convert VCF to HDF5 format
+Since `ipyrad` analysis tools use HDF5 format as input, we need to convert our VCF files into such format. But before we start converting VCF files (= raw/unfiltered), let us first generate a couple more VCF files containing high quality SNPs (= filtered). To do that, let us first compress the VCF file and `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
+
 ```
 # Compress the VCF
 bgzip -c AAP-denovo.vcf > AAP-denovo.vcf.gz 
@@ -364,15 +366,19 @@ tabix AAP-reference.vcf.gz
 tabix AFO-denovo.vcf.gz
 tabix AFO-reference.vcf.gz
 ```
-Use the `sample-sheet.csv` to generate the species-specific `popmap` file required in `05-vcf-filter-highQ.sh`.
+
+<i>Side-step: use the `sample-sheet.csv` to generate the species-specific `popmap` file required in `05-vcf-filter-highQ.sh`.</i>
+
 ```
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
-Run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs.<br>
+
+We can now run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` to only contain high quality SNPs (= filtered).<br>
 <br>
 
-One more thing is converting the VCF files we just generated (raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ) to HDF5 objects so that `ipyrad` analysis tools can take it as input. I converted these VCF output into an HDF5 format using `converter.run()` under `ipyrad` analysis tools. The basic script structure is below:
+
+Now, we have VCF files as follows for both species: raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ). We can now convert these to HDF5 objects so that `ipyrad` analysis tools can take them as input. I converted these VCF files to HDF5 format using `converter.run()` under `ipyrad` analysis tools. The basic script structure is below:
 ```python
 # Import the ipyrad analysis toolkit module
 import ipyrad.analysis as ipa
