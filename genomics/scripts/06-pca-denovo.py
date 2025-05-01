@@ -9,7 +9,7 @@ import toyplot.pdf
 # Aipysurus foliosquama
 
 ## Unfiltered HDF5 file
-afo_50kb_LD = "/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/AFO-reference.LD50k.snps.hdf5"
+afo_50kb_LD = "/hpcfs/users/a1235304/atm/results/ipyrad/AFO-denovo_outfiles/AFO-denovo.LD50k.snps.hdf5"
 
 ## Read the A. foliosquama population file as a Pandas dataframe
 populations = pd.read_csv(
@@ -45,14 +45,14 @@ df = pd.DataFrame(pca.pcaxes[0], index=pca.names)
 df_variance = pd.DataFrame(pca.variances[0])
 
 ## write the PC axes to a CSV file
-df.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-reference_pca.csv")
-df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-reference_pca-variance.csv")
+df.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-denovo_pca.csv")
+df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-denovo_pca-variance.csv")
 
 ## Generate the figure using `pca.draw()`
 figure, _ = pca.draw(
     0, 1,
     width=600, height=500,
-    label = "Aipysurus foliosquama (R): PC1 vs PC2"
+    label = "Aipysurus foliosquama (DN): PC1 vs PC2"
 )
 
 ## set bg colour to white
@@ -62,12 +62,12 @@ figure.style.update({"background-color": "white"})
 figure.width = 650
 
 ## save as PDF
-toyplot.pdf.render(figure, "/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-reference_PCA-1_2.pdf")
+toyplot.pdf.render(figure, "/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AFO-denovo_PCA-1_2.pdf")
 
 # Aipysurus apraefrontalis
 
 ## Unfiltered HDF5 file
-aap_50kb_LD = "/hpcfs/users/a1235304/atm/results/ipyrad/AAP-reference_outfiles/AAP-reference.LD50k.snps.hdf5"
+aap_50kb_LD = "/hpcfs/users/a1235304/atm/results/ipyrad/AAP-denovo_outfiles/AAP-denovo.LD50k.snps.hdf5"
 
 ## Read the A. foliosquama population file as a Pandas dataframe
 populations = pd.read_csv(
@@ -103,14 +103,14 @@ df = pd.DataFrame(pca.pcaxes[0], index=pca.names)
 df_variance = pd.DataFrame(pca.variances[0])
 
 ## write the PC axes to a CSV file
-df.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-reference_pca.csv")
-df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-reference_pca-variance.csv")
+df.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-denovo_pca.csv")
+df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-denovo_pca-variance.csv")
 
 ## Generate the figure using `pca.draw()`
 figure, _ = pca.draw(
     0, 1,
     width=600, height=500,
-    label = "Aipysurus apraefrontalis (R): PC1 vs PC2"
+    label = "Aipysurus apraefrontalis (DN): PC1 vs PC2"
 )
 
 ## set bg colour to white
@@ -120,4 +120,4 @@ figure.style.update({"background-color": "white"})
 figure.width = 650
 
 ## save as PDF
-toyplot.pdf.render(figure, "/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-reference_PCA-1_2.pdf")
+toyplot.pdf.render(figure, "/hpcfs/users/a1235304/atm/results/ipyrad/population-structure/pca/AAP-denovo_PCA-1_2.pdf")
