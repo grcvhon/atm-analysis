@@ -15,3 +15,6 @@ data/*.tiff
 misc/
 rosm.cache/
 markdown/*.html
+
+genomics/ipyrad_files/AAP-reference_outfiles/
+genomics/ipyrad_files/AFO-reference_outfiles/
