@@ -10,9 +10,11 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=vhon.garcia@adelaide.edu.au
 
-PCA=/hpcfs/users/a1235304/atm/scripts/06-pca.py
+REFPCA=/hpcfs/users/a1235304/atm/scripts/06-pca-reference.py
+DENPCA=/hpcfs/users/a1235304/atm/scripts/06-pca-denovo.py
 
 source "/gpfs/apps/icl/software/Anaconda3/2024.06-1/etc/profile.d/conda.sh"
 conda activate ipyrad
 
-python ${PCA}
+python ${REFPCA}
+python ${DENPCA}
