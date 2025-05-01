@@ -52,7 +52,7 @@ df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structur
 figure, _ = pca.draw(
     0, 1,
     width=600, height=500,
-    label = "Aipysurus foliosquama: PC1 vs PC2"
+    label = "Aipysurus foliosquama (R): PC1 vs PC2"
 )
 
 ## set bg colour to white
@@ -110,7 +110,7 @@ df_variance.to_csv("/hpcfs/users/a1235304/atm/results/ipyrad/population-structur
 figure, _ = pca.draw(
     0, 1,
     width=600, height=500,
-    label = "Aipysurus apraefrontalis: PC1 vs PC2"
+    label = "Aipysurus apraefrontalis (R): PC1 vs PC2"
 )
 
 ## set bg colour to white
