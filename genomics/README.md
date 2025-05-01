@@ -451,6 +451,7 @@ conda activate ipyrad
 conda install scikit-learn -c conda-forge
 conda install -c conda-forge "numpy <2.0.0"
 ```
+Assembly method does not appear to affect the PCA plots. However, I think that missing data per individual affects the plot.
 
 [Back to top](#outline)
 <i>Last updated: 30 April 2025</i>
