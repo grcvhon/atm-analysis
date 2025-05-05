@@ -22,7 +22,7 @@ VCF_IN=${DIR}${IPYRAD}AFO-reference.vcf.gz
 
 # filters
 MAC=3
-MISS=0.9
+MISS=0.7
 QUAL=30
 MIN_DEPTH=5
 MAX_DEPTH=30
