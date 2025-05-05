@@ -17,6 +17,7 @@ conda activate vcftools
 # variables
 DIR=/hpcfs/users/a1235304/atm/results/
 IPYRAD=ipyrad/AFO-reference_outfiles/
+VCFTOOLS=${DIR}vcftools/
 VCF_IN=${DIR}${IPYRAD}AFO-reference.vcf.gz
 
 # filters
