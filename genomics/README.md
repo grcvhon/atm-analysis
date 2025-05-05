@@ -452,9 +452,8 @@ conda install scikit-learn -c conda-forge
 conda install -c conda-forge "numpy <2.0.0"
 ```
 Assembly method does not appear to affect the PCA plots. However, I think that missing data per individual affects the plot.<br>
-<br>
 
-I proceeded with `AFO-` and `AAP-reference-highQfiltered` data set. For the PCA plots, I dropped 4 samples of <i>A. foliosquama</i> which had > 0.01 frequency of missing data (table below)
+For <i>A. foliosquama</i>, I proceeded with `AFO-reference-highQfiltered` data set. I dropped 4 samples which had > 0.01 frequency of missing data (table below).
 |INDV                   |N_DATA  |N_GENOTYPES_FILTERED      |N_MISS|F_MISS      |
 |-----------------------|---------|-------------------------|------|------------|
 |AFO-Afo1-2562140       | 6249    |0                        |51    | 0.00816131 |
@@ -467,8 +466,29 @@ I proceeded with `AFO-` and `AAP-reference-highQfiltered` data set. For the PCA 
 |AFO-KLS1702-4013442    | 6249    |0                        |16    | 0.00256041 |
 |AFO-KLS1707-4013447    | 6249    |0                        |22    | 0.00352056 |
 |AFO-KLS1708-4013448    | 6249    |0                        |9     | 0.00144023 |
-|AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 | 
+|AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 |
 |AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
+PCA plot PDF: [AFO-reference-highQfiltered-drop_PCA-1_2](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)
 
-[Bac| to top](#outline)
+For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
+|INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
+|----------------------------------------------------------|
+|AAP-Aaprae_4.12.01-2562202      |5873    |0       |539     |0.0917759|
+|AAP-KLS0834-2562130     |5873    |0       |209     |0.0355866|
+|AAP-KLS1435-3593375     |5873    |0       |20      |0.00340541|
+|AAP-KLS1436-3593362     |5873    |0       |9       |0.00153244|
+|AAP-KLS1454-3593372     |5873    |0       |24      |0.0040865|
+|AAP-KLS1457-3593394     |5873    |0       |45      |0.00766218|
+|AAP-KLS1459-3593395     |5873    |0       |12      |0.00204325|
+|AAP-KLS1465-3593393     |5873    |0       |8       |0.00136217|
+|AAP-KLS1468-3593397     |5873    |0       |35      |0.00595948|
+|AAP-KLS1477-3593356     |5873    |0       |28      |0.00476758|
+|AAP-KLS1484-3517861     |5873    |0       |219     |0.0372893|
+|AAP-KLS1486-3517868     |5873    |0       |405     |0.0689596|
+|AAP-KLS1490-3517879     |5873    |0       |342     |0.0582326|
+|AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
+|AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
+
+
+[Back to top](#outline)
 <i>Last updated: 30 April 2025</i>
