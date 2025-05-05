@@ -468,7 +468,6 @@ For <i>A. foliosquama</i>, I proceeded with `AFO-reference-highQfiltered` data s
 |AFO-KLS1708-4013448    | 6249    |0                        |9     | 0.00144023 |
 |AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 |
 |AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
-<br>
 
 PCA plot PDF: [AFO-reference-highQfiltered-drop_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)<br>
 
