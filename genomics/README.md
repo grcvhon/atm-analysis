@@ -451,7 +451,24 @@ conda activate ipyrad
 conda install scikit-learn -c conda-forge
 conda install -c conda-forge "numpy <2.0.0"
 ```
-Assembly method does not appear to affect the PCA plots. However, I think that missing data per individual affects the plot.
+Assembly method does not appear to affect the PCA plots. However, I think that missing data per individual affects the plot.<br>
+<br>
 
-[Back to top](#outline)
+I proceeded with `AFO-` and `AAP-reference-highQfiltered` data set. For the PCA plots, I dropped 4 samples of <i>A. foliosquama</i> which had > 0.01 frequency of missing data (table below)
+|INDV|                  |N_DATA|  |N_GENOTYPES_FILTERED|    |N_MISS|  |F_MISS   |
+|-------------------------------------------------------------------------------|
+|AFO-Afo1-2562140       | 6249    |0                        |51    | 0.00816131 |
+|AFO-Afo8-2562249       | 6249    |0                        |1565  | 0.25044    |
+|AFO-Afo8-2571080       | 6249    |0                        |1831  | 0.293007   |
+|AFO-KLS1202-3593377    | 6249    |0                        |134   | 0.0214434  |
+|AFO-KLS1696-4013436    | 6249    |0                        |86    | 0.0137622  |
+|AFO-KLS1700-4013440    | 6249    |0                        |4     | 0.000640102|
+|AFO-KLS1701-4013441    | 6249    |0                        |17    | 0.00272044 |
+|AFO-KLS1702-4013442    | 6249    |0                        |16    | 0.00256041 |
+|AFO-KLS1707-4013447    | 6249    |0                        |22    | 0.00352056 |
+|AFO-KLS1708-4013448    | 6249    |0                        |9     | 0.00144023 |
+|AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 | 
+|AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
+
+[Bac| to top](#outline)
 <i>Last updated: 30 April 2025</i>
