@@ -472,7 +472,7 @@ PCA plot PDF: [AFO-reference-highQfiltered-drop_PCA-1_2](https://github.com/grcv
 
 For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
 |INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
-|----------------------------------------------------------|
+|--------|--------|------------------------|--------|------|
 |AAP-Aaprae_4.12.01-2562202      |5873    |0       |539     |0.0917759|
 |AAP-KLS0834-2562130     |5873    |0       |209     |0.0355866|
 |AAP-KLS1435-3593375     |5873    |0       |20      |0.00340541|
