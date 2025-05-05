@@ -27,6 +27,6 @@ QUAL=30
 MIN_DEPTH=5
 MAX_DEPTH=30
 
-VCF_OUT=${DIR}${VCFTOOLS}AFO-reference.q${QUAL}.min${MIN_DEPTH}.max${MAX_DEPTH}.miss${MISS}.mac${MAC}.vcf.gz
+VCF_OUT=${VCFTOOLS}AFO-reference.q${QUAL}.min${MIN_DEPTH}.max${MAX_DEPTH}.miss${MISS}.mac${MAC}.vcf.gz
 
 vcftools --gzvcf ${VCF_IN} --remove-indels --mac ${MAC} --max-missing ${MISS} --minQ ${QUAL} --min-meanDP ${MIN_DEPTH} --max-meanDP ${MAX_DEPTH} --minDP ${MIN_DEPTH} --maxDP ${MAX_DEPTH} --recode --stdout | gzip -c > ${VCF_OUT}
