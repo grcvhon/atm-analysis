@@ -12,7 +12,7 @@
 
 # load conda
 source "/gpfs/apps/icl/software/Anaconda3/2024.06-1/etc/profile.d/conda.sh"
-conda activate ipyrad
+conda activate vcftools
 
 # variables
 DIR=/hpcfs/users/a1235304/atm/results/
