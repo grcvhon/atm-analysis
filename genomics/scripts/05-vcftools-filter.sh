@@ -21,8 +21,8 @@ VCFTOOLS=${DIR}vcftools/
 VCF_IN=${DIR}${IPYRAD}AFO-reference.vcf.gz
 
 # filters
-MAC=3
-MISS=0.7
+MAF=0.1
+MISS=0.8
 QUAL=30
 MIN_DEPTH=5
 MAX_DEPTH=30
