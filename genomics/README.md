@@ -469,7 +469,8 @@ For <i>A. foliosquama</i>, I proceeded with `AFO-reference-highQfiltered` data s
 |AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 |
 |AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
 
-PCA plot PDF: [AFO-reference-highQfiltered-drop_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)<br>
+PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
+[AFO-reference-highQfiltered-drop_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)<br>
 
 For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
 |INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
@@ -490,7 +491,8 @@ For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` dat
 |AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
 
-PCA plot PDF: [AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)
+PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
+[AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)
 
 [Back to top](#outline)
-<i>Last updated: 5 May 2025</i>
+<i>Last updated: 7 May 2025</i>
