@@ -473,8 +473,10 @@ Individual missingness for `AFO-reference.highQ.filtered`:
 
 PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
 [AFO-reference-highQfiltered-drop_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)<br>
-
+<br>
 For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
+
+Individual missingness for `AAP-reference.highQ.filtered`:    
 |INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
 |--------|--------|------------------------|--------|------|
 |AAP-Aaprae_4.12.01-2562202      |5873    |0       |539     |0.0917759|
