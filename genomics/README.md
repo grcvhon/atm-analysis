@@ -497,7 +497,10 @@ Individual missingness for `AAP-reference.highQ.filtered`:
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
 
 PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
-[AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)
+[AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)<br>
+<br>
+
+From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`.
 
 [Back to top](#outline)
 <i>Last updated: 7 May 2025</i>
