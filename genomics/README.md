@@ -455,8 +455,7 @@ Assembly method does not appear to affect the PCA plots. However, I think that m
 
 For <i>A. foliosquama</i>, I proceeded with `AFO-reference-highQ.filtered` data set. I dropped 4 samples which had > 0.01 frequency of missing data (table below).
 
-|Individual missingness for `AFO-reference.highQ.filtered`                      |
-|-------------------------------------------------------------------------------|
+Individual missingness for `AFO-reference.highQ.filtered`:                      
 |INDV                   |N_DATA  |N_GENOTYPES_FILTERED      |N_MISS|F_MISS      |
 |-----------------------|---------|-------------------------|------|------------|
 |AFO-Afo1-2562140       | 6249    |0                        |51    | 0.00816131 |
