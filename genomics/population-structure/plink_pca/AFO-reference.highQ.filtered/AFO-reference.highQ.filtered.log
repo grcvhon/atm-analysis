@@ -1,0 +1,39 @@
+PLINK v2.0.0-a.6.9LM 64-bit Intel (29 Jan 2025)
+Options in effect:
+  --allow-extra-chr
+  --bad-freqs
+  --double-id
+  --make-pgen
+  --out ./AFO-reference.highQ.filtered
+  --pca
+  --set-missing-var-ids @:#
+  --vcf ./ipyrad/AFO-reference_outfiles/AFO-reference.highQ.filtered.vcf.gz
+
+Hostname: p2-log-1
+Working directory: /scratchdata1/users/a1235304/atm/results
+Start time: Wed May  7 12:50:00 2025
+
+Random number seed: 1746588000
+257198 MiB RAM detected, ~163691 available; reserving 128599 MiB for main
+workspace.
+Using up to 72 threads (change this with --threads).
+--vcf: 6249 variants scanned.
+--vcf: ./AFO-reference.highQ.filtered-temporary.pgen +
+./AFO-reference.highQ.filtered-temporary.pvar.zst +
+./AFO-reference.highQ.filtered-temporary.psam written.
+12 samples (0 females, 0 males, 12 ambiguous; 12 founders) loaded from
+./AFO-reference.highQ.filtered-temporary.psam.
+Note: 155 nonstandard chromosome codes present.
+6249 variants loaded from ./AFO-reference.highQ.filtered-temporary.pvar.zst.
+Note: No phenotype data present.
+Calculating allele frequencies... done.
+Constructing GRM: done.
+Correcting for missingness... done.
+Extracting eigenvalues and eigenvectors... done.
+--pca: Eigenvectors written to ./AFO-reference.highQ.filtered.eigenvec , and
+eigenvalues written to ./AFO-reference.highQ.filtered.eigenval .
+Writing ./AFO-reference.highQ.filtered.psam ... done.
+Writing ./AFO-reference.highQ.filtered.pvar ... done.
+Writing ./AFO-reference.highQ.filtered.pgen ... done.
+
+End time: Wed May  7 12:50:00 2025
