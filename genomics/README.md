@@ -501,11 +501,13 @@ PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,00
 <br>
 
 From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`. I initially ran the code below to get PCA-related files from `plink2`.
-```
+```bash
 plink2 --vcf ./ipyrad/AFO-reference_outfiles/AFO-reference.highQ.filtered.vcf.gz \
 --double-id --allow-extra-chr --set-missing-var-ids @:# --make-pgen --pca \
 --out ./AFO-reference.highQ.filtered --bad-freqs
 ```
+I also prepared a PCA plot script function specific for AFO and AAP (see [`pca_plot.R`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/pca_plot.R))
+
 
 [Back to top](#outline)
 <i>Last updated: 7 May 2025</i>
