@@ -500,8 +500,7 @@ PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,00
 [AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)<br>
 <br>
 
-From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`.<br>
-I initially ran the code below to get PCA-related files from `plink2`.
+From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`. I initially ran the code below to get PCA-related files from `plink2`.
 ```
 plink2 --vcf ./ipyrad/AFO-reference_outfiles/AFO-reference.highQ.filtered.vcf.gz \
 --double-id --allow-extra-chr --set-missing-var-ids @:# --make-pgen --pca \
