@@ -408,19 +408,10 @@ Moving forward, for <i>A. foliosquama</i>: I will remove any sample that has `F_
 
 #### Principal Components Analysis
 
-
-
-
-
-
-For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference.highQ.filtered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
-
-
-
-From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`. I initially ran the code below to get PCA-related files from `plink2`.
+I generated necessary files for a PCA plot using `plink2` running the command below:
 ```bash
 plink2 --vcf ./ipyrad/AFO-reference_outfiles/AFO-reference.highQ.filtered.vcf.gz \
---double-id --allow-extra-chr --set-missing-var-ids @:# --make-pgen --pca \
+--double-id --allow-extra-chr --set-missing-var-ids @:# --pca \
 --out ./AFO-reference.highQ.filtered --bad-freqs
 ```
 I also prepared a PCA plot script function specific for AFO and AAP (see [`pca_plot.R`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/pca_plot.R))
