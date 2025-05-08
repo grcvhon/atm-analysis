@@ -40,6 +40,27 @@ pca.plot <- function(eigenvec,eigenval,species){
     geom_point(size = 3) +
     coord_fixed(xlim = NULL, ylim = NULL, ratio = 1, expand = TRUE, clip = "on") +
     theme_light() +
-    xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)"))
-  
+    xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)")) +
+    labs(title = paste0("Aipysurus ",species)) +
+    theme(plot.title = element_text(hjust = 0.5, face = "italic"))
+
 }
+
+# save plots
+pdf("./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered.keep/AFO-reference.highQ.filtered.keep_pca.pdf")
+pca.plot(eigenvec = "./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered.keep/AFO-reference.highQ.filtered.keep.eigenvec",
+         eigenval = "./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered.keep/AFO-reference.highQ.filtered.keep.eigenval",
+         species = "foliosquama")
+dev.off()
+
+pdf("./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered/AFO-reference.highQ.filtered_pca.pdf")
+pca.plot(eigenvec = "./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered/AFO-reference.highQ.filtered.eigenvec",
+         eigenval = "./genomics/population-structure/plink_pca/AFO-reference.highQ.filtered/AFO-reference.highQ.filtered.eigenval",
+         species = "foliosquama")
+dev.off()
+
+pdf("./genomics/population-structure/plink_pca/AAP-reference.highQ.filtered/AAP-reference.highQ.filtered_pca.pdf")
+pca.plot(eigenvec = "./genomics/population-structure/plink_pca/AAP-reference.highQ.filtered/AAP-reference.highQ.filtered.eigenvec",
+         eigenval = "./genomics/population-structure/plink_pca/AAP-reference.highQ.filtered/AAP-reference.highQ.filtered.eigenval",
+         species = "apraefrontalis")
+dev.off()
