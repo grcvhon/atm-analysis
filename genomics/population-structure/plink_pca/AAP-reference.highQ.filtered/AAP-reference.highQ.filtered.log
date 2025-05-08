@@ -1,0 +1,37 @@
+PLINK v2.0.0-a.6.9LM 64-bit Intel (29 Jan 2025)
+Options in effect:
+  --allow-extra-chr
+  --bad-freqs
+  --double-id
+  --out ../../plink/AAP-reference.highQ.filtered
+  --pca
+  --set-missing-var-ids @:#
+  --vcf AAP-reference.highQ.filtered.vcf.gz
+
+Hostname: p2-log-1
+Working directory: /scratchdata1/users/a1235304/atm/results/ipyrad/AAP-reference_outfiles
+Start time: Thu May  8 16:02:39 2025
+
+Random number seed: 1746685959
+257198 MiB RAM detected, ~135004 available; reserving 128599 MiB for main
+workspace.
+Using up to 72 threads (change this with --threads).
+--vcf: 5873 variants scanned.
+--vcf: ../../plink/AAP-reference.highQ.filtered-temporary.pgen +
+../../plink/AAP-reference.highQ.filtered-temporary.pvar.zst +
+../../plink/AAP-reference.highQ.filtered-temporary.psam written.
+15 samples (0 females, 0 males, 15 ambiguous; 15 founders) loaded from
+../../plink/AAP-reference.highQ.filtered-temporary.psam.
+Note: 163 nonstandard chromosome codes present.
+5873 variants loaded from
+../../plink/AAP-reference.highQ.filtered-temporary.pvar.zst.
+Note: No phenotype data present.
+Calculating allele frequencies... done.
+Constructing GRM: done.
+Correcting for missingness... done.
+Extracting eigenvalues and eigenvectors... done.
+--pca: Eigenvectors written to
+../../plink/AAP-reference.highQ.filtered.eigenvec , and eigenvalues written to
+../../plink/AAP-reference.highQ.filtered.eigenval .
+
+End time: Thu May  8 16:02:39 2025
