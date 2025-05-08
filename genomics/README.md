@@ -364,7 +364,7 @@ The `05-vcf-filter-highQ.sh` script will generate `AFO-reference.highQ.filtered.
 [Back to top](#outline)
 
 #### <i>Examining filtered VCF</i>
-It is good to examine the resulting VCF file. I particularly looked at the frequency of missing data per sample (show in the following tables).<br>
+Examining the resulting VCF file, I particularly looked at the frequency of missing data per sample (shown in the following tables).<br>
 
 Individual missingness for `AFO-reference.highQ.filtered`:                      
 |INDV                   |N_DATA  |N_GENOTYPES_FILTERED      |N_MISS|F_MISS      |
@@ -402,7 +402,7 @@ Individual missingness for `AAP-reference.highQ.filtered`:
 |AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
 
-Moving forward, for <i>A. foliosquama</i>: I will remove the any sample that has `F_MISS` (= frequency of missing data) of > 0.01. For <i>A. apraefrontalis</i>: I retain all samples as otherwise, there will be no representation from Ashmore Reef (key site).
+Moving forward, for <i>A. foliosquama</i>: I will remove any sample that has `F_MISS` (= frequency of missing data) of > 0.01. For <i>A. apraefrontalis</i>: I will retain all samples as otherwise, there will be no representation from Ashmore Reef (key site).
 
 [Back to top](#outline)
 
