@@ -18,6 +18,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Running ipyrad](#running-ipyrad)
 - [Preparing `ipyrad` raw VCF file output](#preparing-ipyrad-raw-vcf-file-output)
   - [Filtering for high quality variants](#filtering-for-high-quality-variants)
+  - [Examining filtered VCF](#examining-filtered-vcf)
   - [Principal Components Analysis](#principal-components-analysis)
 
 ---
@@ -348,7 +349,7 @@ After running these commands, the VCF files and other output will be stored in o
 
 ### Preparing `ipyrad` raw VCF file output
 
-#### Filtering for high quality variants
+#### <i>Filtering for high quality variants</i>
 I filtered the raw VCF file output from `ipyrad` to only contain high quality SNPs. This step was done by running `05-vcf-filter-highQ.sh`. This script required species-specific `popmap` file and can be generated with the commands below:
 ```
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
@@ -362,9 +363,8 @@ The `05-vcf-filter-highQ.sh` script will generate `AFO-reference.highQ.filtered.
 
 [Back to top](#outline)
 
-#### Principal Components Analysis
-
-For <i>A. foliosquama</i>, I proceeded with `AFO-reference.highQ.filtered` data set. I dropped 4 samples which had > 0.01 frequency of missing data (table below).
+#### <i>Examining filtered VCF</i>
+It is good to examine the resulting VCF file. I particularly looked at the frequency of missing data per sample (show in the following tables).<br>
 
 Individual missingness for `AFO-reference.highQ.filtered`:                      
 |INDV                   |N_DATA  |N_GENOTYPES_FILTERED      |N_MISS|F_MISS      |
@@ -381,8 +381,7 @@ Individual missingness for `AFO-reference.highQ.filtered`:
 |AFO-KLS1708-4013448    | 6249    |0                        |9     | 0.00144023 |
 |AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 |
 |AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
-
-For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference.highQ.filtered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
+<br>
 
 Individual missingness for `AAP-reference.highQ.filtered`:    
 |INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
@@ -402,6 +401,21 @@ Individual missingness for `AAP-reference.highQ.filtered`:
 |AAP-KLS1490-3517879     |5873    |0       |342     |0.0582326|
 |AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
+
+Moving forward, for <i>A. foliosquama</i>: I will remove the any sample that has `F_MISS` (= frequency of missing data) of > 0.01. For <i>A. apraefrontalis</i>: I retain all samples as otherwise, there will be no representation from Ashmore Reef (key site).
+
+[Back to top](#outline)
+
+#### Principal Components Analysis
+
+
+
+
+
+
+For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference.highQ.filtered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
+
+
 
 From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`. I initially ran the code below to get PCA-related files from `plink2`.
 ```bash
