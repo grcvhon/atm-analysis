@@ -40,8 +40,8 @@ var_based_stats <- function(lqual,
   
 }
 
-var_based_stats(lqual = "AFO-reference.lqual",
-                ldepth.mean = "AFO-reference.ldepth.mean",
-                lmiss = "AFO-reference.lmiss",
-                idepth = "AFO-reference.idepth",
-                imiss = "AFO-denovo.imiss")
+var_based_stats(lqual = "./genomics/vcftools/AFO-reference.lqual",
+                ldepth.mean = "./genomics/vcftools/AFO-reference.ldepth.mean",
+                lmiss = "./genomics/vcftools/AFO-reference.lmiss",
+                idepth = "./genomics/vcftools/AFO-reference.idepth",
+                imiss = "./genomics/vcftools/AFO-denovo.imiss")
