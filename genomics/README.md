@@ -18,7 +18,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Running ipyrad](#running-ipyrad)
 - [Preparing `ipyrad` raw VCF file output](#preparing-ipyrad-raw-vcf-file-output)
   - [Filtering for high quality variants](#filtering-for-high-quality-variants)
-  - [Principal Components Analysis](#pca)
+  - [Principal Components Analysis](#principal-components-analysis)
 
 ---
 
