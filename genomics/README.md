@@ -16,9 +16,9 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
 - [Prepare sample sheet of <i>Aipysurus apraefrontalis</i> and <i>A. foliosquama</i> individuals with RADseq data](#prepare-sample-sheet-of-aipysurus-apraefrontalis-and-a-foliosquama-individuals-with-radseq-data)
 - [On kraken2 and UniVec databases](#on-kraken2-and-univec-databases)
 - [Running ipyrad](#running-ipyrad)
-- [Running ipyrad analysis tools](#running-ipyrad-analysis-tools)
-  - [Convert VCF to HDF5](#running-ipyrad-analysis-tools)
-  - [PCA](#pca)
+- [Preparing `ipyrad` raw VCF file output](#preparing-ipyrad-raw-vcf-file-output)
+  - [Filtering for high quality variants](#filtering-for-high-quality-variants)
+  - [Principal Components Analysis](#pca)
 
 ---
 
@@ -346,114 +346,25 @@ After running these commands, the VCF files and other output will be stored in o
 
 ---
 
-### Running `ipyrad` analysis tools
+### Preparing `ipyrad` raw VCF file output
 
-><i>The ipyrad-analysis toolkit is a Python interface for taking the output files produced in a ipyrad assembly and running a suite of evolutionary analysis tools with convenient features for filtering for missing data, grouping individuals into populations, dropping samples, and more.</i> [https://ipyrad.readthedocs.io/en/master/API-analysis/index.html]<br>
-
-#### <ins>Convert VCF to HDF5 format</ins>
-Since `ipyrad` analysis tools use HDF5 format as input, we need to convert our VCF files into such format. But before we start converting VCF files (= raw/unfiltered), let us first generate a couple more VCF files containing high quality SNPs (= filtered). To do that, let us first compress the VCF file and `tabix` index the compressed VCF (creates `.vcf.gz.tbi`)
-
-```
-# Compress the VCF
-bgzip -c AAP-denovo.vcf > AAP-denovo.vcf.gz 
-bgzip -c AAP-reference.vcf > AAP-reference.vcf.gz 
-bgzip -c AFO-denovo.vcf > AFO-denovo.vcf.gz 
-bgzip -c AFO-reference.vcf > AFO-reference.vcf.gz
-
-# tabix index the compressed VCF
-tabix AAP-denovo.vcf.gz
-tabix AAP-reference.vcf.gz
-tabix AFO-denovo.vcf.gz
-tabix AFO-reference.vcf.gz
-```
-
-<i>Side-step: use the `sample-sheet.csv` to generate the species-specific `popmap` file required in `05-vcf-filter-highQ.sh`.</i>
-
+#### Filtering for high quality variants
+I filtered the raw VCF file output from `ipyrad` to only contain high quality SNPs. This step was done by running `05-vcf-filter-highQ.sh`. This script required species-specific `popmap` file and can be generated with the commands below:
 ```
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AFO" > AFO-popmap.tsv
 awk -F, '{print $3,$10}' ../sample-sheet.csv | grep "AAP" > AAP-popmap.tsv
 ```
 
-We can now run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` (= raw/unfiltered) to only contain high quality SNPs (= filtered).<br>
+We can now run `05-vcf-filter-highQ.sh` which will filter the VCF output from `ipyrad` (= raw/unfiltered) to only contain high quality SNPs (= filtered). This script is also the same as running `vcftools` with the filters set as follows: `--max-missing 0.9`, `--minQ 10`, `--minDP 3`
 <br>
 
-
-Now, we have VCF files as follows for both species: raw = unfiltered ipyrad output, filtered = filtered ipyrad output from a.k.a. highQ. We can now convert these to HDF5 objects so that `ipyrad` analysis tools can take them as input. I converted these VCF files to HDF5 format using `converter.run()` under `ipyrad` analysis tools. This script also includes sampling SNPs at linkage disequilibrium block sizes to theoretically sample unlinked SNPs (important for downstream analyses like PCA and STRUCTURE).<br>
-<br>
-
-The basic script structure is below:
-```python
-# Import the ipyrad analysis toolkit module
-import ipyrad.analysis as ipa
-
-## Aipysurus foliosquama - reference - Unfiltered ipyrad output
-converter = ipa.vcf_to_hdf5(
-    name="AFO-reference.LD50k",
-    data="/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/AFO-reference.vcf.gz",
-    workdir='/hpcfs/users/a1235304/atm/results/ipyrad/AFO-reference_outfiles/',
-    ld_block_size=50000
-)
-converter.run()
-```
-I did this for <i>A. foliosquama</i> (reference, raw and filtered; de novo, raw and filtered) and <i>A. apraefrontalis</i> (reference, raw and filtered; de novo, raw and filtered). Then stored the commands in a python script (`06-vcf2hdf5.py`) and then ran said script as a batch job (`06-vcf2hdf5.sh`).<br>
-<br>
-Part of the job log is shown below:
-
-```
-Starting conversion of vcf to hdf5 for Aipysurus foliosquama...
- 
-### CONVERTING: AFO - reference - Unfiltered ipyrad output to hdf5 ###
-Indexing VCF to HDF5 database file
-hdf5 file exists. Use `force=True` to overwrite.
-### COMPLETE: AFO - reference - Unfiltered ###
-
-...
-
-Starting conversion of vcf to hdf5 for Aipysurus apraefrontalis...
- 
-### CONVERTING: AAP - reference - Unfiltered ipyrad output to hdf5 ###
-Indexing VCF to HDF5 database file
-VCF: 20189 SNPs; 252 scaffolds
-[                    ]   0% 0:00:00 | converting VCF to HDF5 /home/a1235304/.conda/envs/ipyrad/lib/python3.12/site-packages/ipyrad/analysis/vcf_to_hdf5.py:525: 
-FutureWarning: Series.view is deprecated and will be removed in a future version. Use ``astype`` as an alternative to change the dtype.
-  ref = chunkdf.iloc[:, 3].astype(bytes).view(np.int8).values
-[####################] 100% 0:00:14 | converting VCF to HDF5 
-HDF5: 20189 SNPs; 7628 linkage group
-SNP database written to /hpcfs/users/a1235304/atm/results/ipyrad/AAP-reference_outfiles/AAP-reference.LD50k.snps.hdf5
-### COMPLETE: AAP - reference - Unfiltered ###
-```
-
-Listing the HDF5 files we just generated:
-```
-# Aipysurus foliosquama
-|---AFO-reference.LD50k.snps.hdf5
-|---AFO-reference.highQ.filtered.LD50k.snps.hdf5
-|---AFO-denovo.LD50k.snps.hdf5
-|---AFO-denovo.highQ.filtered.LD50k.snps.hdf5
-
-# Aipysurus apraefrontalis
-|---AAP-reference.LD50k.snps.hdf5
-|---AAP-reference.highQ.filtered.LD50k.snps.hdf5
-|---AAP-denovo.LD50k.snps.hdf5
-|---AAP-denovo.highQ.filtered.LD50k.snps.hdf5
-```
+The `05-vcf-filter-highQ.sh` script will generate `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`.
 
 [Back to top](#outline)
 
-#### <ins>PCA</ins>
-In this section, we will use the unfiltered HDF5 files we generated as we will apply filters in the scripts below. I used the HDF5 files which were generated using a reference genome (<i>Aipysurus laevis</i>) (i.e., `reference ## [5] assembly_method` in `ipyrad`). All result files from this section are written in the `results/ipyrad/population-structure/pca` directory.<br>
+#### Principal Components Analysis
 
-To produce the PCA plot, I contained the workflow in `06-pca.py` following https://github.com/a-lud/sea-snake-dart/blob/main/scripts/06-pca.ipynb, then ran this Python script as a batch job in `06-pca.sh`. Note that the packages `scikit-learn` and `numpy` are required. Please install these in the same environment where `ipyrad` was installed.<br>
-```
-conda activate ipyrad
-
-# now install the additional packages inside the activated ipyrad environment
-conda install scikit-learn -c conda-forge
-conda install -c conda-forge "numpy <2.0.0"
-```
-Assembly method does not appear to affect the PCA plots. However, I think that missing data per individual affects the plot.<br>
-
-For <i>A. foliosquama</i>, I proceeded with `AFO-reference-highQ.filtered` data set. I dropped 4 samples which had > 0.01 frequency of missing data (table below).
+For <i>A. foliosquama</i>, I proceeded with `AFO-reference.highQ.filtered` data set. I dropped 4 samples which had > 0.01 frequency of missing data (table below).
 
 Individual missingness for `AFO-reference.highQ.filtered`:                      
 |INDV                   |N_DATA  |N_GENOTYPES_FILTERED      |N_MISS|F_MISS      |
@@ -471,11 +382,7 @@ Individual missingness for `AFO-reference.highQ.filtered`:
 |AFO-KLS1710-4013450    | 6249    |0                        |36    | 0.00576092 |
 |AFO-SS171014-02-2562167| 6249    |0                        |27    | 0.00432069 |
 
-PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
-[AFO-reference-highQfiltered-drop_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AFO-reference-highQfiltered-drop_PCA-1_2.pdf)<br>
-<br>
-
-For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference-highQfiltered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
+For <i>A. apraefrontalis</i>, I proceeded with `AAP-reference.highQ.filtered` data set. I did not drop any samples as otherwise, there will be no representation from key Ashmore Reef.
 
 Individual missingness for `AAP-reference.highQ.filtered`:    
 |INDV    |N_DATA  |N_GENOTYPES_FILTERED    |N_MISS  |F_MISS|
@@ -495,10 +402,6 @@ Individual missingness for `AAP-reference.highQ.filtered`:
 |AAP-KLS1490-3517879     |5873    |0       |342     |0.0582326|
 |AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
-
-PCA plot PDF (<b>after converting to HDF5 format with subsampling for LD = 50,000 bp</b>):<br>
-[AAP-reference-highQfiltered_PCA-1_2.pdf](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/pca/AAP-reference-highQfiltered_PCA-1_2.pdf)<br>
-<br>
 
 From here I will use `AFO-reference.highQ.filtered.vcf.gz` and `AAP-reference.highQ.filtered.vcf.gz`; and also generate the necessary files for a PCA plot using `plink2`. I initially ran the code below to get PCA-related files from `plink2`.
 ```bash
