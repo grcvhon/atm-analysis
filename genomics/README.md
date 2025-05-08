@@ -402,11 +402,17 @@ Individual missingness for `AAP-reference.highQ.filtered`:
 |AAP-KLS1509-3593337     |5873    |0       |17      |0.0028946|
 |AAP-SS171013-03-2562139 |5873    |0       |121     |0.0206028|
 
-Moving forward, for <i>A. foliosquama</i>: I will remove any sample that has `F_MISS` (= frequency of missing data) of > 0.01. For <i>A. apraefrontalis</i>: I will retain all samples as otherwise, there will be no representation from Ashmore Reef (key site).
+Moving forward, for <i>A. foliosquama</i>: I will keep any sample that has `F_MISS` (= frequency of missing data) of < 0.01. For <i>A. apraefrontalis</i>: I will retain all samples as otherwise, there will be no representation from Ashmore Reef (key site).<br>
+
+Keep individuals of <i>A. foliosquama</i> by running command below:
+```bash
+vcftools --gzvcf AFO-reference.highQ.filtered.vcf.gz --keep AFO-keep.txt --recode --stdout | gzip -c > AFO-reference.highQ.filtered.keep.vcf.gz
+```
+
 
 [Back to top](#outline)
 
-#### Principal Components Analysis
+#### <i>Principal Components Analysis</i>
 
 I generated necessary files for a PCA plot using `plink2` running the command below:
 ```bash
@@ -416,6 +422,10 @@ plink2 --vcf ./ipyrad/AFO-reference_outfiles/AFO-reference.highQ.filtered.vcf.gz
 ```
 I also prepared a PCA plot script function specific for AFO and AAP (see [`pca_plot.R`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/pca_plot.R))
 
+View the PCA plots here:
+- [PCA plot for <i>A. foliosquama</i>](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/plink_pca/AFO-reference.highQ.filtered.keep/AFO-reference.highQ.filtered.keep_pca.pdf)
+- [PCA plot for <i>A. apraefrontalis</i>](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/plink_pca/AAP-reference.highQ.filtered/AAP-reference.highQ.filtered_pca.pdf)
 
 [Back to top](#outline)
 <i>Last updated: 7 May 2025</i>
+
