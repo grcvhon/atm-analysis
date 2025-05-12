@@ -3,6 +3,7 @@
 # by: Vhon Garcia
 
 library(algatr)
+alazygatr_packages()
 
 # read in AFO vcf
 AFO_vcf <- read.vcfR("./genomics/vcf_files/AFO-reference.highQ.filtered.keep.vcf", verbose = TRUE)
@@ -32,6 +33,10 @@ AFO_coords <- sample_sheet %>% filter(id_clean %in% AFO_keep$sample)
 AFO_coords <- AFO_coords %>% arrange(id_clean, AFO_keep$sample)
 # retain only longitude and latitude information
 AFO_coords <- (AFO_coords[,8:9])
+# move replicate coordinates by 0.0001; two snakes in one shot
+AFO_coords[2,] <- AFO_coords[2,]+0.0001
+# check that row 2 values have changed
+AFO_coords
 # rename colnames as x and y
 colnames(AFO_coords) <- c("x","y")
 # preview AFO_coords
@@ -62,6 +67,35 @@ AFO_points <- convert_2_sf(df_name = AFO_coords)
 mapview(AFO_points) + mapview(bathymetry, na.color=NA) # two points are the same x,y (two AFO in one shot = same GPS)
 
 
+# TESS3
+AFO_dosage <- vcf_to_dosage(AFO_vcf)
+AFO_tess <- tess_ktest(AFO_dosage,
+                       AFO_coords,
+                       Kvals = 1:8,
+                       ploidy = 2,
+                       K_selection = "auto")
+AFO_tess3obj <- AFO_tess$tess3_obj
+AFO_K <- AFO_tess[["K"]]
+AFO_qmat <- qmatrix(AFO_tess3obj, K = AFO_K)
+AFO_qmat
+tess_barplot(AFO_qmat)
+tess_ggbarplot(AFO_qmat)
+
+AFO_pcdists <- gen_dist(AFO_vcf, dist_type = "pc", npc_selection = "auto", criticalpoint = 0.9793)
+gen_dist_hm(AFO_pcdists)
 
 
+# MMRR
+# Convert genetic data to matrix
+Y <- as.matrix(AFO_pcdists)
+# Extract values from our environmental raster
+AFO_env <- raster::extract(bathymetry, AFO_points)
+# Calculate environmental distances
+X <- env_dist(AFO_env)
+# Add geographic distance to X
+X[["geodist"]] <- geo_dist(AFO_points)
 
+# Run MMRR
+AFO_resfull <- mmrr_run(Y, X, stdz = TRUE, nperm = 999, model = "full")
+# Interpret results
+AFO_resfull
