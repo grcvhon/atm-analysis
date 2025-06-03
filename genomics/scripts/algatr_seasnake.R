@@ -211,8 +211,62 @@ ala_coords
 
 # download data from worldclim bound by ala_coords
 ala_wclim <- get_worldclim(coords = ala_coords, res = 5, save_output = TRUE)
-plot(ala_wclim)
+plot(ala_wclim[[1]])
 points(ala_coords, pch = 19)
-check_env(ala_wclim)
 
-# ...collinearity issues next
+### MARSPEC ----
+marspec_annual_names <- list_layers("MARSPEC", monthly = FALSE)$name # as guide
+marspec_annual <- list_layers("MARSPEC", monthly = FALSE)$layer_code # all annual layers
+ala_marspec <- load_layers(marspec_annual, rasterstack = TRUE)
+ala_marspec <- ala_marspec %>% raster::crop(ala_coords)
+plot(ala_marspec_crop[[14]])
+
+## Detecting collinearity ----
+
+# collinearity among environmental layers
+# calculate the Pearson correlation coefficient for pairwise comparisons of environmental layers
+cors_env <- check_env(ala_wclim) 
+cors_env_m <- check_env(ala_marspec_crop)
+
+# collinearity among extracted environmental variables
+# determine collinearity using Pearson's correlation coefficients on extracted env vars at each sampling coordinate
+# also generate a plot showing the pairwise correlations between environmental variables
+check_result <- check_vals(ala_wclim, ala_coords) 
+check_result_m <- check_vals(ala_marspec_crop, ala_coords)
+
+# collinearity between distances
+# determines collinearity between geographic and environmental distances
+# does so by extracting values at sampling coordinates, 
+# and then calculating geographic and environmental distances 
+# and runs a Mantel test on resulting distances.
+# Environmental distance = Euclidean distances
+# Geographic distances = can be Euclidean, topographic, or resistance distance
+check_results <- check_dists(ala_wclim, ala_coords)
+check_results_m <- check_dists(ala_marspec_crop, ala_coords)
+head(check_results$mantel_df)
+
+## Raster PCA on environmental layers ----
+
+# result of this function is a list containing the model information, 
+# and a RasterBrick object containing multiple layers of PCA scores. 
+# One can also use the nComp argument to only extract the top n PCs; 
+# in many cases, the top three PCs may explain the majority of the variance of the data,
+# and so only those will be considered for further analyses.
+
+# using MARSPEC layers
+env_pcs <- rasterPCA(ala_marspec, spca = TRUE)
+
+
+# take a look at the results for the top 3 PCs
+plots <- lapply(1:3, function(x) ggR(env_pcs$map, x, geom_raster = TRUE))
+
+
+
+
+
+
+
+
+
+
+
