@@ -207,7 +207,10 @@ ala_popmap <- ala_popmap[-c(2,82),] # needed to single out AL401 and AL404
 ala_coords <- ala_popmap %>% arrange(id_clean, ala_samples$sample) # arrange samples as in vcf
 ala_coords <- ala_coords %>% select(longitude, latitude) # retain only long and lat columns
 colnames(ala_coords) <- c("x","y") # rename cols
-ala_coords
+
+library(sf)
+ala_coords <- st_as_sf(ala_coords, coords = c("x", "y"), crs = "+proj=longlat")
+ala_proj <- st_transform(ala_coords, crs = 4326)
 
 # download data from worldclim bound by ala_coords
 ala_wclim <- get_worldclim(coords = ala_coords, res = 5, save_output = TRUE)
@@ -215,11 +218,13 @@ plot(ala_wclim[[1]])
 points(ala_coords, pch = 19)
 
 ### MARSPEC ----
+library(sdmpredictors)
 marspec_annual_names <- list_layers("MARSPEC", monthly = FALSE)$name # as guide
 marspec_annual <- list_layers("MARSPEC", monthly = FALSE)$layer_code # all annual layers
-ala_marspec <- load_layers(marspec_annual, rasterstack = TRUE)
+ala_marspec <- load_layers(marspec_annual)
+#ala_marspec <- terra::rast(ala_marspec)
 ala_marspec <- ala_marspec %>% raster::crop(ala_coords)
-plot(ala_marspec_crop[[14]])
+plot(ala_marspec[[14]])
 
 ## Detecting collinearity ----
 
@@ -255,18 +260,28 @@ head(check_results$mantel_df)
 
 # using MARSPEC layers
 env_pcs <- rasterPCA(ala_marspec, spca = TRUE)
-
+envlayer <- rast(ala_marspec[[1]])
+envlayer <- aggregate(envlayer, 5)
+envlayer <- project(envlayer, crs(ala_proj))
 
 # take a look at the results for the top 3 PCs
 plots <- lapply(1:3, function(x) ggR(env_pcs$map, x, geom_raster = TRUE))
+plots[[1]]
+plots[[2]]
+plots[[3]]
+
+# We can also create a single composite raster plot with 3 PCs (each is assigned R, G, or B)
+ggRGB(env_pcs$map, 1, 2, 3, stretch = "lin", q = 0, geom_raster = TRUE)
 
 
+ala_lyr <- coords_to_raster(ala_proj, res = 0.1, buffer = 10, plot = TRUE)
 
+ala_samp_count <- preview_gd(ala_lyr, ala_proj, wdim = 3, fact = 0)
+ggplot_count(ala_samp_count)
 
+ala_wgd <- window_gd(ala_vcf, ala_proj, ala_lyr, wdim = 3, fact = 0)
 
-
-
-
-
+plot_gd(ala_wgd, bkg = envlayer)
+plot_count(ala_wgd)
 
 
