@@ -142,7 +142,7 @@ plot(l_gd[[1]])
 points(x_proj)
 #ggplot_gd(l_gd)
 
-l_kgd <- krig_gd(l_gd, index = 1:2, laevis_lyr) # krig genetic diversity; about 2 hours?; increase wdim and fact = quicker
+l_kgd <- krig_gd(l_gd, index = 1:2, laevis_lyr) # krig genetic diversity; about 2 hours?; increase wdim and fact = quicker; no NaN with this setting
 plot(l_kgd[[1]])
 points(x_proj)
 #ggplot_count(l_kgd)
