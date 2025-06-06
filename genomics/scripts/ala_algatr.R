@@ -84,20 +84,35 @@ mspec_annual <- list_layers("MARSPEC", monthly = FALSE)$layer_code
 # download the layers
 mspec_layers <- load_layers(mspec_annual) 
 # plot raster layers
-bound <- extent(c(xmin = 111.9903, 
-                  xmax = 126.0431,
-                  ymin = -28.39904, 
-                  ymax = -11.1))
-mspec_raster <- crop(mspec_layers, bound)
-plot(mspec_raster)
-plot(mspec_raster[[1]])
-points(laevis_nw_proj)
+#bound <- extent(c(xmin = 111.9903, 
+#                  xmax = 126.0431,
+#                  ymin = -28.39904, 
+#                  ymax = -11.1))
+#mspec_raster <- crop(mspec_layers, bound)
+#plot(mspec_raster)
+#plot(mspec_raster[[1]])
+#points(laevis_nw_proj)
+
+# nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
+# mapview::mapview(nw_shelf)
+# effort_nwshelf_sf <- mask(effort_vect, mask = vect(nw_shelf))
+
+mspec_spatrast <- crop(mspec_layers, nw_shelf)
+mspec_spatrast <- terra::rast(mspec_spatrast) # global; convert RasterStack to SpatRaster
+mspec_shelf <- mask(mspec_spatrast, mask = vect(nw_shelf))
+plot(mspec_shelf[[1]])
+points(laevis_nw_coords)
+
 
 library(RStoolbox)
-mspec_pcs <- rasterPCA(mspec_raster, spca = TRUE)
-mspec_pcs
+#mspec_pcs <- rasterPCA(mspec_raster, spca = TRUE)
+#mspec_pcs
 # this mspec_stack, same class as `CA_env` in accompanying example
 mspec_stack <- raster::stack(mspec_pcs$map)
+
+mspec_sh_pcs <- rasterPCA(mspec_shelf, spca = TRUE)
+mspec_sh_stack <- raster::stack(mspec_sh_pcs$map)
+mspec_sh_stack
 
 # TESS
 laevis_tess <- tess_ktest(laevis_dosage, laevis_nw_proj, Kvals = 1:7, ploidy = 2, K_selection = "auto")
@@ -150,7 +165,9 @@ points(x_proj)
 l_mgd_1 <- mask_gd(l_kgd, l_kgd[["pi"]], minval = 0.0001)
 plot(l_mgd_1[[1]])
 points(x_proj)
+
 ggplot_gd(l_mgd_1, bkg = y_krig_raster)
+
 
 mapview::mapview(x_proj) + mapview::mapview(l_kgd[[1]]) 
 # pi showing and interpolated throughout laevis_nw_proj extent ... need to modify extent ... use extent of bathymetry.asc?
