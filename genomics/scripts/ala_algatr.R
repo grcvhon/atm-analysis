@@ -97,9 +97,9 @@ mspec_layers <- load_layers(mspec_annual)
 # mapview::mapview(nw_shelf)
 # effort_nwshelf_sf <- mask(effort_vect, mask = vect(nw_shelf))
 
-mspec_spatrast <- crop(mspec_layers, nw_shelf)
-mspec_spatrast <- terra::rast(mspec_spatrast) # global; convert RasterStack to SpatRaster
-mspec_shelf <- mask(mspec_spatrast, mask = vect(nw_shelf))
+mspec_spatrast <- raster::crop(mspec_layers, nw_shelf)
+mspec_spatrast <- terra::rast(mspec_spatrast) # global; convert RasterBrick to SpatRaster
+mspec_shelf <- terra::mask(mspec_spatrast, mask = terra::vect(nw_shelf))
 plot(mspec_shelf[[1]])
 points(laevis_nw_coords)
 
@@ -108,9 +108,9 @@ library(RStoolbox)
 #mspec_pcs <- rasterPCA(mspec_raster, spca = TRUE)
 #mspec_pcs
 # this mspec_stack, same class as `CA_env` in accompanying example
-mspec_stack <- raster::stack(mspec_pcs$map)
+# mspec_stack <- raster::stack(mspec_pcs$map)
 
-mspec_sh_pcs <- rasterPCA(mspec_shelf, spca = TRUE)
+mspec_sh_pcs <- RStoolbox::rasterPCA(mspec_shelf, spca = TRUE)
 mspec_sh_stack <- raster::stack(mspec_sh_pcs$map)
 mspec_sh_stack
 
@@ -127,26 +127,35 @@ laevis_qmat <- tess3r::qmatrix(laevis_tessobj, K = laevis_bestK)
 
 # tess3 krig raster
 mspec_krig <- (mspec_stack[[1]]) # no aggregate factor
-
+mspec_sh_krig <- (mspec_sh_stack[[1]])
 #mspec_krig1 <- projectRaster(mspec_krig, crs = "epsg:4326")
 
 laevis_krig_admix <- tess_krig(laevis_qmat, laevis_nw_proj, mspec_krig)
 
 ## this bit run...
-x <- st_as_sf(laevis_nw_coords, coords = c("x", "y"), crs = 4326)
-x_proj <- st_transform(x, crs = 3112)
+x <- sf::st_as_sf(laevis_nw_coords, coords = c("x", "y"), crs = 4326)
+x_proj <- sf::st_transform(x, crs = 3112)
 y_krig_raster <- projectRaster(mspec_krig, crs = "epsg:3112")
+y_krig_sh_raster <- raster::projectRaster(mspec_sh_krig, crs = "epsg:3112")
 
 crs(x_proj)
 crs(y_krig_raster)
 
-z_krig_admix <- tess_krig(laevis_qmat, x_proj, y_krig_raster)
+z_krig_admix <- algatr::tess_krig(laevis_qmat, x_proj, y_krig_raster)
 
 # TESS
-tess_ggplot(z_krig_admix, 
+algatr::tess_ggplot(z_krig_admix, 
             plot_method = "maxQ", 
             #ggplot_fill = scale_fill_manual(values = c("#bd9dac", "#257b94", "#476e9e")),
             plot_axes = TRUE, 
+            coords = x_proj)
+
+
+z_krig_sh_admix <- algatr::tess_krig(laevis_qmat, x_proj, y_krig_sh_raster)
+
+algatr::tess_ggplot(z_krig_sh_admix,
+            plot_method = "maxQ",
+            plot_axes = TRUE,
             coords = x_proj)
 
 # wingen
@@ -167,7 +176,7 @@ plot(l_mgd_1[[1]])
 points(x_proj)
 
 ggplot_gd(l_mgd_1, bkg = y_krig_raster)
-
+plot(mspec_shelf)
 
 mapview::mapview(x_proj) + mapview::mapview(l_kgd[[1]]) 
 # pi showing and interpolated throughout laevis_nw_proj extent ... need to modify extent ... use extent of bathymetry.asc?
