@@ -15,4 +15,5 @@ genomics/ipyrad_files/AAP-reference_outfiles/
 genomics/ipyrad_files/AFO-reference_outfiles/
 genomics/population-structure/ipyrad_pca1/
 genomics/vcf_files/
-tmp
+tmp/
+genomics/marspec/
