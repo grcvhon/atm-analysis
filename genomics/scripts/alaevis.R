@@ -30,11 +30,13 @@ laevis_vcf_keep <- laevis_nw %>%
   select("id_clean")
 # remove header from keep list
 colnames(laevis_vcf_keep) <- NULL
-write.table(laevis_vcf_keep,
-            file = "./genomics/ALA-nw.txt",
-            sep = ",",
-            row.names = FALSE,
-            quote = FALSE)
+
+# already written to file
+#write.table(laevis_vcf_keep,
+#            file = "./genomics/ALA-nw.txt",
+#            sep = ",",
+#            row.names = FALSE,
+#            quote = FALSE)
 
 # Genetic data processing - loading A laevis DArTseq VCF ----
 
@@ -83,16 +85,16 @@ mspec_annual <- list_layers("MARSPEC", monthly = FALSE)$layer_code
 # download the layers -- already saved in marspec dir
 # mspec_layers <- load_layers(mspec_annual, datadir = "./genomics/marspec/") 
 
-# From `./sdm/scripts/maxent-model-fw.R`
-# nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
-# mapview::mapview(nw_shelf)
-# effort_nwshelf_sf <- mask(effort_vect, mask = vect(nw_shelf))
+# Introduce NW shelf boundary ----
+nw_shelf <- sf::st_read("./data/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% sf::st_transform(4326)
+mapview::mapview(nw_shelf)
 
+# Limit to NW shelf boundary ----
 mspec_spatrast <- raster::crop(mspec_layers, nw_shelf)
 mspec_spatrast <- terra::rast(mspec_spatrast) # global; convert RasterBrick to SpatRaster
 mspec_shelf <- terra::mask(mspec_spatrast, mask = terra::vect(nw_shelf))
-plot(mspec_shelf[[1]])
-points(laevis_nw_coords)
+plot(mspec_shelf[[14]]) # 14 = sea surface temp (annual mean)
+points(laevis_nw_coords, pch = 19)
 
 mspec_sh_pcs <- RStoolbox::rasterPCA(mspec_shelf, spca = TRUE)
 mspec_sh_stack <- raster::stack(mspec_sh_pcs$map)
