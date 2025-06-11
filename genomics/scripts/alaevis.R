@@ -80,8 +80,8 @@ library(dismo)
 mspec_names <- list_layers("MARSPEC", monthly = FALSE)$name 
 # all annual layers
 mspec_annual <- list_layers("MARSPEC", monthly = FALSE)$layer_code 
-# download the layers
-mspec_layers <- load_layers(mspec_annual) 
+# download the layers -- already saved in marspec dir
+# mspec_layers <- load_layers(mspec_annual, datadir = "./genomics/marspec/") 
 
 # From `./sdm/scripts/maxent-model-fw.R`
 # nw_shelf <- st_read("data/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
