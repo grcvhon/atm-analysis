@@ -5,4 +5,4 @@ using Pkg
 Pkg.add("Circuitscape")
 
 # Check if all the tests are passing by doing the following:
-julia> Pkg.test("Circuitscape")
+Pkg.test("Circuitscape")
