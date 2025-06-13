@@ -4,9 +4,10 @@
 
 # This is also my first time using Julia lang so I have notes below
 # about basic commands
-# - pwd() print present working dir
-# - cd("path/to/dir") change working dir
+# - pwd() ... print present working dir
+# - cd("path/to/dir") ... change working dir
 # - plot() ... capable of plotting, will open new window to print plot
+# - exit() ... exit Julia lang
 
 #################
 # Omniscape
