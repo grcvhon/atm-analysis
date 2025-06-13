@@ -107,7 +107,7 @@ mspec_sh_stack
 # > When K = 2, both Ks are represented on the plot. When K = 3, only K1 shows up. 
 
 laevis_tess <- 
-  algatr::tess_ktest(gen = laevis_dosage, 
+  algatr::tess_ktest(gen = laevis_dos_imp, 
                      coords = laevis_nw_proj, 
                      Kvals = 1:7, 
                      ploidy = 2, 
@@ -143,3 +143,4 @@ z_map_sh_admix <-
                       plot_method = "maxQ",
                       plot_axes = TRUE,
                       coords = x_proj)
+plot(z_map_sh_admix)
