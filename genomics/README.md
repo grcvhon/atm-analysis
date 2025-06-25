@@ -434,7 +434,15 @@ View the PCA plots here:
 Paper: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
 
 Originally, I thought of using the `algatr` package because it is "<i>a pipeline for performing cutting-edge landscape genomic analyses with individual-based sampling</i>" (Chambers et al. 2023). 
-However, sample size and sample coverage across the area of interest proved to be significant factors which can limit the analyses performed through this toolkit.
+However, sample size and sample coverage across the area of interest proved to be significant factors which can limit the analyses performed through this toolkit.<br>
+
+This issue is the case for <i>A. foliosquama</i> and <i>A. apraefrontalis</i>. As a workaround, I used <i>A. laevis</i> dataset given its greater sample size and better sample coverage across the area of interest. The <i>A. laevis</i> dataset I used was from [sea-snake-dart](https://github.com/a-lud/sea-snake-dart/tree/main), which has sampling across northern Australia (Shark Bay to Gulf of Carpentaria) and New Caledonia. I limited the dataset to only include samples from the northwest shelf.<br>
+
+To begin, I used `vcftools` to keep samples from the northwest shelf:
+```bash
+vcftools --vcf ALA-stringent.highQ.filtered.vcf --keep ../ALA-nw.txt --recode	--stdout
+```
+
 
 [Back to top](#outline)
 
