@@ -444,7 +444,7 @@ vcftools --vcf ALA-stringent.highQ.filtered.vcf --keep ../ALA-nw.txt --recode	--
 ```
 The file `ALA-nw.txt` was generated following scripts: [alaevis.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/alaevis.R) and [scratch.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/scratch.R). Refer to these scripts for the rest of workflow.<br>
 
-I used the `TESS3` package incorporated in the `algatr` toolkit to generate a map with ancestry coefficients interpolated across the area of interest. See line 115 in `scratch.R`. I also wrote this into a *.tif file (`./genomics/algatr_TESS/laevis_nw_anc_coeff.tif`), which can be loaded in R:
+I used the `TESS3` package incorporated in the `algatr` toolkit to generate a map with ancestry coefficients interpolated across the area of interest. See line 115 in `scratch.R`. I also wrote this into a *.tif file (`./genomics/algatr_TESS/laevis_nw_anc_coeff.tif`), which can be read into R:
 ```r
 d <- raster::raster("./genomics/algatr_TESS/laevis_nw_anc_coeff.tif")
 mapview::mapview(d)
