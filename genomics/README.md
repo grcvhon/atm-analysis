@@ -429,7 +429,7 @@ View the PCA plots here:
 
 [Back to top](#outline)
 
-### ALGATR: A Landscape Genomic Analysis Toolkit in R 
+### `algatr`: A Landscape Genomic Analysis Toolkit in R 
 
 Paper: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
 
@@ -438,11 +438,13 @@ However, sample size and sample coverage across the area of interest proved to b
 
 This issue is the case for <i>A. foliosquama</i> and <i>A. apraefrontalis</i>. As a workaround, I used <i>A. laevis</i> dataset given its greater sample size and better sample coverage across the area of interest. The <i>A. laevis</i> dataset I used was from [sea-snake-dart](https://github.com/a-lud/sea-snake-dart/tree/main), which has sampling across northern Australia (Shark Bay to Gulf of Carpentaria) and New Caledonia. I limited the dataset to only include samples from the northwest shelf.<br>
 
-To begin, I used `vcftools` to keep samples from the northwest shelf:
+To begin, I used `vcftools` to only keep samples from the northwest shelf in the VCF file:
 ```bash
 vcftools --vcf ALA-stringent.highQ.filtered.vcf --keep ../ALA-nw.txt --recode	--stdout
 ```
+The file `ALA-nw.txt` was generated following scripts: [alaevis.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/alaevis.R) and [scratch.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/scratch.R). Refer to these scripts for the rest of workflow.<br>
 
+I used the `TESS3` package incorporated in the `algatr` toolkit to generate a map with ancestry coefficients interpolated across the area of interest. See line 115 in `scratch.R`. I also wrote this into a *.tif file (`./genomics/algatr_TESS/laevis_nw_anc_coeff.tif`)
 
 [Back to top](#outline)
 
