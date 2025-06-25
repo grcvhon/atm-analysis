@@ -431,10 +431,10 @@ View the PCA plots here:
 
 ### ALGATR: A Landscape Genomic Analysis Toolkit in R 
 
-The `algatr` R package - read more here: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
+Paper: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
 
-Originally thought of using the `algatr` package because it is "a pipeline for performing cutting-edge landscape genomic analyses with individual-based sampling" (Chambers et al. 2023). 
-However, sample size and sample coverage across the area of interest proved to be significant factors which can limit analyses in this toolkit.
+Originally, I thought of using the `algatr` package because it is "<i>a pipeline for performing cutting-edge landscape genomic analyses with individual-based sampling</i>" (Chambers et al. 2023). 
+However, sample size and sample coverage across the area of interest proved to be significant factors which can limit the analyses performed through this toolkit.
 
 [Back to top](#outline)
 
