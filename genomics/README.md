@@ -20,6 +20,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
   - [Filtering for high quality variants](#filtering-for-high-quality-variants)
   - [Examining filtered VCF](#examining-filtered-vcf)
   - [Principal Components Analysis](#principal-components-analysis)
+  - [ALGATR: A Landscape Genomic Analysis Toolkit in R](#algatr-a-landscape-genomic-analysis-toolkit-in-r)
 
 ---
 
@@ -427,5 +428,13 @@ View the PCA plots here:
 - [PCA plot for <i>A. apraefrontalis</i>](https://github.com/grcvhon/atm-analysis/blob/master/genomics/population-structure/plink_pca/AAP-reference.highQ.filtered/AAP-reference.highQ.filtered_pca.pdf)
 
 [Back to top](#outline)
-<i>Last updated: 7 May 2025</i>
 
+#### <i>ALGATR: A Landscape Genomic Analysis Toolkit in R </i>
+
+The `algatr` R package - read more here: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
+
+Originally thought of using the `algatr` package because it is "a pipeline for performing cutting-edge landscape genomic analyses with individual-based sampling" (Chambers et al. 2023). 
+However, sample size and sample coverage across the area of interest proved to be significant factors which can limit analyses in this toolkit.
+
+[Back to top](#outline)
+<i>Last updated: 25 June 2025</i>
