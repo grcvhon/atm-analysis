@@ -116,7 +116,7 @@ plot(z_map_sh_admix)
 
 # save as tif file
 # terra::writeRaster(x = z_krig_sh_admix,
-#                    filename = "laevis_nw_anc_coeff.tif")
+#                    filename = "./genomics/algatr_TESS/laevis_nw_anc_coeff.tif")
 
 ### misc ####
 #
