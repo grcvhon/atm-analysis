@@ -111,36 +111,7 @@ print $8"," $9","toupper(substr($3,1,1))toupper(substr($4,1,2))"-"$2"-"$9","\
 $3","$4","$7","$6","$5 } }' atm_genetic_dataset.csv >> individuals.csv
 ```
 
-Preview our `individuals.csv`:
-|order       |dart_id|id_clean                  |Genus    |Species       |Longitude  |Latitude    |Locality    |
-|------------|-------|--------------------------|---------|--------------|-----------|------------|------------|
-|DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|Aipysurus|apraefrontalis|123.04166  |-12.24174549|Ashmore_Reef|
-|DNote21-6332|2562130|AAP-KLS0834-2562130       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|DNote21-6332|2562139|AAP-SS171013-03-2562139   |Aipysurus|apraefrontalis|118.220874 |-19.6889305 |Pilbara     |
-|DNote21-6332|2562140|AFO-Afo1-2562140          |Aipysurus|foliosquama   |123.04166  |-12.24174549|Ashmore_Reef|
-|DNote21-6332|2562249|AFO-Afo8-2562249          |Aipysurus|foliosquama   |123.04166  |-12.24174549|Ashmore_Reef|
-|DNote21-6332|2571080|AFO-Afo8-2571080          |Aipysurus|foliosquama   |123.04166  |-12.24174549|Ashmore_Reef|
-|DNote21-6332|2562167|AFO-SS171014-02-2562167   |Aipysurus|foliosquama   |117.8305545|-19.709453  |Pilbara     |
-|DNote23-8556|3517861|AAP-KLS1484-3517861       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|DNote23-8556|3517868|AAP-KLS1486-3517868       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|DNote23-8556|3517879|AAP-KLS1490-3517879       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|Dnote23-8773|3593375|AAP-KLS1435-3593375       |Aipysurus|apraefrontalis|114.20917  |-22.10533   |Exmouth_Gulf|
-|Dnote23-8773|3593362|AAP-KLS1436-3593362       |Aipysurus|apraefrontalis|114.321    |-22.120333  |Exmouth_Gulf|
-|Dnote23-8773|3593372|AAP-KLS1454-3593372       |Aipysurus|apraefrontalis|114.134833 |-22.1245    |Exmouth_Gulf|
-|Dnote23-8773|3593394|AAP-KLS1457-3593394       |Aipysurus|apraefrontalis|114.13483  |-22.1245    |Exmouth_Gulf|
-|Dnote23-8773|3593395|AAP-KLS1459-3593395       |Aipysurus|apraefrontalis|114.2005   |-22.134833  |Exmouth_Gulf|
-|Dnote23-8773|3593393|AAP-KLS1465-3593393       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|Dnote23-8773|3593397|AAP-KLS1468-3593397       |Aipysurus|apraefrontalis|114.246667 |-22.090333  |Exmouth_Gulf|
-|Dnote23-8773|3593356|AAP-KLS1477-3593356       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|Dnote23-8773|3593337|AAP-KLS1509-3593337       |Aipysurus|apraefrontalis|114.2999988|-22.166666  |Exmouth_Gulf|
-|Dnote23-8773|3593377|AFO-KLS1202-3593377       |Aipysurus|foliosquama   |118.288886 |-20.050212  |Pilbara     |
-|DNote24-9763|4013436|AFO-KLS1696-4013436       |Aipysurus|foliosquama   |113.4100415|-25.24705   |Shark_Bay   |
-|DNote24-9763|4013440|AFO-KLS1700-4013440       |Aipysurus|foliosquama   |113.1631085|-25.623425  |Shark_Bay   |
-|DNote24-9763|4013441|AFO-KLS1701-4013441       |Aipysurus|foliosquama   |113.1631085|-25.623425  |Shark_Bay   |
-|DNote24-9763|4013442|AFO-KLS1702-4013442       |Aipysurus|foliosquama   |113.2126165|-25.5985585 |Shark_Bay   |
-|DNote24-9763|4013447|AFO-KLS1707-4013447       |Aipysurus|foliosquama   |113.336883 |-25.020975  |Shark_Bay   |
-|DNote24-9763|4013448|AFO-KLS1708-4013448       |Aipysurus|foliosquama   |113.2711835|-24.926183  |Shark_Bay   |
-|DNote24-9763|4013450|AFO-KLS1710-4013450       |Aipysurus|foliosquama   |113.19455  |-24.9617915 |Shark_Bay   |
+Preview our [`individuals.csv`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/sample-sheets/individuals.csv)<br>
 
 We will add the `barcode9l` and `barcode` columns in the next steps.<br>
 <br>
@@ -177,38 +148,7 @@ The first part of the command just above lists the values in `dart_id` column of
 
 The next part uses this list by going through each value and finding a match in the first column of the downloaded `targets_*.csv` files. It searches through each of the `targets_*.csv` files in each of the order directories and, if it finds a match, prints the `targetid` (i.e., `dart_id`), the `barcode9l`, and `barcode` columns (columns 15 and 16 in `targets_*.csv`).<br>
 
-The output is then written as `barcodes.csv`
-
-Preview `barcodes.csv`:
-|targetid|barcode9l      |barcode       |
-|--------|---------------|--------------|
-|2562202 |TACCGCTCCATATTG|TACCGCTCCATAT |
-|2562130 |ACACTTCGTTCTTGC|ACACTTCGTTCT  |
-|2562139 |TCTTCCTAGGTTGCA|TCTTCCTAGGT   |
-|2562140 |CTCTCTCTCTAGTAT|CTCTCTCTCTAGTA|
-|2562249 |CTTGTGTGTATGCAG|CTTGTGTGTA    |
-|2571080 |TTGGTGCGGCGGATT|TTGGTGCGGCGGAT|
-|2562167 |ATGAGTAGTCTAATG|ATGAGTAGTCTAA |
-|3517861 |TCGCATAGTGTGCAG|TCGCATAGTG    |
-|3517868 |TGCGTATAGGTGCAG|TGCGTATAGG    |
-|3517879 |AGGATACATCCTTGC|AGGATACATCCT  |
-|3593375 |TATGCTCCACATTGC|TATGCTCCACAT  |
-|3593362 |TCTACATCCGCTCTT|TCTACATCCGCTCT|
-|3593372 |CCGTGAGGTCACCGT|CCGTGAGGTCACCG|
-|3593394 |GCCTGCTATGCGGAT|GCCTGCTATGCGGA|
-|3593395 |TACAATGTGCGTAAT|TACAATGTGCGTAA|
-|3593393 |ATCTCCACCTATTGC|ATCTCCACCTAT  |
-|3593397 |CGGACTTCTCGGAGT|CGGACTTCTCGGAG|
-|3593356 |AATGTGCCGTCGCTT|AATGTGCCGTCGCT|
-|3593337 |TATACAGAGGCTTAT|TATACAGAGGCTTA|
-|3593377 |GTCATGGAGTGTGTG|GTCATGGAGTGTG |
-|4013436 |ATTACGTCAGTATTG|ATTACGTCAGTAT |
-|4013440 |GTCTTAGCAATGCAG|GTCTTAGCAA    |
-|4013441 |GAACCGAGGTATGCA|GAACCGAGGTA   |
-|4013442 |AAGATCAGGAATGCA|AAGATCAGGAA   |
-|4013447 |CTCTAACTATGAGTG|CTCTAACTATGAG |
-|4013448 |AACGATGACGTGCAG|AACGATGACG    |
-|4013450 |GTGCAGTTCCATGCA|GTGCAGTTCCA   |
+The output is then written as [`barcodes.csv`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/sample-sheets/barcodes.csv)<br>
 
 I included the `targetid` so I can compare it with the `dart_id` from the `individuals.csv`. This way we can make sure that the information for `barcode9l` and `barcode` are all in line with the same sample.<br>
 
