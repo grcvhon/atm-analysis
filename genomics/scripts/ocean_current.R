@@ -2,6 +2,9 @@
 # ESRI https://www.arcgis.com/home/item.html?id=b02f417ebbed4dc69edefd848dc69715
 
 # *** insert how tif was exported from ArcGIS ***
+# *** insert how monthly means were subset from multidimensional data ***
+# "C:\Program Files\ArcGIS\Pro\bin\Python\Scripts\propy" myscript.py
+# Can do it programatically or figure out in ArcGIS GUI
 
 library(raster)
 library(terra)
