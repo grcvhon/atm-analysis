@@ -20,17 +20,30 @@ v <- nw_current$Band_2
 
 # formula for magnitude
 # sqrt(u^2 + v^2)
-nw_current_dir <- sqrt(u^2 + v^2)
-plot(nw_current_dir)
+nw_current_mag <- sqrt(u^2 + v^2)
+plot(nw_current_mag)
 
 # formula for bearing
 # atan2(v,u)*180/pi
 nw_current_ber <- atan2(v,u)*180/pi
 plot(nw_current_ber)
 
-# plot side-by-side
+# one page plot
 par(mfrow=c(2,1))
-plot(nw_current_dir)
+plot(nw_current_mag)
 title("Magnitude", line = 3)
 plot(nw_current_ber)
 title("Bearing", line = 3)
+
+# only keep within nw_shelf shape extent
+nw_current_mag <- terra::project(x = nw_current_mag, y = "EPSG:4326")
+plot(nw_current_mag)
+nw_current_mag_ext <- raster::crop(nw_current_mag, nw_shelf)
+nw_current_mag_ext <- terra::mask(nw_current_mag_ext, mask = terra::vect(nw_shelf))
+mapview(nw_current_mag_ext, na.color = NA) + mapview(nw_shelf, alpha.region = 0)
+
+nw_current_ber <- terra::project(x = nw_current_ber, y = "EPSG:4326")
+plot(nw_current_ber)
+nw_current_ber_ext <- raster::crop(nw_current_ber, nw_shelf)
+nw_current_ber_ext <- terra::mask(nw_current_ber_ext, mask = terra::vect(nw_shelf))
+mapview(nw_current_ber_ext, na.color = NA) + mapview(nw_shelf, alpha.region = 0)
