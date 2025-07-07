@@ -3,15 +3,13 @@
 
 # *** insert how tif was exported from ArcGIS ***
 # *** insert how monthly means were subset from multidimensional data ***
-# "C:\Program Files\ArcGIS\Pro\bin\Python\Scripts\propy" myscript.py
-# Can do it programatically or figure out in ArcGIS GUI
 
 library(raster)
 library(terra)
 library(mapview)
 
 # *** have to find out which time slice ***
-nw_current <- rast("./genomics/ocean-cur/nw_1000.tif")
+nw_current <- rast("./genomics/ocean-cur/2001-03-01.tif")
 
 # check layers
 plot(nw_current$Band_1) # assuming Band_1 is U (eastward velocity)
