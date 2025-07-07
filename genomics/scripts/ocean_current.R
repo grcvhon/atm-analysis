@@ -9,7 +9,7 @@ library(terra)
 library(mapview)
 
 # *** have to find out which time slice ***
-nw_current <- rast("./genomics/ocean-cur/2001-03-01.tif")
+nw_current <- rast("./genomics/ocean-cur/2001-03-01.tif") # tif manually subset in ArcGIS
 
 # check layers
 plot(nw_current$Band_1) # assuming Band_1 is U (eastward velocity)
