@@ -398,11 +398,11 @@ The first OSCAR dataset can be downloaded as a `.pitemx` file, a file format whi
 ># Download Ocean Surface Current Analyses Real-time (OSCAR) Surface Currents - Final 0.25 Degree (Version 2.0)
 ># url: https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_FINAL_V2.0#
 >
->podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./ \
->--start-date 1993-01-01T00:00:00Z \
->--end-date 1993-01-08T00:00:00Z \
->-e .nc
+># Download .nc files from 1st to 8th of January 1993
+>podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./ --start-date 1993-01-01T00:00:00Z --end-date 1993-01-08T00:00:00Z -e .nc
 >```
+
+
 
 [Back to top](#outline)
 
