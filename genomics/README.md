@@ -337,6 +337,8 @@ View the PCA plots here:
 
 [Back to top](#outline)
 
+---
+
 ### `algatr`: A Landscape Genomic Analysis Toolkit in R 
 
 Paper: [Chambers et al. 2023. Individual-based landscape genomics for conservation: An analysis pipeline](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13884)<br>
@@ -360,5 +362,38 @@ mapview::mapview(d)
 ```
 
 [Back to top](#outline)
+
+---
+
+### Obtaining ocean surface current data
+
+A couple of ways to obtain ocean surface current data. The original suggestion from VU is to use the `remora` package but issues with the `extractBlue()` function made me look for other alternatives. I ended up getting stuck (and into the rabbit hole) with OSCAR Ocean Surface Current data ([Global Ocean Surface Currents - Monthly Mean (2001-2020)](https://www.arcgis.com/home/item.html?id=b02f417ebbed4dc69edefd848dc69715) and [Ocean Surface Current Analyses Real-time (OSCAR) Surface Currents - Final 0.25 Degree (Version 2.0)](https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_FINAL_V2.0#)).<br>
+
+The first OSCAR dataset can be downloaded as a `.pitemx` file, a file format which can be opened via ArcGIS. While the time slices (i.e., monthly mean values) can be exported and saved as a `.tif` separately. This operation has to be done manually as the python script needs the ArcGIS GUI to access information from the `.pitemx` file. Since tedious, I looked for another dataset which has `.nc` files; and so the latter dataset which has daily downloadable files spanning from 1993 to 2022 (~10,000 individual .nc files). This dataset provides very granular temporal resolution which might be too much for intended purpose. However, since I spent a lot of time figuring out how to download the dataset from [Earthdata](https://podaac.jpl.nasa.gov/), I share what I learned below:
+
+>1) sign up for an Earthdata profile: https://urs.earthdata.nasa.gov/
+>
+>2) set up cmdline to recognise Earthdata credentials
+>```bash
+>cd ~
+>touch .netrc
+>echo "machine urs.earthdata.nasa.gov login toughturf password +0u6hturF9801" > .netrc
+>chmod 0600 .netrc
+>```
+>
+>3) create cookies for efficiency; makes credentials persist
+>```bash
+>cd ~
+>touch .urs_cookies
+>```
+>
+>4) download data - modify date range to download
+>Ocean Surface Current Analyses Real-time (OSCAR) Surface Currents - Final 0.25 Degree (Version 2.0)
+>url: https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_FINAL_V2.0#
+>
+>```bash
+># install podaac-data-subscriber (https://podaac.github.io/tutorials/quarto_text/DataSubscriberDownloader.html)
+>podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./ --start-date 1993-01-01T00:00:00Z --end-date 1993-01-08T00:00:00Z -e .nc
+>```
 
 <i>Last updated: 25 June 2025</i>
