@@ -21,6 +21,7 @@ This README file is quite detailed as I treat it as a logbook to keep track of w
   - [Examining filtered VCF](#examining-filtered-vcf)
   - [Principal Components Analysis](#principal-components-analysis)
 - [`algatr`: A Landscape Genomic Analysis Toolkit in R](#algatr-a-landscape-genomic-analysis-toolkit-in-r)
+- [Ocean surface current data](#ocean-surface-current-data)
 
 ---
 
@@ -318,7 +319,6 @@ Keep individuals of <i>A. foliosquama</i> by running command below:
 vcftools --gzvcf AFO-reference.highQ.filtered.vcf.gz --keep AFO-keep.txt --recode --stdout | gzip -c > AFO-reference.highQ.filtered.keep.vcf.gz
 ```
 
-
 [Back to top](#outline)
 
 #### <i>Principal Components Analysis</i>
@@ -365,18 +365,21 @@ mapview::mapview(d)
 
 ---
 
-### Obtaining ocean surface current data
+### Ocean surface current data
 
 A couple of ways to obtain ocean surface current data. The original suggestion from VU is to use the `remora` package but issues with the `extractBlue()` function made me look for other alternatives. I ended up getting stuck (and into the rabbit hole) with OSCAR Ocean Surface Current data ([Global Ocean Surface Currents - Monthly Mean (2001-2020)](https://www.arcgis.com/home/item.html?id=b02f417ebbed4dc69edefd848dc69715) and [Ocean Surface Current Analyses Real-time (OSCAR) Surface Currents - Final 0.25 Degree (Version 2.0)](https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_FINAL_V2.0#)).<br>
 
 The first OSCAR dataset can be downloaded as a `.pitemx` file, a file format which can be opened via ArcGIS. While the time slices (i.e., monthly mean values) can be exported and saved as a `.tif` separately. This operation has to be done manually as the python script needs the ArcGIS GUI to access information from the `.pitemx` file. Since tedious, I looked for another dataset which has `.nc` files; and so the latter dataset which has daily downloadable files spanning from 1993 to 2022 (~10,000 individual .nc files). This dataset provides very granular temporal resolution which might be too much for intended purpose. But since I spent a lot of time figuring out how to download the dataset from [Earthdata](https://podaac.jpl.nasa.gov/), I share what I learned below:
 
+#### <i>Downloading ocean surface current data from Earthdata</i>:
 ><i>1) Sign up for an Earthdata profile</i>: https://urs.earthdata.nasa.gov/
 >
 ><i>2) Set up cmdline to recognise Earthdata credentials</i>
 >```bash
 >cd ~
 >touch .netrc
+>
+># my login and password are provided
 >echo "machine urs.earthdata.nasa.gov login toughturf password +0u6hturF9801" > .netrc
 >chmod 0600 .netrc
 >```
@@ -400,5 +403,7 @@ The first OSCAR dataset can be downloaded as a `.pitemx` file, a file format whi
 >--end-date 1993-01-08T00:00:00Z \
 >-e .nc
 >```
+
+[Back to top](#outline)
 
 <i>Last updated: 25 June 2025</i>
