@@ -401,9 +401,10 @@ The first OSCAR dataset can be downloaded as a `.pitemx` file, a file format whi
 ># Download .nc files from 1st to 8th of January 1993
 >podaac-data-downloader -c OSCAR_L4_OC_FINAL_V2.0 -d ./ --start-date 1993-01-01T00:00:00Z --end-date 1993-01-08T00:00:00Z -e .nc
 >```
+These .nc files can then be processed in R. See [ocean_earthdata.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/ocean_earthdata.R)<br>
 
-
+Emerging from the rabbit hole that is NASA's EarthData portal, I turned to [BioOracle](https://www.bio-oracle.org/) after finding out that the database has sea water direction and sea water speed data layers. These layers are at 0.05 decimal degree spatial resolution (~5 x 5 km grid) and at a decadal temporal resolution. See [ocean_biooracle.R](https://github.com/grcvhon/atm-analysis/blob/master/genomics/scripts/ocean_biooracle.R) for script on how to download these layers.<br>
 
 [Back to top](#outline)
 
-<i>Last updated: 25 June 2025</i>
+<i>Last updated: 09 July 2025</i>
