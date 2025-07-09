@@ -37,7 +37,7 @@ z <- flip(z)
 # provide extent
 
 z <- terra::rotate(z)
-ext(z) <- c(-179.75, 179.75, -89.75,89.75) # res(z) is 0.25 0.25 with these numbers; based on dataset, spatial coverage: -180, 180, -89.75, 89.75
+ext(z) <- c(-180, 180, -89.875,89.875) # res(z) is 0.25 0.25 with these numbers; based on dataset, spatial coverage: -180, 180, -89.75, 89.75
 
 #n <- terra::rotate(n)
 #ext(n) <- c(-179.875, 179.875, -89.75, 89.75)
