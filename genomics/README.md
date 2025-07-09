@@ -165,10 +165,7 @@ paste -d, individuals.csv barcodes.csv |\
 awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-sheet.csv
 ```
 
-Preview [`sample-sheet.csv`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/sample-sheets/sample-sheet.csv)<br>
-
-We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
-<br>
+Preview [`sample-sheet.csv`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/sample-sheets/sample-sheet.csv). We can use now use this file as input in the genomics workflow (see https://github.com/a-lud/sea-snake-dart/tree/main) or begin with `01_rename_batch.sh` in this repository.<br>
 
 [Back to top](#outline)
 
