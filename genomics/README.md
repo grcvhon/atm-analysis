@@ -165,7 +165,7 @@ paste -d, individuals.csv barcodes.csv |\
 awk -F, '{ print $1","$2","$3","$10","$11","$4","$5","$6","$7","$8 }' > sample-sheet.csv
 ```
 
-Preview `sample-sheet.csv`:
+Preview []`sample-sheet.csv`](https://github.com/grcvhon/atm-analysis/blob/master/genomics/sample-sheets/sample-sheet.csv)<br>
 |order       |dart_id|id_clean                  |barcode9l|barcode       |Genus      |Species     |Longitude   |Latitude    |Locality    |
 |------------|-------|--------------------------|---------|--------------|-----------|------------|------------|------------|------------|
 |DNote21-6332|2562202|AAP-Aaprae_4.12.01-2562202|TACCGCTCCATATTG|TACCGCTCCATAT |Aipysurus  |apraefrontalis|123.04166   |-12.24174549|Ashmore_Reef|
