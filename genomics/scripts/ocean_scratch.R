@@ -20,25 +20,49 @@ library(ncdf4)
 library(terra)
 
 # open netcdf file
-osc <- nc_open("./oscar_currents_final_19930108.nc")
+osc <- nc_open("./genomics/ocean-cur/podaac_data/oscar_currents_final_19930108.nc")
 
-# access "u" variable
+# access "u" variable - eastward
 u <- ncvar_get(osc, "u")
+# access "v" variable - northward
+#v <- ncvar_get(osc, "v")
 
 # rasterise
 z <- rast(u)
-
-# provide extent
-ext(z) <- c(-180, 180, -90, 90)
+#n <- rast(v)
 
 # flip north-side up
 z <- flip(z)
 
+# provide extent
+
+z <- terra::rotate(z)
+ext(z) <- c(-179.75, 179.75, -89.75,89.75) # res(z) is 0.25 0.25 with these numbers; based on dataset, spatial coverage: -180, 180, -89.75, 89.75
+
+#n <- terra::rotate(n)
+#ext(n) <- c(-179.875, 179.875, -89.75, 89.75)
+
+
+#n <- flip(n)
+
 # projection
 crs(z) <- "EPSG:4326"
+#crs(n) <- "EPSG:4326"
 
 # plot
 plot(z)
 mapview::mapview(z)
 
-# The orientation of the map (Pacific Ocean in the centre so east and west do not line up). Check projection
+#plot(n)
+#mapview::mapview(n)
+
+# formula for magnitude
+# sqrt(u^2 + v^2)
+zn_mag <- sqrt(z^2 + n^2)
+plot(zn_mag)
+
+# formula for bearing
+# atan2(v,u)*180/pi
+zn_ber <- atan2(z,n)*180/pi
+plot(zn_ber)
+
