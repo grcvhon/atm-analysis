@@ -22,50 +22,49 @@ library(terra)
 # open netcdf file
 osc <- nc_open("./genomics/ocean-cur/podaac_data/oscar_currents_final_19930108.nc")
 
-# access "u" variable - eastward
+# access "u" (eastward) and "v" (northward) variables
 u <- ncvar_get(osc, "u")
-# access "v" variable - northward
-#v <- ncvar_get(osc, "v")
+v <- ncvar_get(osc, "v")
 
 # rasterise
 z <- rast(u)
-#n <- rast(v)
+n <- rast(v)
 
 # flip north-side up
 z <- flip(z)
+n <- flip(n)
 
 # provide extent
-
 z <- terra::rotate(z)
-ext(z) <- c(-180, 180, -89.875,89.875) # res(z) is 0.25 0.25 with these numbers; based on dataset, spatial coverage: -180, 180, -89.75, 89.75
+ext(z) <- c(-180, 180, -89.875,89.875) 
+n <- terra::rotate(n)
+ext(n) <- c(-180, 180, -89.875,89.875)
 
-#n <- terra::rotate(n)
-#ext(n) <- c(-179.875, 179.875, -89.75, 89.75)
-
-
-#n <- flip(n)
+# res(z) and res(n) is 0.25 0.25 with these numbers; based on dataset, spatial coverage: -180, 180, -89.75, 89.75
 
 # projection
 crs(z) <- "EPSG:4326"
-#crs(n) <- "EPSG:4326"
+crs(n) <- "EPSG:4326"
 
-# plot
-plot(z)
-mapview::mapview(z)
+# eastward
+nw_z <- raster::crop(z, nw_shelf)
+nw_z <- terra::mask(nw_z, mask = terra::vect(nw_shelf))
+mapview::mapview(nw_z, na.color = NA)
 
-#plot(n)
-#mapview::mapview(n)
+# northward
+nw_n <- raster::crop(n, nw_shelf)
+nw_n <- terra::mask(nw_n, mask = terra::vect(nw_shelf))
+mapview::mapview(nw_n, na.color = NA)
 
 # formula for magnitude
 # sqrt(u^2 + v^2)
-zn_mag <- sqrt(z^2 + n^2)
-plot(zn_mag)
+nw_zn_mag <- sqrt(nw_z^2 + nw_n^2)
+plot(nw_zn_mag)
 
 # formula for bearing
 # atan2(v,u)*180/pi
-zn_ber <- atan2(z,n)*180/pi
-plot(zn_ber)
-
+nw_zn_ber <- atan2(nw_z,nw_n)*180/pi
+plot(nw_zn_ber)
 
 ### try BioOracle instead...
 library(biooracler)
