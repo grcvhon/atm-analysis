@@ -47,3 +47,40 @@ mapview::mapview(nw_swd, na.color = NA)
 nw_sws <- raster::crop(sws_layer, nw_shelf)
 nw_sws <- terra::mask(nw_sws, mask = terra::vect(nw_shelf))
 mapview::mapview(nw_sws, na.color = NA)
+
+
+###
+
+library(marmap)
+library(raster)
+library(gdistance)
+
+# get bathymetric data for Australia
+nw_bathy <- getNOAA.bathy(lon1=110.544995584098, lon2=118.342214992267, 
+                           lat1=-18.69138797000501, lat2=-29.7363816780876,
+                           resolution=1, keep=TRUE)
+
+# subset laevis sites
+sub_laevis <- laevis_nw[c(122,170),c(4,5)] # Exmouth and Shark Bay
+sub_laevis
+
+nw_trans <- trans.mat(nw_bathy)
+nw_trans200 <- trans.mat(nw_bathy, min.depth = 0, max.depth = -200)
+
+nw_lcdist <- lc.dist(nw_trans,sub_laevis,res="path")
+nw_lcdist200 <- lc.dist(nw_trans200,sub_laevis,res="path")
+
+plot(nw_bathy, image=TRUE)
+lapply(nw_lcdist200,lines,col="orange",lwd=3,lty=1)
+points(sub_laevis, pch = 19, col = "red", cex = 1.5)
+
+###
+
+
+
+
+
+
+
+
+
