@@ -6,19 +6,19 @@ library(biooracler)
 # list available layers
 layers <- list_layers()
 swd <- list_layers("SeaWaterDirection")
-View(swd)
+#View(swd)
 # want swd_baseline_2000_2019_depthsurf | Bio-Oracle SeaWaterDirection [depthSurf]Baseline 2000-2019.
 
 sws <- list_layers("SeaWaterSpeed")
-View(sws)
+#View(sws)
 # want sws_baseline_2000_2019_depthsurf | Bio-Oracle SeaWaterSpeed [depthSurf]Baseline 2000-2019
 
 # check layer info
 swd_id <- "swd_baseline_2000_2019_depthsurf"
-info_layer(swd_id)
+#info_layer(swd_id)
 
 sws_id <- "sws_baseline_2000_2019_depthsurf"
-info_layer(sws_id)
+#info_layer(sws_id)
 
 # set constraints before downloading data
 
@@ -39,6 +39,56 @@ sws_var <- "sws_mean" # sea water speed - mean
 swd_layer <- download_layers(swd_id, swd_var, constraints)
 sws_layer <- download_layers(sws_id, sws_var, constraints)
 
+### side quest: marmap adaptation
+  #swd_rast <- raster::raster(swd_layer)
+  #plot(swd_rast)
+  #swd_bathy <- marmap::as.bathy(swd_rast)
+  #plot(swd_bathy, image = TRUE)
+  
+  #library(raster)
+  #library(terra)
+  #library(marmap)
+  swd_mask <- raster::crop(swd_layer, nw_shelf)
+  swd_mask <- terra::mask(swd_mask, mask = terra::vect(nw_shelf))
+  swd_mask <- raster::raster(swd_mask)
+  plot(swd_mask)
+  swd_mask_bathy <- marmap::as.bathy(swd_mask)
+  summary(swd_mask_bathy)
+  swd_trans <- 
+  swd_lcdist <- marmap::lc.dist(swd_trans, sub_laevis, res = "path")
+  lapply(nw_lcdist200,lines,col="dodgerblue",lwd=3,lty=1)
+  
+  #library(rWind)
+  # working with swd_layer downloaded from biooracle
+  swd_layer_coords <- terra::crds(swd_layer$swd_mean_1,  df = TRUE) # get coords from swd_mean_1 layer and into a df 
+  swd_layer_dr1_df <- as.data.frame(swd_layer$swd_mean_1) # get mean direction  1
+  sws_layer_sp1_df <- as.data.frame(sws_layer$sws_mean_1) # get mean speed 1
+  ocean_uv <- ds2uv(ocean_c$dir, ocean_c$speed) # convert direction and speed to eastward and northward vectors
+  ocean_c <- cbind(swd_layer_coords,swd_layer_dr1_df,sws_layer_sp1_df) # combine columns
+  colnames(ocean_c) <- c("lon","lat","dir","speed") # rename headers
+  class(ocean_c) <- c("rWind", "data.frame") # reclass
+  ggplot(ocean_c, aes(x = lon, y = lat, color = dir)) + geom_point()
+  
+  ocean_c_ras <- wind2raster(ocean_c)
+  ocean_conduct <- flow.dispersion(ocean_c_ras)
+  GtoS <- shortestPath(ocean_conduct, 
+                       goal = c(sub_laevis[2,1], sub_laevis[2,2]),
+                       origin = c(sub_laevis[1,1], sub_laevis[1,2]),
+                       output = "SpatialLines")
+  
+  StoG <- shortestPath(ocean_conduct, 
+                       origin = c(sub_laevis[2,1], sub_laevis[2,2]),
+                       goal = c(sub_laevis[1,1], sub_laevis[1,2]),
+                       output = "SpatialLines")
+
+  
+  #example
+  data(wind.data)
+  wd_ras <- wind2raster(wind.data)
+  conductance <- flow.dispersion(wd_ras)
+  AtoB <- shortestPath(conductance, c(-5.5,37), c(-5.5,35), output = "SpatialLines")
+  BtoA <- shortestPath(conductance, c(-5.5,35), c(-5.5,37), output = "SpatialLines")
+  
 # recall: nw_shelf - object containing shapefile of extent
 nw_swd <- raster::crop(swd_layer, nw_shelf)
 nw_swd <- terra::mask(nw_swd, mask = terra::vect(nw_shelf))
