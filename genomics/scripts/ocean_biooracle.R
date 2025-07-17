@@ -60,31 +60,39 @@ sws_layer <- download_layers(sws_id, sws_var, constraints)
   
   #devtools::install_github("jabiologo/rWind")
   library(rWind)
+  # in the following lines, I'm trying to copy the format of `data(wind.data)` from the `rWind` package
+  
   # working with swd_layer downloaded from biooracle
   swd_layer_coords <- terra::crds(swd_layer$swd_mean_1,  df = TRUE) # get coords from swd_mean_1 layer and into a df 
   swd_layer_dr1_df <- as.data.frame(swd_layer$swd_mean_1) # get mean direction  1
   sws_layer_sp1_df <- as.data.frame(sws_layer$sws_mean_1) # get mean speed 1
   ocean_c <- cbind(swd_layer_coords,swd_layer_dr1_df,sws_layer_sp1_df) # combine columns
   colnames(ocean_c) <- c("lon","lat","dir","speed") # rename headers
-  class(ocean_c) <- c("data.frame") # reclass
+  class(ocean_c) <- c("rWind", "data.frame") # reclass
   # plot to see if map looks as expected
+  library(ggplot2)
   ggplot(ocean_c, aes(lon, lat, color = dir)) + 
     geom_point() + 
     scale_color_continuous(type = "viridis")
   
+  # following rWind workflow (example from vignette below)
   ocean_c_ras <- rWind::wind2raster(ocean_c)
   ocean_conduct <- flow.dispersion(ocean_c_ras)
   
-  
+  # provide origin and goal coordinates for path generation
+  sub_coords <- data.frame(longitude = c(114.2825, 114.0446),
+                           latitude = c(-22.11952, -26.39628))
+  sub_coords # first row ExmouthG, second row SharkB
   
   GtoS <- shortestPath(ocean_conduct, 
-                       goal = c(sub_laevis[2,1], sub_laevis[2,2]),
-                       origin = c(sub_laevis[1,1], sub_laevis[1,2]),
+                       goal = c(sub_coords[2,1], sub_coords[2,2]),
+                       origin = c(sub_coords[1,1], sub_coords[1,2]),
                        output = "SpatialLines")
   
+  # note order of origin and goal args swapped
   StoG <- shortestPath(ocean_conduct, 
-                       origin = c(sub_laevis[2,1], sub_laevis[2,2]),
-                       goal = c(sub_laevis[1,1], sub_laevis[1,2]),
+                       origin = c(sub_coords[2,1], sub_coords[2,2]),
+                       goal = c(sub_coords[1,1], sub_coords[1,2]),
                        output = "SpatialLines")
   
   plot(swd_layer$swd_mean_1)
@@ -121,6 +129,25 @@ sws_layer <- download_layers(sws_id, sws_var, constraints)
   # another challenge though is that we won't have good maps like those produced in circuitscape, since this approach only finds one solution (i.e., one line) therefore no exploration of other potential pathways.
   
   # some calculations in the function `flow.dispersion`
+  
+  # NOTES/COMMENTS
+  # 
+  # The lines generated so far the least cost path accounting for current direction (orange is Exmouth to Shark Bay and then SB to EG in red).
+  # Although, the obvious issue/challenge is that paths were generated over land, although I think there shouldn't be values in the whitespace.
+  #
+  # If we can get around this issue, I think we can do the following:
+  # - get coordinates of the dots that form the line 
+  # - then based on those coordinates, compute the total distance (i.e., connecting the coordinate points to form a line and measure that line)
+  # 
+  # This computed distance would represent how far an individual would travel from SB to EG if it were to follow the path that has 
+  # the least resistance due to current direction. I think, then, we can use this computed distance and regress it with genetic distance 
+  # to answer the question: does current direction (here represented by the information contained in the computed distance) impose resistance 
+  # that can influence population genetic connectivity?
+  # 
+  # another challenge though is that we won't have maps like those produced in circuitscape since the rWind approach 
+  # only finds one solution and therefore no exploration of other potential pathways (while not best are still possible pathways) across the extent.
+  #
+  # Maybe useful code: the rWind package provided the calculations for cost in the function `flow.dispersion` and the cost function itself `cost.FMGS`
   
   #example
   data(wind.data)
