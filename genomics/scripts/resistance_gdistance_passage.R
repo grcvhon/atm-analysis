@@ -82,8 +82,8 @@ samp_coords <- as.data.frame(samp_coords[,c(4,5)])
 # bearing
 
 # generate transition layer
-swd_layer_tr <- transition(swd_layer_raster, transitionFunction = mean, directions = 4) %>% 
-  geoCorrection(type = "c", multpl = F)
+swd_layer_tr <- transition(swd_layer_raster, transitionFunction = mean, directions = 8) %>% 
+  geoCorrection(type = "r", multpl = F)
 
 ggplot(as.data.frame(swd_layer_raster, xy=T)) + 
   geom_raster(aes(x=x, y=y, fill = bearing)) + 
