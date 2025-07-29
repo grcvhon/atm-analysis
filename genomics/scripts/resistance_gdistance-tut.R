@@ -72,8 +72,8 @@ ggplot(as.data.frame(asp, xy=T)) +
   theme_map() + 
   theme(legend.position = "right")
 
-set.seed(6)                                               # To make your results match mine
-Pj_sample <- Pj_coords[sample(nrow(Pj_coords), 5),]       # Take 5 random locations
+#set.seed(6)                                               # To make your results match mine
+Pj_sample <- Pj_coords[sample(nrow(Pj_coords), 20),]       # Take 5 random locations
 
 ggplot(as.data.frame(asp, xy=T)) + geom_raster(aes(x=x, y=y, fill=aspect)) + 
   geom_point(data=as.data.frame(Pj_sample), aes(x=longitude, y=latitude), size=2, col="white") +
@@ -107,7 +107,96 @@ colors <- c("grey60", viridis_pal(option="plasma", begin = 0.3, end = 1)(20))
 ggplot(as.data.frame(passages_overlay, xy=T)) + 
   geom_raster(aes(x=x,y=y,fill=layer)) +
   scale_fill_gradientn(colors = colors, na.value = NA) + 
-  theme_map() + 
+  theme_map() +
   theme(legend.position = "right")
 
 ## Warning: Removed 18361 rows containing missing values (geom_raster).
+
+###############################################################################
+
+# load package
+library(biooracler)
+
+# BioOracle layers are at the spatial resolution of 0.05 x 0.05 decimal degrees and decadal temporal resolution
+
+# list available layers
+layers <- list_layers()
+swd <- list_layers("SeaWaterDirection")
+
+# check layer info
+swd_id <- "swd_baseline_2000_2019_depthsurf"
+
+# time based on info_layer
+oracle_time <- c("2000-01-01T00:00:00Z", "2010-01-01T00:00:00Z")
+# extent based on "nw_shelf" shape i.e., ext(nw_shelf)
+oracle_lat <- c(-26.7363816780876, -9.69138797000501)
+oracle_lon <- c(111.544995584098, 130.342214992267)
+
+constraints <- list(oracle_time, oracle_lat, oracle_lon)
+names(constraints) <- c("time", "latitude", "longitude")
+
+swd_var <- "swd_mean" # sea water direction - mean
+swd_layer <- download_layers(swd_id, swd_var, constraints)
+swd_layer_raster <- raster::raster(swd_layer$swd_mean_1)
+
+# Load original raster
+swd_lay_rasload <- swd_layer_raster 
+# Create a clean copy by writing and re-reading it (strips NetCDF metadata)
+swd_lay_ras <- raster(swd_lay_rasload) 
+# write to a temporary GeoTIFF, then re-load it
+tempfile <- tempfile(fileext = ".tif")
+writeRaster(swd_lay_rasload, tempfile, formate = "GTiff", overwrite = TRUE)
+# Read it back — now it's stripped of zvar, z-value, band info
+swd_layer_raster <- raster(tempfile)
+# re-name `names` attribute to "bearing"
+names(swd_layer_raster) <- "bearing"
+# Print
+swd_layer_raster
+
+# Sample coordinates
+# - from all nw laevis samples, take only coordinates of the first 3 samples from listed pops
+samp_coords <- laevis_nw %>% 
+  filter(pop %in% c("Ashmore", "Broome", "Pilbara", "Exmouth_Gulf", "Shark_Bay")) %>% 
+  group_by(pop) %>% slice(1:3) %>% ungroup()
+
+samp_coords <- as.data.frame(samp_coords[,c(4,5)])
+
+# generate transition layer
+swd_layer_tr <- transition(swd_layer_raster, transitionFunction = mean, directions = 8) %>% 
+  geoCorrection(type = "c", multpl = F)
+
+ggplot(as.data.frame(swd_layer_raster, xy=T)) + 
+  geom_raster(aes(x=x, y=y, fill = bearing)) + 
+  geom_point(data=as.data.frame(samp_coords), aes(x=longitude, y=latitude), size=2, col="red") +
+  scale_fill_continuous(na.value=NA) + 
+  theme_map() + theme(legend.position = "right")
+
+laevis_combn <- 
+  combn(nrow(samp_coords),2) %>%
+  t() %>%
+  as.matrix()
+
+passages <- list()                                                     # Create a list to store the passage probability rasters in
+system.time(                                                           # Keep track of how long this takes
+  for (i in 1:nrow(laevis_combn)) {           
+    locations <- SpatialPoints(rbind(samp_coords[laevis_combn[i,1],1:2],     # create origin points
+                                     samp_coords[laevis_combn[i,2],1:2]),   # create destination (or goal) points, to traverse
+                               proj4string = CRS("+init=epsg:4326"))
+    passages[[i]] <- passage(swd_layer_tr,                                   # run the passage function 
+                             origin=locations[1],                 # set orgin point
+                             goal=locations[2],                   # set goal point
+                             theta = 0.00001)                             # set theta (tuning parameter, see notes below)
+    print(paste((i/nrow(laevis_combn))*100, "% complete"))
+  }
+)
+
+passages <- stack(passages)                                            # create a raster stack of all the passage probabilities
+passages_overlay <- sum(passages)/nrow(laevis_combn)                       # calculate average
+
+colors <- c("grey50", viridis_pal(option="inferno", begin = 0.3, end = 1)(20))
+ggplot(as.data.frame(passages_overlay, xy=T)) + 
+  geom_raster(aes(x=x,y=y,fill=layer)) +
+  scale_fill_gradientn(colors = colors, na.value = NA) + 
+  #geom_point(data=as.data.frame(samp_coords), aes(x=longitude, y=latitude), size=1, col="red") +
+  theme_map() +
+  theme(legend.position = "right")
