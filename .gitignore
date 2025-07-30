@@ -18,3 +18,4 @@ genomics/vcf_files/
 tmp/
 genomics/marspec/
 genomics/ocean-cur/
+*.csv
