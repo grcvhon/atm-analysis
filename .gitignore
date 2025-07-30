@@ -18,4 +18,5 @@ genomics/vcf_files/
 tmp/
 genomics/marspec/
 genomics/ocean-cur/
+genomics/scripts/rmd_report/
 *.csv
