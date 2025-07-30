@@ -77,25 +77,49 @@ ggplot(ocean_c, aes(lon, lat, color = dir)) +
 ocean_c_ras <- rWind::wind2raster(ocean_c) # note warning here...
 ocean_conduct <- flow.dispersion(ocean_c_ras)
 
-# provide origin and goal coordinates for path generation
-sub_coords <- data.frame(longitude = c(114.2825, 114.0446),
-                         latitude = c(-22.11952, -26.39628))
-sub_coords # first row ExmouthG, second row SharkB
+# declare objects for coords; pick one from each locality
+coords_one <- laevis_nw %>% 
+  filter(pop %in% c("Ashmore", "Broome", "Exmouth_Gulf", "Pilbara", "Shark_Bay")) %>% 
+  group_by(pop) %>% slice(1) %>% ungroup()
+coords_one <- as.data.frame(coords_one)
+coords_one
 
+Ashmore <- c(123.0942, -12.14553)
+Broome <- c(122.0936, -18.06773)
+Exmouth <- c(114.2231, -22.05562)
+Pilbara <- c(119.7474, -19.72300)
+SharkBay <- c(114.0237, -26.37763)
+
+# shortest Path in gdistance package
 GtoS <- shortestPath(ocean_conduct, 
-                     goal = c(sub_coords[2,1], sub_coords[2,2]),
-                     origin = c(sub_coords[1,1], sub_coords[1,2]),
+                     goal = SharkBay,
+                     origin = Exmouth,
                      output = "SpatialLines")
 
 # note order of origin and goal args swapped
 StoG <- shortestPath(ocean_conduct, 
-                     origin = c(sub_coords[2,1], sub_coords[2,2]),
-                     goal = c(sub_coords[1,1], sub_coords[1,2]),
+                     origin = SharkBay,
+                     goal = Exmouth,
                      output = "SpatialLines")
 
 plot(swd_layer$swd_mean_1)
 lines(GtoS, col = "orange", lwd = 3) 
 lines(StoG, col = "orangered", lwd = 3)
+
+# use `passage` in gdistance package
+
+pSE <- passage(ocean_conduct, 
+               origin = SharkBay,
+               goal = Exmouth, theta = 0.0001)
+plot(swd_layer_raster, alpha = 0.2)
+plot(pSE, add = TRUE, alpha = 0.5)
+
+pES <- passage(ocean_conduct,
+               origin = Exmouth,
+               goal = SharkBay, theta = 0.0001)
+plot(swd_layer_raster, alpha = 0.2)
+plot(pES, add = TRUE, alpha = 0.5)
+
 
 # NOTES/COMMENTS
 # 
