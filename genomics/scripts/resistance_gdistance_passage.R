@@ -73,7 +73,7 @@ sws_layer_raster
 # Sample coordinates
 # - from all nw laevis samples, take only coordinates of the first 3 samples from listed pops
 samp_coords <- laevis_nw %>% 
-  filter(pop %in% c("Ashmore", "Broome", "Pilbara", "Exmouth_Gulf", "Shark_Bay")) %>% 
+  filter(pop %in% c("Ashmore", "Broome", "Exmouth_Gulf", "Pilbara", "Shark_Bay")) %>% 
   group_by(pop) %>% slice(1:3) %>% ungroup()
 
 # keep only longitude and latitude columns
@@ -83,7 +83,7 @@ samp_coords <- as.data.frame(samp_coords[,c(4,5)])
 
 # generate transition layer
 swd_layer_tr <- transition(swd_layer_raster, transitionFunction = mean, directions = 8) %>% 
-  geoCorrection(type = "r", multpl = F)
+  geoCorrection(type = "c", multpl = F)
 
 ggplot(as.data.frame(swd_layer_raster, xy=T)) + 
   geom_raster(aes(x=x, y=y, fill = bearing)) + 
@@ -124,7 +124,7 @@ ggplot(as.data.frame(bearing_passages_overlay, xy=T)) +
 # speed
 
 # generate transition layer
-sws_layer_tr <- transition(sws_layer_raster, transitionFunction = mean, directions = 4) %>% 
+sws_layer_tr <- transition(sws_layer_raster, transitionFunction = mean, directions = 8) %>% 
   geoCorrection(type = "c", multpl = F)
 
 ggplot(as.data.frame(sws_layer_raster, xy=T)) + 
