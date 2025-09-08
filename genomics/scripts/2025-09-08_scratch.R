@@ -1,3 +1,5 @@
+### script below depends on `resistance_gdistance_passage.R`
+
 # bearing
 
 # generate transition layer
