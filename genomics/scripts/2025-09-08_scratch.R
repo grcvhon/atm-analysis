@@ -47,6 +47,14 @@ system.time(                                                           # Keep tr
 random_bearing_passages <- stack(bearing_passages)                                            # create a raster stack of all the passage probabilities
 random_bearing_passages_overlay <- sum(random_bearing_passages)/nrow(rand_pts_combn)                       # calculate average
 
+# save output as csv
+library(terra)
+ovr <- rast(random_bearing_passages_overlay)
+df_ovr <- as.data.frame(ovr, xy = TRUE)
+
+library(utils)
+write.csv(df_ovr, "location")
+
 colors <- c("grey50", viridis_pal(option="inferno", begin = 0.3, end = 1)(20))
 ggplot(as.data.frame(random_bearing_passages_overlay, xy=T)) + 
   geom_raster(aes(x=x,y=y,fill=layer)) +
@@ -59,7 +67,12 @@ ggplot(as.data.frame(random_bearing_passages_overlay, xy=T)) +
 # regular
 reg_rand_points <- st_sample(nw_shelf, size = 1000, type = "regular", replace = FALSE)
 plot(reg_rand_points, pch = 19, cex = 0.1)
-reg_rand_points
+df_reg_rand_points <- sfheaders::sfc_to_df(reg_rand_points)
+df_reg_rand_points <- df_reg_rand_points[,-c(1,2)]
+colnames(df_reg_rand_points) <- c("longitude", "latitude")
+print(dim(df_reg_rand_points)) # check number of rows and columns
+print(dim(unique(df_reg_rand_points))) # check unique number of rows and columns
+print(dim(unique(df_reg_rand_points)) == dim(df_reg_rand_points)) # should be TRUE TRUE
 
 # hexagonal
 hex_grid <- st_make_grid(nw_shelf[1,], what = "corners", square = F, n = 1000)
