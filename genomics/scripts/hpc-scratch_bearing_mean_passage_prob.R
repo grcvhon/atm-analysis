@@ -66,6 +66,7 @@ swd_layer_raster <- raster(tempfile)
 names(swd_layer_raster) <- "bearing"
 # Print
 swd_layer_raster
+writeRaster(swd_layer_raster, filename = "swd_layer_raster.tif")
 
 # write to a temporary GeoTIFF, then re-load it
 tempfile <- tempfile(fileext = ".tif")
@@ -76,8 +77,9 @@ sws_layer_raster <- raster(tempfile)
 names(sws_layer_raster) <- "speed"
 # Print
 sws_layer_raster
+writeRaster(sws_layer_raster, filename = "sws_layer_raster.tif")
 
-
+speed_rast <- rast("./genomics/sws_layer_raster.tif")
 
 
 
@@ -108,7 +110,7 @@ plot(sws_layer_raster)
 # regular
 
 set.seed(1) # generates exactly 1000 points
-size <- 1000
+size <- 50
 reg_points <- st_sample(nw_shelf, 
                         size = size, 
                         type = "regular", 
