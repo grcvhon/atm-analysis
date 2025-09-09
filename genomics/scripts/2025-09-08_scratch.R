@@ -75,9 +75,15 @@ print(dim(unique(df_reg_rand_points))) # check unique number of rows and columns
 print(dim(unique(df_reg_rand_points)) == dim(df_reg_rand_points)) # should be TRUE TRUE
 
 # hexagonal
-hex_grid <- st_make_grid(nw_shelf[1,], what = "corners", square = F, n = 1000)
+hex_grid <- st_make_grid(nw_shelf[1,], what = "corners", square = F, n = 50)
 plot(hex_grid, cex = 0.3)
 hex_grid
 
+df_hex_grid <- sfheaders::sfc_to_df(hex_grid)
+df_hex_grid <- df_hex_grid[,-c(1,2)]
+colnames(df_hex_grid) <- c("longitude", "latitude")
+print(dim(df_hex_grid)) # check number of rows and columns
+print(dim(unique(df_hex_grid))) # check unique number of rows and columns
+print(dim(unique(df_hex_grid)) == dim(df_hex_grid)) # should be TRUE TRUE
 
-
+# Comes up with duplicate sets of coordinates
