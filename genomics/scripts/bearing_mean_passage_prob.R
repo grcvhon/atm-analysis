@@ -86,7 +86,7 @@ sws_layer_raster
 ### *** crop bearing and speed rasters based on NW shelf shapefile extent *** ###
 
 # load shapefile
-nw_shelf <- st_read("/hpcfs/users/a1235304/atm_passage/shapefiles/nw-shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
+nw_shelf <- st_read("/hpcfs/users/a1235304/atm_passage/shapefiles/nw_shelf/NWShelf.shp", quiet = TRUE) %>% st_transform(4326)
 
 # crop bearing layer
 swd_layer_raster <- crop(swd_layer_raster, extent(nw_shelf))
