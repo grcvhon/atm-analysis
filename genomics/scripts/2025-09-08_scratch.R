@@ -87,3 +87,69 @@ print(dim(unique(df_hex_grid))) # check unique number of rows and columns
 print(dim(unique(df_hex_grid)) == dim(df_hex_grid)) # should be TRUE TRUE
 
 # Comes up with duplicate sets of coordinates
+
+# spatially balanced
+# dssduoa - adopt from other projects
+
+# required nw_shelf
+plot(nw_shelf)
+
+library(sf)
+nw_shelf_utm <- st_transform(nw_shelf, crs = 32750)
+
+library(dssduoa)
+nw_shelf_region <- make.region(shape = nw_shelf_utm)
+
+#ecoflow_points <- st_as_sfc(st_bbox(nw_shelf_utm)) #|>
+  #st_make_grid(cellsize = 1000) |>
+  #st_as_sf()
+
+#ecoflow_points_inPoly <- st_intersection(ecoflow_points, nw_shelf_utm)
+
+library(spsurvey)
+set.seed(100)
+ecoflow_pts <- grts(nw_shelf_utm, n_base = 100)
+
+plot(ecoflow_pts)
+
+ecoflow_pts_sf <- st_as_sf(ecoflow_pts$sites_base)
+
+library(ggplot2)
+ggplot() + geom_sf(data = nw_shelf_utm) + geom_sf(data = ecoflow_pts_sf)
+
+ecoflow_pts_lon <- ecoflow_pts$sites_base$lon_WGS84
+ecoflow_pts_lat <- ecoflow_pts$sites_base$lat_WGS84
+ecoflow_pts_coords <- cbind(ecoflow_pts_lon,ecoflow_pts_lat)
+colnames(ecoflow_pts_coords) <- c("longitude","latitude")
+df_ecoflow_pts_coords <- as.data.frame(ecoflow_pts_coords)
+dim(df_ecoflow_pts_coords) == dim(unique(df_ecoflow_pts_coords)) # no duplicate points
+
+# generate origin/destination combinations across the 1000 points
+ecoflow_pts_comb <- 
+  combn(nrow(df_ecoflow_pts_coords),2) %>%
+  t() %>%
+  as.matrix()
+ecoflow_pts_comb
+
+# bearing
+swd_layer_tr <- transition(swd_layer_raster, transitionFunction = mean, directions = 8) %>% 
+  geoCorrection(type = "c", multpl = F)
+
+ecoflow_bearing_passages <- list()                                                     
+
+system.time( # Keep track of how long this takes
+  for (i in 1:nrow(ecoflow_pts_comb)) {           
+    locations <- SpatialPoints(rbind(df_ecoflow_pts_coords[ecoflow_pts_comb[i,1],1:2],   # create origin points
+                                     df_ecoflow_pts_coords[ecoflow_pts_comb[i,2],1:2]),  # create destination (or goal) points, to traverse
+                               proj4string = CRS("+init=epsg:4326"))
+    ecoflow_bearing_passages[[i]] <- passage(swd_layer_tr,                        # run the passage function 
+                                         origin=locations[1],                 # set orgin point
+                                         goal=locations[2],                   # set goal point
+                                         theta = 0.00001)                     # set theta (tuning parameter, see notes below)
+    print(paste((i/nrow(ecoflow_pts_comb))*100, "% complete"))
+  }
+)
+
+
+
+
