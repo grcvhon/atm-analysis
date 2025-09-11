@@ -117,7 +117,8 @@ nw_shelf_region <- make.region(shape = nw_shelf_utm)
 #ecoflow_points_inPoly <- st_intersection(ecoflow_points, nw_shelf_utm)
 
 library(spsurvey)
-set.seed(100)
+seed <- 100
+set.seed(seed)
 n_base <- 100
 ecoflow_pts <- grts(nw_shelf_utm, n_base = n_base)
 
