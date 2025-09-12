@@ -20,3 +20,4 @@ genomics/marspec/
 genomics/ocean-cur/
 genomics/scripts/rmd_report/
 *.csv
+genomics/*.pdf
