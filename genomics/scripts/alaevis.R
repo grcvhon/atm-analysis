@@ -144,3 +144,9 @@ z_map_sh_admix <-
                       plot_axes = TRUE,
                       coords = x_proj)
 plot(z_map_sh_admix)
+
+t <- raster::raster(z_krig_sh_admix$K1) # extent is different; does not represent coordinates
+t <- terra::rast(t)
+df_t <- as.data.frame(t, xy = TRUE)
+write.csv(df_t, "./alaevis_tess_overlay.csv")
+
