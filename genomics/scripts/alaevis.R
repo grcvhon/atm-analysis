@@ -145,8 +145,9 @@ z_map_sh_admix <-
                       coords = x_proj)
 plot(z_map_sh_admix)
 
-t <- raster::raster(z_krig_sh_admix$K1) # extent is different; does not represent coordinates
-t <- terra::rast(t)
-df_t <- as.data.frame(t, xy = TRUE)
-write.csv(df_t, "./alaevis_tess_overlay.csv")
-
+# save as df
+anc <- raster::raster(z_krig_sh_admix$K2) # take either K; K1 is inverse of K2
+anc <- terra::rast(anc)
+anc <- terra::project(anc, "+proj=longlat +datum=WGS84")
+df_anc <- as.data.frame(anc, xy = TRUE)
+write.csv(df_anc, "./genomics/algatr_TESS/alaevis_tess_K2.csv")
