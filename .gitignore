@@ -21,3 +21,4 @@ genomics/ocean-cur/
 genomics/scripts/rmd_report/
 *.csv
 genomics/*.pdf
+!ancestry_layer/sample-lists/*.csv
