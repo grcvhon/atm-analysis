@@ -160,4 +160,4 @@ colnames(stokesii_vcf_keep) <- NULL
 # via "Filter by individual" (i.e., using a keep list)
 #
 # Example:
-# vcftools --vcf ALA-stringent.highQ.filtered.vcf --keep ../ALA-nw.txt --recode --stdout > ./ALA-stringent.highQ.filtered.nw.keep.vcf
+# vcftools --vcf ./vcf-files/ALA-stringent.vcf --keep ./sample-lists/ALA-nw.txt --recode --stdout > ./ALA-stringent.nw.keep.vcf
