@@ -1,6 +1,7 @@
 # Clean up VCF files via "Filter by individual" (i.e., using a keep list)
-# use vcftools
+# to only keep nw samples
 
+# use vcftools
 # check directory
 
 vcftools --vcf ./vcf-files/updated/ALA-stringent.vcf --keep ./sample-lists/ALA-nw.txt --recode --stdout > ./ALA-stringent.nw.keep.vcf
