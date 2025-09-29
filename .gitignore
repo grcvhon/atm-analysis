@@ -22,3 +22,5 @@ genomics/scripts/rmd_report/
 *.csv
 genomics/*.pdf
 !ancestry_layer/sample-lists/*.csv
+ancestry_layer/marspec/
+ancestry_layer/nw_shapefile/
