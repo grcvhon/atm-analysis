@@ -7,11 +7,10 @@
 # -- removed samples (not based on location) are from `samples-remove.txt` 
 #    in github.com/a-lud/sea-snake-dart
 
-# The keep list output of this script will be used for filtering VCF files 
-# via "Filter by individual" (i.e., using a keep list)
-
+# set work dir
 setwd("C:/Users/a1235304/Dropbox/Short-nosed and Leaf-scaled sea snake TSSC/atm-analysis/ancestry_layer/")
 
+# load package
 library(tidyverse)
 
 ##############
@@ -47,11 +46,11 @@ laevis_vcf_keep <- laevis_nw %>%
 colnames(laevis_vcf_keep) <- NULL
 
 # already written to file
-#write.table(laevis_vcf_keep,
-#            file = "./sample-lists/ALA-nw.txt",
-#            sep = ",",
-#            row.names = FALSE,
-#            quote = FALSE)
+write.table(laevis_vcf_keep,
+            file = "./sample-lists/ALA-nw.txt",
+            sep = ",",
+            row.names = FALSE,
+            quote = FALSE)
 
 ##############
 # major
@@ -95,11 +94,11 @@ major_vcf_keep <- major_nw %>%
 colnames(major_vcf_keep) <- NULL
 
 # Not run - already written
-#write.table(major_vcf_keep,
-#            file = "./sample-lists/HMA-nw.txt",
-#            sep = ",",
-#            row.names = FALSE,
-#            quote = FALSE)
+write.table(major_vcf_keep,
+            file = "./sample-lists/HMA-nw.txt",
+            sep = ",",
+            row.names = FALSE,
+            quote = FALSE)
 
 ##############
 # stokesii
@@ -126,6 +125,7 @@ stokesii_nw <- stokesii_popmap %>%
   subset(id!="KLS1204") %>% 
   subset(id!="As012") %>% 
   subset(id!="As010") %>% 
+  subset(id!="KLS1688") %>% 
   # remove non-nw samples
   subset(pop!="Gulf_of_Carpentaria") %>%  
   subset(pop!="North_QLD")
@@ -149,15 +149,11 @@ stokesii_vcf_keep <- stokesii_nw %>%
 colnames(stokesii_vcf_keep) <- NULL
 
 # Not run - already written
-#write.table(stokesii_vcf_keep,
-#            file = "./sample-lists/HST-nw.txt",
-#            sep = ",",
-#            row.names = FALSE,
-#            quote = FALSE)
+write.table(stokesii_vcf_keep,
+            file = "./sample-lists/HST-nw.txt",
+            sep = ",",
+            row.names = FALSE,
+            quote = FALSE)
 
 # Next step:
-# The keep list output of this script will be used for filtering VCF files 
-# via "Filter by individual" (i.e., using a keep list)
-#
-# Example:
-# vcftools --vcf ./vcf-files/ALA-stringent.vcf --keep ./sample-lists/ALA-nw.txt --recode --stdout > ./ALA-stringent.nw.keep.vcf
+# Use the keep list output to subset VCF files using vcfR
