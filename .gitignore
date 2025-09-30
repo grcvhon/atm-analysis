@@ -24,3 +24,4 @@ genomics/*.pdf
 ancestry_layer/
 genetic_layer/marspec/
 genetic_layer/nw_shapefile/
+!genetic_layer/laevis/sample_list/ALA-popmap-coords.csv
