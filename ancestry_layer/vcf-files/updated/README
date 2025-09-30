@@ -1,4 +1,0 @@
-Source:
-ALA = https://github.com/a-lud/sea-snake-dart/blob/6e3dd92bd4b68e28078810c148270ce964dc30f0/results/ipyrad/ALA-stringent_outfiles/ALA-stringent.vcf.gz
-HMA = https://github.com/a-lud/sea-snake-dart/blob/6e3dd92bd4b68e28078810c148270ce964dc30f0/results/ipyrad/HMA-stringent_outfiles/HMA-stringent.vcf.gz
-HST = https://github.com/a-lud/sea-snake-dart/blob/6e3dd92bd4b68e28078810c148270ce964dc30f0/results/ipyrad/HST-stringent_outfiles/HST-stringent.vcf.gz
