@@ -21,6 +21,6 @@ genomics/ocean-cur/
 genomics/scripts/rmd_report/
 *.csv
 genomics/*.pdf
-!ancestry_layer/sample-lists/*.csv
-ancestry_layer/marspec/
-ancestry_layer/nw_shapefile/
+ancestry_layer/
+genetic_layer/marspec/
+genetic_layer/nw_shapefile/
