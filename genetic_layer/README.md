@@ -1,0 +1,1 @@
+This directory contains code and input data for generating a genetic layer from kriged (interpolated) ancestry coefficient across the seascape.
