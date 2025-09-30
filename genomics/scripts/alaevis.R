@@ -111,7 +111,7 @@ laevis_tess <-
                      coords = laevis_nw_proj, 
                      Kvals = 1:7, 
                      ploidy = 2, 
-                     K_selection = "auto")
+                     K_selection = "manual")
 # ^note that K changes every iteration ...
 
 # Get TESS object and best K from results (i.e., laevis_tess)
