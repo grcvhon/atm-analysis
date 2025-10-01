@@ -6,8 +6,6 @@ The example below uses DArTseq data for <i>Aipysurus laevis</i>. Input files wer
 
 The northwest shelf is the extent of the spatial genetic layer we will generate.
 
-<br>
-
 ### Prepare sample list
 First, we will prepare a sample list which includes individuals of <i>A. laevis</i> from the northwest shelf.
 
@@ -50,15 +48,11 @@ colnames(laevis_vcf_keep) <- NULL
 
 The written output will be used to subset the VCF file.
 
-<br>
-
 ### Subset the VCF file
 Next, we will subset the VCF file by individual using `vcftools`. In bash, we run:
 ```bash
 vcftools --vcf ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.vcf --keep ./genetic_layer/laevis/sample-list/ALA-nw.txt --recode --stdout > ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.nw.keep.vcf
 ```
-
-<br>
 
 ### Process subsetted DArTseq data
 After subsetting the VCF file to only include individuals of Olive sea snakes from the northwest shelf, we will prepare the data for downstream `algatr` analyses.
@@ -82,8 +76,6 @@ laevis_dos_imp <-
   algatr::simple_impute(laevis_dosage, FUN = median)
 ```
 
-<br>
-
 ### Prepare sample list for `algatr` analyses
 Analyses in `algatr` require a sample list that has samples arranged in the same way as in the VCF file. To make sure we have that, we run:
 ```r
@@ -105,8 +97,6 @@ laevis_nw_proj <- sf::st_as_sf(laevis_nw_coords, coords = c("x", "y"), crs = "ep
 laevis_nw_proj <- sf::st_transform(laevis_nw_proj, crs = 4326)
 ```
 With the genetic input data prepared, we will proceed with preparing spatial input data.
-
-<br>
 
 ### Spatial: Marine environmental datasets and analysis extent
 These environmental datasets can be accessed through the [MARSPEC](https://marspec.weebly.com/) website. We will download it programmatically using the `sdmpredictors` R package.
@@ -147,8 +137,6 @@ mspec_sh_stack <- raster::stack(mspec_sh_pcs$map)
 mspec_sh_stack
 ```
 The last few lines of code above under `# environmetal PCA` summarises the variation across the environmental variables. We will use environmental PC1 in downstream analyses.
-
-<br>
 
 ### Interpolate ancestry coefficients across the seascape
 With our genetic and spatial data prepared, we can now perform K-estimation and kriging to generate our spatial genetic layer.
@@ -196,8 +184,11 @@ z_map_sh_admix <-
 # plot
 plot(z_map_sh_admix)
 ```
-Here is a plot of `z_map_sh_admix`:<br> 
-![Alt](https://github.com/grcvhon/atm-analysis/blob/master/genetic_layer/laevis/output/laevis_K2.png)
+Here is a plot of `z_map_sh_admix`:
+
+<br> 
+
+## ![ ](https://github.com/grcvhon/atm-analysis/blob/master/genetic_layer/laevis/output/laevis_K2.png)
 
 We now have our spatial genetic layer for <i>A. laevis</i> obtained from the northwest shelf. We also want to save our output as a `.csv` file so we can use it as input for species distribution modelling.
 ```r
