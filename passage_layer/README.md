@@ -35,18 +35,17 @@ Rscript sbs_script.R
 ```
 Run the bash script above using `sbatch filename.sh`. Script took approximately 6 hours to run.
 
-Here is a preview of the output:
-![]
+Here is a preview of the output:<br>
+![ ](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.png)
 
 ---
-From here, I present the R code and visual output.
-
 <br>
+From here, I present the R code.
 
 ### Download/Load ocean current bearing and speed datasets
 We will obtain our ocean current bearing and speed datasets from [BioOracle](https://www.bio-oracle.org/) via the R package `biooracler`. BioOracle layers are at the spatial resolution of 0.05 x 0.05 decimal degrees and of decadal temporal resolution. 
 
-We have code that will download these BioOracle layers each time it is run (see {script URL}). However, we may want to save these layers to file so we can access it immediately when running the job through the HPC.
+We have code that will download these BioOracle layers each time it is run (see [sbs_script.R](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_script.R)). However, we may want to save these layers to file so we can access it immediately when running the job through the HPC.
 ```r
 # load required packages
 library(gdistance)
