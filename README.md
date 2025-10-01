@@ -1,6 +1,6 @@
 ## Tracking Species Trajectories: Determining baseline populations and monitoring methods for Critically Endangered sea snake species
 
-This repository contains input data and code used for developing species distribution models for the project of <i><b>Tracking species trajectories</i></b> funded by the DCCEEW. 
+This repository contains input data and code used for developing species distribution models for the project: <i><b>Tracking species trajectories</i></b>.
 
 Overall, this project aims to 1) determine baseline populations and develop monitoring methods through mark-recapture methods; and 2) generate more robust species distribution models for two Critically Endangered sea snakes (EPCB Act 1999): the Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>) and the Leaf-scaled sea snake (<i>A. foliosquama</i>)
 
