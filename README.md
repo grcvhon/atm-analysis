@@ -6,5 +6,6 @@ Overall, this project aims to 1) determine baseline populations and develop moni
 
 In this section, we look to incorporate genetic information in generating species distribution models. Doing so may progress our understanding of current species-specific distributional ranges as well as identify potential key locations for future surveys.
 
+
 ##
-###### This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.
+<sub>This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.</sub>
