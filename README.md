@@ -1,1 +1,5 @@
-### [ATM_2023_0715] Tracking Species Trajectories funded by the Department of Climate Change, Energy, the Environment and Water (DCCEEW)
+## [ATM_2023_0715] Tracking Species Trajectories funded by the Department of Climate Change, Energy, the Environment and Water (DCCEEW)
+
+This repository contains input data and code used for developing species distribution models for the project of <i><b>Tracking species trajectories</i></b> funded by the DCCEEW. 
+
+This project aims to update species distribution models for two Critically Endangered sea snake species (EPCB Act 1999): the Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>) and the Leaf-scaled sea snake (<i>A. foliosquama</i>). In this project, we aim to incorporate species ancestry coefficient values (i.e., genetic information) in generating said updated species distribution models. Doing so may progress our understanding of current species-specific distributions as well as inform potential key locations for future surveys.
