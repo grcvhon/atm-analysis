@@ -6,10 +6,9 @@ Mean passage probability was estimated based on the ocean current bearing^ which
 
 The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix). In this document, I present the code and visual output.
 
-##
-###### * Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.<br>^ Mean passage probability estimates based on ocean current speed still needs to be executed.
+*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.</sub><br>^<sub> Mean passage probability estimates based on ocean current speed still needs to be executed.</sub>
 
-<br>
+#
 
 ### Download ocean current bearing and speed datasets
 We will obtain our ocean current bearing and speed datasets from [BioOracle](https://www.bio-oracle.org/) via the R package `biooracler`.
