@@ -1,4 +1,4 @@
-## [ATM_2023_0715] Tracking Species Trajectories funded by the Department of Climate Change, Energy, the Environment and Water (DCCEEW)
+## Tracking Species Trajectories funded by the Department of Climate Change, Energy, the Environment and Water (DCCEEW)
 
 This repository contains input data and code used for developing species distribution models for the project of <i><b>Tracking species trajectories</i></b> funded by the DCCEEW. 
 
