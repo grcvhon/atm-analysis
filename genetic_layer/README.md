@@ -52,8 +52,6 @@ The written output will be used to subset the VCF file.
 
 ### Subset the VCF file
 Next, we will subset the VCF file by individual using `vcftools`. In bash, we run:
-```zsh
-vcftools --vcf ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.vcf \
---keep ./genetic_layer/laevis/sample-list/ALA-nw.txt \
---recode --stdout > ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.nw.keep.vcf
+```bash
+vcftools --vcf ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.vcf --keep ./genetic_layer/laevis/sample-list/ALA-nw.txt --recode --stdout > ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.nw.keep.vcf
 ```
