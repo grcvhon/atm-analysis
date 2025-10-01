@@ -36,7 +36,8 @@ Rscript sbs_script.R
 Run the bash script above using `sbatch filename.sh`. Script took approximately 6 hours to run.
 
 Here is a preview of the output:<br>
-![ ](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.png "Mean passage probability among 100 spatially balanced points estimated based on ocean current bearing. Warmer colours represent areas of greater mean passage probability.")
+![ ](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.png)<br>
+###### <i>Mean passage probability among 100 spatially balanced points based on ocean current bearing. Warmer colours represent areas of greater passage probability.</i>
 
 ---
 <br>
