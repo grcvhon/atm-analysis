@@ -1,4 +1,4 @@
-# Generating spatial genetic layer to incorporate in species distribution modelling
+# Generate a spatial genetic layer for species distribution modelling
 
 This directory contains code and input data for generating a spatial genetic layer from kriged (interpolated) ancestry coefficients across the seascape.
 
