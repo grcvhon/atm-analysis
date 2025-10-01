@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 *.Rproj
+data/
 data/predictor-variables/
 data/shapefiles/
 data/spreadsheets/*
@@ -26,4 +27,3 @@ genetic_layer/marspec/
 genetic_layer/nw_shapefile/
 !genetic_layer/laevis/sample_list/ALA-popmap-coords.csv
 !genetic_layer/laevis/output/*.csv
-data/
