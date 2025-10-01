@@ -190,7 +190,7 @@ Here is a plot of `z_map_sh_admix`:
 
 ## ![ ](https://github.com/grcvhon/atm-analysis/blob/master/genetic_layer/laevis/output/laevis_K2.png)
 
-We now have our spatial genetic layer for <i>A. laevis</i> obtained from the northwest shelf. We also want to save our output as a `.csv` file so we can use it as input for species distribution modelling.
+We now have our spatial genetic layer for <i>A. laevis</i>. We also want to save our output as a `.csv` file so we can use it as input for species distribution modelling.
 ```r
 ### write: save as csv ###
 anc <- raster::raster(z_krig_sh_admix$K2) # take either K; K1 is inverse of K2
