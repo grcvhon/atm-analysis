@@ -165,3 +165,8 @@ anc <- terra::rast(anc)
 anc <- terra::project(anc, "+proj=longlat +datum=WGS84")
 df_anc <- as.data.frame(anc, xy = TRUE)
 write.csv(df_anc, file = paste0("./genetic_layer/output/laevis_K",laevis_bestK,".csv"))
+
+# not run
+# png(height = 5,width = 8,filename = "./genetic_layer/laevis/output/laevis_K2.png", units = "in", res = 300)
+# plot(z_map_sh_admix)
+# dev.off()
