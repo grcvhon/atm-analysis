@@ -37,7 +37,7 @@ Run the bash script above using `sbatch filename.sh`. Script took approximately 
 
 Here is a preview of the output:<br>
 ![ ](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.png)<br>
-Mean passage probability among 100 spatially balanced points estimated based on ocean current bearing. Warmer colours represent areas of greater mean passage probability.
+##### Mean passage probability among 100 spatially balanced points estimated based on ocean current bearing. Warmer colours represent areas of greater mean passage probability.
 
 ---
 <br>
