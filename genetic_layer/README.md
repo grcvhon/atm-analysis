@@ -197,7 +197,7 @@ z_map_sh_admix <-
 plot(z_map_sh_admix)
 ```
 Here is a plot of `z_map_sh_admix`:<br> 
-(genetic_layer/laevis/output/laevis_K2.png)
+![Alt](https://github.com/grcvhon/atm-analysis/blob/master/genetic_layer/laevis/output/laevis_K2.png)
 
 We now have our spatial genetic layer for <i>A. laevis</i> obtained from the northwest shelf. We also want to save our output as a `.csv` file so we can use it as input for species distribution modelling.
 ```r
