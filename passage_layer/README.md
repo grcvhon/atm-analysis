@@ -6,11 +6,16 @@ Mean passage probability was estimated based on the ocean current bearing (direc
 
 The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix HPC).
 
+*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.
+
 ##
 
 ### Run in Phoenix HPC
-{UPDATING SOON...}
-
+The R scripts and associated bash scripts are stored in: `/hpcfs/users/a1235304/atm_passage`.
+```sh
+sbatch sbs_bearing_bash.sh
+sbatch sbs_speed_bash.sh
+```
 Here is a preview of the output:<br>
 {UPDATING SOON...}
 
