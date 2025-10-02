@@ -134,6 +134,16 @@ ecoflow_pts_lat <- ecoflow_pts$sites_base$lat_WGS84
 ecoflow_pts_coords <- cbind(ecoflow_pts_lon,ecoflow_pts_lat)
 colnames(ecoflow_pts_coords) <- c("longitude","latitude")
 df_ecoflow_pts_coords <- as.data.frame(ecoflow_pts_coords)
+
+# introduce manually selected points in EG and SB
+manual_pts <- 
+  data.frame(longitude = c(114.37139,114.31644,114.29309,113.69914,113.25505,113.45073),
+             latitude = c(-21.86184,-22.08711,-22.31837,-26.38297,-25.73358,-25.13991))
+
+# append manually selected points to sbs generated pts
+df_ecoflow_pts_coords <- rbind(df_ecoflow_pts_coords, manual_pts)
+
+# check for duplicate points
 dim(df_ecoflow_pts_coords) == dim(unique(df_ecoflow_pts_coords)) # no duplicate points
 
 # generate origin/destination combinations across the 1000 points
