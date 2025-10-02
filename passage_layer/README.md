@@ -2,42 +2,17 @@
 
 This directory contains code and input data for generating a layer representing mean passage probability among spatially balanced points* across the northwest shelf. 
 
-Mean passage probability was estimated based on the ocean current bearing^ which can produce asymmetrical routes between any two points. As such, pairwise mean passage probability was estimated and then visualised. The final output is a `.csv` file which can be used as input/predictor layer for species distribution modelling.
+Mean passage probability was estimated based on the ocean current bearing (direction) and ocean current speed which can produce asymmetrical routes between any two points. As such, pairwise mean passage probability values were estimated and then visualised. The final output is a `.csv` file which can be used as input/predictor layer for species distribution modelling. These mean passage probability values are also visualised into accompanying `.pdf` output.
 
 The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix HPC).
-
-*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities. <b>These manually selected points are yet to be included.</b></sub><br>^<sub>Mean passage probability estimates based on ocean current speed still needs to be executed.</sub>
 
 ##
 
 ### Run in Phoenix HPC
-Bash script: (save as e.g.`filename.sh`)
-```bash
-#!/usr/bin/env bash
-
-#SBATCH --job-name=sbs
-#SBATCH -p batch
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH -c 36
-#SBATCH --time=12:00:00
-#SBATCH --mem=64GB
-#SBATCH -o /hpcfs/users/a1235304/atm_passage/log/%x_%A.log
-
-module load GDAL
-module load GEOS
-module load PROJ
-module load UDUNITS
-module load cURL
-module load R
-
-Rscript sbs_script.R
-```
-Run the bash script above using `sbatch filename.sh`. Script took approximately 6 hours to run.
+{UPDATING SOON...}
 
 Here is a preview of the output:<br>
-![ ](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.png)<br>
-###### <i>Mean passage probability among 100 spatially balanced points based on ocean current bearing. Warmer colours represent areas of greater passage probability.</i>
+{UPDATING SOON...}
 
 ---
 <br>
@@ -46,7 +21,7 @@ From here, I present the R code.
 ### Download/Load ocean current bearing and speed datasets
 We will obtain our ocean current bearing and speed datasets from [BioOracle](https://www.bio-oracle.org/) via the R package `biooracler`. BioOracle layers are at the spatial resolution of 0.05 x 0.05 decimal degrees and of decadal temporal resolution. 
 
-We have code that will download these BioOracle layers each time it is run (see [sbs_script.R](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_script.R)). However, we may want to save these layers to file so we can access it immediately when running the job through the HPC.
+We have code that will download these BioOracle layers each time it is run (see either [sbs_bearing_script.R](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_bearing_script.R) or [sbs_speed_script.R](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_speed_script.R)). However, we may want to save these layers to file so we can access it immediately when running the job through the HPC.
 ```r
 # load required packages
 library(gdistance)
@@ -70,9 +45,9 @@ swd_layer_raster <- rast("/hpcfs/users/a1235304/atm_passage/rasterfiles/swd_laye
 swd_layer_raster <- raster(swd_layer_raster)
 #sws_layer_raster <- raster(sws_layer_raster)
 ```
-Notice that `sws_*` objects have been commented out. These correspond to the ocean current speed which still needs to be executed.
+The code block above is from the standalone script for ocean current bearing (direction) and as such lines for `sws_*` have been commented out (and for the rest of the scripts presented below). The standalone script for ocean current speed ([sbs_speed_script.R](https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_speed_script.R)) is basically the same but with speed lines activated.
 
-### Generate spatially balanced points
+### Generate spatially balanced points (plus manually selected points for Shark Bay and Exmouth Gulf)
 We will now place spatially balanced points within the northwest shelf boundary. We are going to use the northwest shelf shapefile obtained from Vinay Udyawer.
 ```r
 # load shapefile
@@ -99,9 +74,19 @@ ecoflow_pts_lat <- ecoflow_pts$sites_base$lat_WGS84
 ecoflow_pts_coords <- cbind(ecoflow_pts_lon,ecoflow_pts_lat)
 colnames(ecoflow_pts_coords) <- c("longitude","latitude")
 df_ecoflow_pts_coords <- as.data.frame(ecoflow_pts_coords)
+
+# introduce manually selected points in EG and SB
+manual_pts <- 
+  data.frame(longitude = c(114.37139,114.31644,114.29309,113.69914,113.25505,113.45073),
+             latitude = c(-21.86184,-22.08711,-22.31837,-26.38297,-25.73358,-25.13991))
+
+# append manually selected points to sbs generated pts
+df_ecoflow_pts_coords <- rbind(df_ecoflow_pts_coords, manual_pts)
+
+# check for duplicate points
 dim(df_ecoflow_pts_coords) == dim(unique(df_ecoflow_pts_coords)) # no duplicate points
 
-# generate origin/destination combinations across the 1000 points
+# generate origin/destination combinations across the 100 points
 ecoflow_pts_comb <- 
   combn(nrow(df_ecoflow_pts_coords),2) %>%
   t() %>%
@@ -137,7 +122,7 @@ We then supply the code to write our output. We produce a `.csv` file which can 
 ```r
 ### *** save output *** ###
 
-dir <- paste0("/hpcfs/users/a1235304/atm_passage/output/sbs_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),"/")
+dir <- paste0("/hpcfs/users/a1235304/atm_passage/output/sbs_bearing_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),"/")
 dir.create(dir, recursive = TRUE)
 
 # as csv
@@ -146,11 +131,11 @@ ovr <- rast(ecoflow_bearing_passages_overlay)
 df_ovr <- as.data.frame(ovr, xy = TRUE)
 
 library(utils)
-write.csv(df_ovr, file = paste0(dir, "sbs_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),".csv"))
+write.csv(df_ovr, file = paste0(dir, "sbs_bearing_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),".csv"))
           
 # as pdf
 
-pdf(file = paste0(dir, "sbs_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),".pdf"), height = 8.5, width = 11)
+pdf(file = paste0(dir, "sbs_bearing_seed",seed,"_",n_base,"pts_",format(Sys.time(),"%Hh%Mm%Ss"),".pdf"), height = 8.5, width = 11)
 
 colors <- c("grey50", viridis_pal(option="inferno", begin = 0.3, end = 1)(20))
 ggplot(as.data.frame(ecoflow_bearing_passages_overlay, xy=T)) +
@@ -160,4 +145,3 @@ ggplot(as.data.frame(ecoflow_bearing_passages_overlay, xy=T)) +
   theme_map() +
   theme(legend.position = "right")
   ```
-
