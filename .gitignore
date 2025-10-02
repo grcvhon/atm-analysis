@@ -31,3 +31,4 @@ sdm/
 !passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.csv
 !passage_layer/output/regular_seed1_50pts_17h53m10s/regular_seed1_50pts_17h53m10s.csv
 passage_layer/output/regular_seed1_50pts_17h53m10s
+passage_layer/scripts/regular_*
