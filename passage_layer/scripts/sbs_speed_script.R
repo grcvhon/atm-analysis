@@ -149,7 +149,7 @@ df_ecoflow_pts_coords <- rbind(df_ecoflow_pts_coords, manual_pts)
 # check for duplicate points
 dim(df_ecoflow_pts_coords) == dim(unique(df_ecoflow_pts_coords)) # no duplicate points
 
-# generate origin/destination combinations across the 1000 points
+# generate origin/destination combinations across the 100 points
 ecoflow_pts_comb <- 
   combn(nrow(df_ecoflow_pts_coords),2) %>%
   t() %>%
