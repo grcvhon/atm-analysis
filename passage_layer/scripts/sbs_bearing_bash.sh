@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=sbs
+#SBATCH --job-name=sbs_bearing
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
@@ -16,4 +16,5 @@ module load UDUNITS
 module load cURL
 module load R
 
-Rscript sbs_script.R
+Rscript sbs_bearing_script.R
+#Rscript sbs_speed_script.R
