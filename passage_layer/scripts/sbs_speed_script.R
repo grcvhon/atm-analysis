@@ -125,7 +125,7 @@ set.seed(seed)
 n_base <- 100
 ecoflow_pts <- grts(nw_shelf_utm, n_base = n_base)
 
-plot(ecoflow_pts)
+#plot(ecoflow_pts)
 
 ecoflow_pts_sf <- st_as_sf(ecoflow_pts$sites_base)
 
@@ -154,7 +154,7 @@ ecoflow_pts_comb <-
   combn(nrow(df_ecoflow_pts_coords),2) %>%
   t() %>%
   as.matrix()
-ecoflow_pts_comb
+#ecoflow_pts_comb
 
 # speed
 sws_layer_tr <- transition(sws_layer_raster, transitionFunction = mean, directions = 8) %>% 
