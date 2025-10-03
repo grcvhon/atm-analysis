@@ -192,6 +192,8 @@ Interpolated ancestry coefficient values across the northwest shelf at K = 2.
 </div>
 </p>
 
+<br>
+
 We now have our spatial genetic layer for <i>A. laevis</i>. We also want to save our output as a `.csv` file so we can use it as input for species distribution modelling.
 ```r
 ### write: save as csv ###
