@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 40px 500px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #8e2922; /* Change the old color so it seems less like an error */
+	background:#eeeeee;
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="generate-a-spatial-genetic-layer-for-species-distribution-modelling">Generate a spatial genetic layer for species distribution modelling</h1>
+<p>This directory contains code and input data for generating a spatial genetic layer from kriged (interpolated) ancestry coefficient values across the seascape. This analysis uses methods of <a href="https://doi.org/10.1111/1755-0998.13884">Chambers et al. 2023</a> and the R package <a href="https://github.com/TheWangLab/algatr"><code>algatr</code></a>.</p>
+<p>The example below uses DArTseq data for <i>Aipysurus laevis</i>. Input files were downloaded from the GitHub repository: <a href="https://github.com/a-lud/sea-snake-dart">sea-snake-dart</a>. Environmental layers were downloaded from MARSPEC (via R). The northwest shelf shapefile was obtained from Vinay Udyawer.</p>
+<p>The northwest shelf is the extent of the spatial genetic layer we will generate.</p>
+<h3 id="prepare-sample-list">Prepare sample list</h3>
+<p>First, we will prepare a sample list which includes individuals of <i>A. laevis</i> from the northwest shelf.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">library</span>(tidyverse)
+
+laevis_popmap &lt;- 
+  read.csv(<span class="hljs-string">"./genetic_layer/laevis/sample_list/ALA-popmap-coords.csv"</span>,
+           sep = <span class="hljs-string">","</span>, header = <span class="hljs-literal">TRUE</span>)
+
+laevis_nw &lt;- laevis_popmap %&gt;% 
+  <span class="hljs-comment"># Remove AL401 and AL404 - dropped samples</span>
+  subset(id!=<span class="hljs-string">"AL401"</span>) %&gt;% 
+  subset(id!=<span class="hljs-string">"AL404"</span>) %&gt;% 
+  <span class="hljs-comment"># Keep only samples west of GoC</span>
+  subset(pop!=<span class="hljs-string">"North_QLD"</span>) %&gt;% 
+  subset(pop!=<span class="hljs-string">"Gulf_of_Carpentaria"</span>) %&gt;% 
+  subset(pop!=<span class="hljs-string">"New_Caledonia"</span>)
+
+laevis_nw &lt;- laevis_nw %&gt;%
+  <span class="hljs-comment"># unite first 3 column values separated with "-"</span>
+  unite(<span class="hljs-string">"id_clean"</span>, species:targetid, remove = <span class="hljs-literal">FALSE</span>, sep = <span class="hljs-string">"-"</span>) %&gt;% 
+  <span class="hljs-comment"># arrange columns as desired</span>
+  select(<span class="hljs-string">"id_clean"</span>,<span class="hljs-string">"pop"</span>,<span class="hljs-string">"locality"</span>,<span class="hljs-string">"longitude"</span>,<span class="hljs-string">"latitude"</span>)
+laevis_nw
+
+<span class="hljs-comment"># create keep list for vcf</span>
+laevis_vcf_keep &lt;- laevis_nw %&gt;% 
+  select(<span class="hljs-string">"id_clean"</span>)
+<span class="hljs-comment"># remove header from keep list</span>
+colnames(laevis_vcf_keep) &lt;- <span class="hljs-literal">NULL</span>
+
+<span class="hljs-comment">### Not run ###</span>
+<span class="hljs-comment"># write.table(laevis_vcf_keep,</span>
+<span class="hljs-comment">#             file = "./genetic_layer/laevis/sample_list/ALA-nw.txt",</span>
+<span class="hljs-comment">#             sep = ",",</span>
+<span class="hljs-comment">#             row.names = FALSE,</span>
+<span class="hljs-comment">#             quote = FALSE)</span>
+</div></code></pre>
+<p>The written output will be used to subset the VCF file.</p>
+<h3 id="subset-the-vcf-file">Subset the VCF file</h3>
+<p>Next, we will subset the VCF file by individual using <code>vcftools</code>. In bash, we run:</p>
+<pre class="hljs"><code><div>vcftools --vcf ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.vcf --keep ./genetic_layer/laevis/sample-list/ALA-nw.txt --recode --stdout &gt; ./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.nw.keep.vcf
+</div></code></pre>
+<h3 id="process-subsetted-dartseq-data">Process subsetted DArTseq data</h3>
+<p>After subsetting the VCF file to only include individuals of Olive sea snakes from the northwest shelf, we will prepare the data for downstream <code>algatr</code> analyses.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># load package</span>
+<span class="hljs-keyword">library</span>(vcfR)
+<span class="hljs-keyword">library</span>(wingen)
+<span class="hljs-keyword">library</span>(algatr)
+
+<span class="hljs-comment"># load vcf</span>
+laevis_vcf &lt;- 
+  vcfR::read.vcfR(<span class="hljs-string">"./genetic_layer/laevis/vcf_file/ALA-stringent.highQ.filtered.nw.keep.vcf"</span>, 
+                  verbose = <span class="hljs-literal">TRUE</span>)
+
+<span class="hljs-comment"># convert to dosage</span>
+laevis_dosage &lt;- 
+  wingen::vcf_to_dosage(laevis_vcf)
+
+<span class="hljs-comment"># impute any missing data with median</span>
+laevis_dos_imp &lt;- 
+  algatr::simple_impute(laevis_dosage, FUN = median)
+</div></code></pre>
+<h3 id="prepare-sample-list-for-algatr-analyses">Prepare sample list for <code>algatr</code> analyses</h3>
+<p>Analyses in <code>algatr</code> require a sample list that has samples arranged in the same way as in the VCF file. To make sure we have that, we run:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># obtain list of samples from VCF</span>
+laevis_samples &lt;- as.data.frame(colnames(laevis_vcf@gt)) <span class="hljs-comment"># get sample names from ala_vcf</span>
+laevis_samples &lt;- as.data.frame(laevis_samples[-<span class="hljs-number">1</span>,]) <span class="hljs-comment"># remove "FORMAT" colname</span>
+colnames(laevis_samples) &lt;- <span class="hljs-string">"sample"</span> <span class="hljs-comment"># rename "FORMAT" as "sample"</span>
+laevis_samples
+
+laevis_nw_coords &lt;- laevis_nw %&gt;%
+  <span class="hljs-comment"># arrange `laevis_nw_coords` as in samples in vcf file</span>
+  arrange(id_clean, laevis_samples$sample) %&gt;% 
+  <span class="hljs-comment"># select only long and lat cols</span>
+  select(<span class="hljs-string">"longitude"</span>,<span class="hljs-string">"latitude"</span>)
+colnames(laevis_nw_coords) &lt;- c(<span class="hljs-string">"x"</span>,<span class="hljs-string">"y"</span>) <span class="hljs-comment"># rename cols</span>
+
+<span class="hljs-comment"># project</span>
+laevis_nw_proj &lt;- sf::st_as_sf(laevis_nw_coords, coords = c(<span class="hljs-string">"x"</span>, <span class="hljs-string">"y"</span>), crs = <span class="hljs-string">"epsg:4326"</span>)
+laevis_nw_proj &lt;- sf::st_transform(laevis_nw_proj, crs = <span class="hljs-number">4326</span>)
+</div></code></pre>
+<p>With the genetic input data prepared, we will proceed with preparing spatial input data.</p>
+<h3 id="spatial-marine-environmental-datasets-and-analysis-extent">Spatial: Marine environmental datasets and analysis extent</h3>
+<p>These environmental datasets can be accessed through the <a href="https://marspec.weebly.com/">MARSPEC</a> website. We will download it programmatically using the <code>sdmpredictors</code> R package.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># load packages</span>
+<span class="hljs-keyword">library</span>(sdmpredictors)
+<span class="hljs-keyword">library</span>(raster)
+<span class="hljs-keyword">library</span>(sp)
+<span class="hljs-keyword">library</span>(dismo)
+
+<span class="hljs-comment"># MARSPEC data sets</span>
+<span class="hljs-comment"># list names of MARSPEC layers (annual data) </span>
+mspec_names &lt;- list_layers(<span class="hljs-string">"MARSPEC"</span>, monthly = <span class="hljs-literal">FALSE</span>)$name 
+
+<span class="hljs-comment"># all annual layers</span>
+mspec_annual &lt;- list_layers(<span class="hljs-string">"MARSPEC"</span>, monthly = <span class="hljs-literal">FALSE</span>)$layer_code 
+
+<span class="hljs-comment"># download the layers -- already saved in marspec dir</span>
+mspec_layers &lt;- load_layers(mspec_annual, datadir = <span class="hljs-string">"./genetic_layer/marspec/"</span>)
+</div></code></pre>
+<p>The last line above will write the layers in the <code>marspec</code> directory for ease of access since the layers need to be downloaded only once. Next, we introduce the extent of our analyses - the northwest shelf.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># load shapefile</span>
+nw_shelf &lt;- sf::st_read(<span class="hljs-string">"./genetic_layer/nw_shapefile/NWShelf.shp"</span>, quiet = <span class="hljs-literal">TRUE</span>) %&gt;% sf::st_transform(<span class="hljs-number">4326</span>)
+
+<span class="hljs-comment"># limit environmental layers to NW shelf boundary</span>
+mspec_spatrast &lt;- raster::crop(mspec_layers, nw_shelf)
+mspec_spatrast &lt;- terra::rast(mspec_spatrast) <span class="hljs-comment"># global; convert RasterBrick to SpatRaster</span>
+mspec_shelf &lt;- terra::mask(mspec_spatrast, mask = terra::vect(nw_shelf))
+
+<span class="hljs-comment"># preview with laevis points</span>
+plot(mspec_shelf[[<span class="hljs-number">14</span>]]) <span class="hljs-comment"># 14 = sea surface temp (annual mean)</span>
+points(laevis_nw_coords, pch = <span class="hljs-number">19</span>)
+
+<span class="hljs-comment"># environmental PCA</span>
+mspec_sh_pcs &lt;- RStoolbox::rasterPCA(mspec_shelf, spca = <span class="hljs-literal">TRUE</span>)
+mspec_sh_stack &lt;- raster::stack(mspec_sh_pcs$map)
+mspec_sh_stack
+</div></code></pre>
+<p>The last few lines of code above under <code># environmetal PCA</code> summarises the variation across the environmental variables. We will use environmental PC1 in downstream analyses.</p>
+<h3 id="interpolate-ancestry-coefficients-across-the-seascape">Interpolate ancestry coefficients across the seascape</h3>
+<p>With our genetic and spatial data prepared, we can now perform K-estimation and kriging to generate our spatial genetic layer.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># run TESS to estimate best K, use manual K selection</span>
+laevis_tess &lt;- 
+  algatr::tess_ktest(gen = laevis_dos_imp, 
+                     coords = laevis_nw_proj, 
+                     Kvals = <span class="hljs-number">1</span>:<span class="hljs-number">7</span>, <span class="hljs-comment"># 7 pops</span>
+                     ploidy = <span class="hljs-number">2</span>, 
+                     K_selection = <span class="hljs-string">"manual"</span>) <span class="hljs-comment"># choose K = 2 </span>
+
+<span class="hljs-comment"># get TESS object and best K from results (i.e., laevis_tess)</span>
+laevis_tessobj &lt;- laevis_tess$tess3_obj
+laevis_bestK &lt;- laevis_tess[[<span class="hljs-string">"K"</span>]]
+
+<span class="hljs-comment"># get matrix of ancestry coefficients</span>
+laevis_qmat &lt;- 
+  tess3r::qmatrix(tess3 = laevis_tessobj, 
+                  K = laevis_bestK)
+
+<span class="hljs-comment"># prepare grid for kriging</span>
+
+<span class="hljs-comment"># grid</span>
+mspec_sh_krig &lt;- (mspec_sh_stack[[<span class="hljs-number">1</span>]]) <span class="hljs-comment"># environmental PC1, nw shape</span>
+y_krig_sh_raster &lt;- raster::projectRaster(mspec_sh_krig, crs = <span class="hljs-string">"epsg:3112"</span>)
+
+<span class="hljs-comment"># sample coordinates</span>
+x &lt;- sf::st_as_sf(laevis_nw_coords, coords = c(<span class="hljs-string">"x"</span>, <span class="hljs-string">"y"</span>), crs = <span class="hljs-number">4326</span>)
+x_proj &lt;- sf::st_transform(x, crs = <span class="hljs-number">3112</span>) <span class="hljs-comment"># EPSG:3112; GDA94 Geoscience Australia projection </span>
+
+<span class="hljs-comment"># krig</span>
+z_krig_sh_admix &lt;- 
+  algatr::tess_krig(qmat = laevis_qmat, 
+                    coords = x_proj, 
+                    grid = y_krig_sh_raster)
+
+<span class="hljs-comment"># map the krig</span>
+z_map_sh_admix &lt;- 
+  algatr::tess_ggplot(z_krig_sh_admix,
+                      plot_method = <span class="hljs-string">"maxQ"</span>,
+                      plot_axes = <span class="hljs-literal">TRUE</span>,
+                      coords = x_proj)
+
+<span class="hljs-comment"># plot</span>
+plot(z_map_sh_admix)
+</div></code></pre>
+<p>Here is a plot of <code>z_map_sh_admix</code>:</p>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/genetic_layer/laevis/output/laevis_K2.png", width = 75%, height = 75%>
+<div align = "center">
+Interpolated ancestry coefficient values across the northwest shelf at K = 2.
+</div>
+</p>
+<br>
+<p>We now have our spatial genetic layer for <i>A. laevis</i>. We also want to save our output as a <code>.csv</code> file so we can use it as input for species distribution modelling.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">### write: save as csv ###</span>
+anc &lt;- raster::raster(z_krig_sh_admix$K2) <span class="hljs-comment"># take either K; K1 is inverse of K2</span>
+anc &lt;- terra::rast(anc)
+anc &lt;- terra::project(anc, <span class="hljs-string">"+proj=longlat +datum=WGS84"</span>)
+df_anc &lt;- as.data.frame(anc, xy = <span class="hljs-literal">TRUE</span>)
+write.csv(df_anc, file = paste0(<span class="hljs-string">"./genetic_layer/output/laevis_K"</span>,laevis_bestK,<span class="hljs-string">".csv"</span>))
+</div></code></pre>
+
+</body>
+</html>
