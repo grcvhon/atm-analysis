@@ -6,7 +6,7 @@ Mean passage probability was estimated based on the ocean current bearing (direc
 
 The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix HPC).
 
-*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.
+*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.</sub>
 
 ##
 
