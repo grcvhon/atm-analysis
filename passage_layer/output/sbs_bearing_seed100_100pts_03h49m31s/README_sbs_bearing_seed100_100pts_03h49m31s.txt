@@ -1,0 +1,1 @@
+Arguments used: seed = 100, points = 100 (+ 6 manually selected), theta = 0.00001
