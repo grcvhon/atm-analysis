@@ -186,7 +186,7 @@ plot(z_map_sh_admix)
 ```
 Here is a plot of `z_map_sh_admix`:
 <p align = center>
-<img src="https://github.com/grcvhon/atm-analysis/blob/master/genetic_layer/laevis/output/laevis_K2.png", width = 75%, height = 75%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/genetic_layer/laevis/output/laevis_K2.png", width = 75%, height = 75%>
 <div align = "center">
 Interpolated ancestry coefficient values across the northwest shelf at K = 2.
 </div>
