@@ -11,17 +11,22 @@ The code was written in R and executed using the University of Adelaide High Per
 ##
 
 ### Run in Phoenix HPC
-The R scripts and associated bash scripts are stored in: `/hpcfs/users/a1235304/atm_passage`.
+The R scripts and associated bash scripts are stored in: `/hpcfs/users/a1235304/atm_passage`. Each takes about 7.5 hours to run.
 ```sh
 sbatch sbs_bearing_bash.sh
 sbatch sbs_speed_bash.sh
 ```
 Here is a preview of the output:<br>
-{UPDATING SOON...}
+<p>
+<img src="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/sbs_bearing_seed100_100pts_03h49m32s.png">
+<img src="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_speed_seed100_100pts_04h07m52s/sbs_speed_seed100_100pts_04h07m53s.png">
+</p>
+
+###### Estimated mean passage probability based on ocean current bearing (direction).
 
 ---
 <br>
-From here, I present the R code.
+From here, I go through the R code.
 
 ### Download/Load ocean current bearing and speed datasets
 We will obtain our ocean current bearing and speed datasets from [BioOracle](https://www.bio-oracle.org/) via the R package `biooracler`. BioOracle layers are at the spatial resolution of 0.05 x 0.05 decimal degrees and of decadal temporal resolution. 
