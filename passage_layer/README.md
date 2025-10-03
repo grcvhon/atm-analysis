@@ -119,10 +119,10 @@ system.time( # Keep track of how long this takes
     locations <- SpatialPoints(rbind(df_ecoflow_pts_coords[ecoflow_pts_comb[i,1],1:2],   # create origin points
                                      df_ecoflow_pts_coords[ecoflow_pts_comb[i,2],1:2]),  # create destination (or goal) points, to traverse
                                proj4string = CRS("+init=epsg:4326"))
-    ecoflow_bearing_passages[[i]] <- passage(swd_layer_tr,                        # run the passage function 
-                                             origin=locations[1],                 # set orgin point
-                                             goal=locations[2],                   # set goal point
-                                             theta = 0.00001)                     # set theta (tuning parameter, see notes below)
+    ecoflow_bearing_passages[[i]] <- passage(swd_layer_tr,        # run the passage function 
+                                             origin=locations[1], # set orgin point
+                                             goal=locations[2],   # set goal point
+                                             theta = 0.00001)     # set theta (tuning parameter, see notes below)
     print(paste((i/nrow(ecoflow_pts_comb))*100, "% complete"))
   }
 )
@@ -130,6 +130,8 @@ system.time( # Keep track of how long this takes
 ecoflow_bearing_passages <- stack(ecoflow_bearing_passages) # create a raster stack of all the passage probabilities
 ecoflow_bearing_passages_overlay <- sum(ecoflow_bearing_passages)/nrow(ecoflow_pts_comb) # calculate average
 ```
+From [Mapping Ecological Flow in R](https://www.alexbaecher.com/post/connectivity-script/): <i>"In our passage function, we set theta, (θ), a tuning parameter. Extremely low values result in a random walk (equivilant to Circuit Theory), but as θ¸ increases, the passage converges on least cost path. I supplied a value somewhere in the middle."</i>
+
 We then supply the code to write our output. We produce a `.csv` file which can be used as input for species distribution modelling and a `.pdf` file for visualisation.
 ```r
 ### *** save output *** ###
@@ -156,4 +158,4 @@ ggplot(as.data.frame(ecoflow_bearing_passages_overlay, xy=T)) +
   #geom_point(data=as.data.frame(samp_coords), aes(x=longitude, y=latitude), size=1, col="red") +
   theme_map() +
   theme(legend.position = "right")
-  ```
+```
