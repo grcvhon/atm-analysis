@@ -18,7 +18,7 @@ sbatch sbs_speed_bash.sh
 ```
 Here is a preview of the output:<br>
 <p>
-<img src="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/sbs_bearing_seed100_100pts_03h49m32s.png">
+<img src="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/sbs_bearing_seed100_100pts_03h49m32s.png", width = 50%, height = 50%>
 <img src="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/output/sbs_speed_seed100_100pts_04h07m52s/sbs_speed_seed100_100pts_04h07m53s.png">
 </p>
 
