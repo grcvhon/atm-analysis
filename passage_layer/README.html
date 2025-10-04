@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0px 0px;
+	margin: 3% 25%;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	margin: 0.5%;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #8e2922; /* Change the old color so it seems less like an error */
+	background:#eeeeee;
+	font-size: inherit;
+	border-radius: 3px;
+	padding: 2px 2px;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="generate-spatial-passage-layer-for-species-distribution-modelling">Generate spatial passage layer for species distribution modelling</h1>
+<p>This directory contains code and input data for generating a layer representing mean passage probability among spatially balanced points* across the northwest shelf.</p>
+<p>Mean passage probability was estimated based on the ocean current bearing (direction) and ocean current speed which can produce asymmetrical routes between any two points. As such, pairwise mean passage probability values were estimated and then visualised. The final output is a <code>.csv</code> file which can be used as input/predictor layer for species distribution modelling. These mean passage probability values are also visualised into accompanying <code>.pdf</code> output.</p>
+<p>The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix HPC).</p>
+<p>*<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.</sub></p>
+<h2 id=""></h2>
+<h3 id="run-in-phoenix-hpc">Run in Phoenix HPC</h3>
+<p>The R scripts and associated bash scripts are stored in: <code>/hpcfs/users/a1235304/atm_passage</code>. Each takes about 7.5 hours to run.</p>
+<pre class="hljs"><code><div>sbatch sbs_bearing_bash.sh
+sbatch sbs_speed_bash.sh
+</div></code></pre>
+<p>Here is a preview of the output:<br></p>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/sbs_bearing_seed100_100pts_03h49m32s.png", width = 50%, height = 50%><img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/output/sbs_speed_seed100_100pts_04h07m52s/sbs_speed_seed100_100pts_04h07m53s.png", width = 50%, height = 50%>
+<div align = "center">
+Estimated mean passage probability across the northwest shelf based on ocean current bearing (direction) (left); speed (right).
+</div>
+</p>
+<hr>
+<br>
+From here, I go through the R code.
+<h3 id="downloadload-ocean-current-bearing-and-speed-datasets">Download/Load ocean current bearing and speed datasets</h3>
+<p>We will obtain our ocean current bearing and speed datasets from <a href="https://www.bio-oracle.org/">BioOracle</a> via the R package <code>biooracler</code>. BioOracle layers are at the spatial resolution of 0.05 x 0.05 decimal degrees and of decadal temporal resolution.</p>
+<p>We have code that will download these BioOracle layers each time it is run (see either <a href="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_bearing_script.R">sbs_bearing_script.R</a> or <a href="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_speed_script.R">sbs_speed_script.R</a>). However, we may want to save these layers to file so we can access it immediately when running the job through the HPC.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># load required packages</span>
+<span class="hljs-keyword">library</span>(gdistance)
+<span class="hljs-keyword">library</span>(tidyverse)
+<span class="hljs-keyword">library</span>(ggplot2)
+<span class="hljs-keyword">library</span>(raster)
+<span class="hljs-keyword">library</span>(viridis)
+<span class="hljs-keyword">library</span>(ggthemes)
+<span class="hljs-keyword">library</span>(biooracler)
+<span class="hljs-keyword">library</span>(sf)
+<span class="hljs-keyword">library</span>(terra)
+
+<span class="hljs-comment">### To circumvent cURL timeout:</span>
+<span class="hljs-comment">### *** The raster files have been downloaded and now exist in rasterfiles/ dir *** ###</span>
+
+<span class="hljs-comment"># Load the tif file (class will be SpatRaster)</span>
+swd_layer_raster &lt;- rast(<span class="hljs-string">"/hpcfs/users/a1235304/atm_passage/rasterfiles/swd_layer_raster.tif"</span>)
+<span class="hljs-comment">#sws_layer_raster &lt;- rast("/hpcfs/users/a1235304/atm_passage/rasterfiles/sws_layer_raster.tif")</span>
+
+<span class="hljs-comment"># Convert to RasterLayer</span>
+swd_layer_raster &lt;- raster(swd_layer_raster)
+<span class="hljs-comment">#sws_layer_raster &lt;- raster(sws_layer_raster)</span>
+</div></code></pre>
+<p>The code block above is from the standalone script for ocean current bearing (direction) and as such lines for <code>sws_*</code> have been commented out (and for the rest of the scripts presented below). The standalone script for ocean current speed (<a href="https://github.com/grcvhon/atm-analysis/blob/master/passage_layer/scripts/sbs_speed_script.R">sbs_speed_script.R</a>) is basically the same but with speed lines activated.</p>
+<h3 id="generate-spatially-balanced-points-plus-manually-selected-points-for-shark-bay-and-exmouth-gulf">Generate spatially balanced points (plus manually selected points for Shark Bay and Exmouth Gulf)</h3>
+<p>We will now place spatially balanced points within the northwest shelf boundary. We are going to use the northwest shelf shapefile obtained from Vinay Udyawer.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># load shapefile</span>
+nw_shelf &lt;- st_read(<span class="hljs-string">"/hpcfs/users/a1235304/atm_passage/shapefiles/nw_shelf/NWShelf.shp"</span>, quiet = <span class="hljs-literal">TRUE</span>) %&gt;% st_transform(<span class="hljs-number">4326</span>)
+
+<span class="hljs-keyword">library</span>(sf)
+nw_shelf_utm &lt;- st_transform(nw_shelf, crs = <span class="hljs-number">32750</span>)
+
+<span class="hljs-keyword">library</span>(dssduoa)
+nw_shelf_region &lt;- make.region(shape = nw_shelf_utm)
+
+<span class="hljs-keyword">library</span>(spsurvey)
+seed &lt;- <span class="hljs-number">100</span>
+set.seed(seed) <span class="hljs-comment"># we set seed to track iteration</span>
+n_base &lt;- <span class="hljs-number">100</span>
+ecoflow_pts &lt;- grts(nw_shelf_utm, n_base = n_base)
+
+plot(ecoflow_pts)
+
+ecoflow_pts_sf &lt;- st_as_sf(ecoflow_pts$sites_base)
+
+ecoflow_pts_lon &lt;- ecoflow_pts$sites_base$lon_WGS84
+ecoflow_pts_lat &lt;- ecoflow_pts$sites_base$lat_WGS84
+ecoflow_pts_coords &lt;- cbind(ecoflow_pts_lon,ecoflow_pts_lat)
+colnames(ecoflow_pts_coords) &lt;- c(<span class="hljs-string">"longitude"</span>,<span class="hljs-string">"latitude"</span>)
+df_ecoflow_pts_coords &lt;- as.data.frame(ecoflow_pts_coords)
+
+<span class="hljs-comment"># introduce manually selected points in EG and SB</span>
+manual_pts &lt;- 
+  data.frame(longitude = c(<span class="hljs-number">114.37139</span>,<span class="hljs-number">114.31644</span>,<span class="hljs-number">114.29309</span>,<span class="hljs-number">113.69914</span>,<span class="hljs-number">113.25505</span>,<span class="hljs-number">113.45073</span>),
+             latitude = c(-<span class="hljs-number">21.86184</span>,-<span class="hljs-number">22.08711</span>,-<span class="hljs-number">22.31837</span>,-<span class="hljs-number">26.38297</span>,-<span class="hljs-number">25.73358</span>,-<span class="hljs-number">25.13991</span>))
+
+<span class="hljs-comment"># append manually selected points to sbs generated pts</span>
+df_ecoflow_pts_coords &lt;- rbind(df_ecoflow_pts_coords, manual_pts)
+
+<span class="hljs-comment"># check for duplicate points</span>
+dim(df_ecoflow_pts_coords) == dim(unique(df_ecoflow_pts_coords)) <span class="hljs-comment"># no duplicate points</span>
+
+<span class="hljs-comment"># generate origin/destination combinations across the 100 points</span>
+ecoflow_pts_comb &lt;- 
+  combn(nrow(df_ecoflow_pts_coords),<span class="hljs-number">2</span>) %&gt;%
+  t() %&gt;%
+  as.matrix()
+ecoflow_pts_comb
+</div></code></pre>
+<h3 id="estimate-mean-passage-probability">Estimate mean passage probability</h3>
+<p>We will now estimate mean passage probability among pairwise points. Pairwise points were limited within the northwest shelf boundary but mean passage probability estimates were made throughout the extent of the BioOracle ocean current bearing layer.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># bearing</span>
+swd_layer_tr &lt;- transition(swd_layer_raster, transitionFunction = mean, directions = <span class="hljs-number">8</span>) %&gt;% 
+  geoCorrection(type = <span class="hljs-string">"c"</span>, multpl = <span class="hljs-literal">F</span>)
+
+ecoflow_bearing_passages &lt;- list()                                                     
+
+system.time( <span class="hljs-comment"># Keep track of how long this takes</span>
+  <span class="hljs-keyword">for</span> (i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:nrow(ecoflow_pts_comb)) {           
+    locations &lt;- SpatialPoints(rbind(df_ecoflow_pts_coords[ecoflow_pts_comb[i,<span class="hljs-number">1</span>],<span class="hljs-number">1</span>:<span class="hljs-number">2</span>],   <span class="hljs-comment"># create origin points</span>
+                                     df_ecoflow_pts_coords[ecoflow_pts_comb[i,<span class="hljs-number">2</span>],<span class="hljs-number">1</span>:<span class="hljs-number">2</span>]),  <span class="hljs-comment"># create destination (or goal) points, to traverse</span>
+                               proj4string = CRS(<span class="hljs-string">"+init=epsg:4326"</span>))
+    ecoflow_bearing_passages[[i]] &lt;- passage(swd_layer_tr,        <span class="hljs-comment"># run the passage function </span>
+                                             origin=locations[<span class="hljs-number">1</span>], <span class="hljs-comment"># set orgin point</span>
+                                             goal=locations[<span class="hljs-number">2</span>],   <span class="hljs-comment"># set goal point</span>
+                                             theta = <span class="hljs-number">0.00001</span>)     <span class="hljs-comment"># set theta (tuning parameter, see notes below)</span>
+    print(paste((i/nrow(ecoflow_pts_comb))*<span class="hljs-number">100</span>, <span class="hljs-string">"% complete"</span>))
+  }
+)
+
+ecoflow_bearing_passages &lt;- stack(ecoflow_bearing_passages) <span class="hljs-comment"># create a raster stack of all the passage probabilities</span>
+ecoflow_bearing_passages_overlay &lt;- sum(ecoflow_bearing_passages)/nrow(ecoflow_pts_comb) <span class="hljs-comment"># calculate average</span>
+</div></code></pre>
+<p>From <a href="https://www.alexbaecher.com/post/connectivity-script/">Mapping Ecological Flow in R</a>: <i>&quot;In our passage function, we set theta, (θ), a tuning parameter. Extremely low values result in a random walk (equivilant to Circuit Theory), but as θ¸ increases, the passage converges on least cost path. I supplied a value somewhere in the middle.&quot;</i></p>
+<p>We then supply the code to write our output. We produce a <code>.csv</code> file which can be used as input for species distribution modelling and a <code>.pdf</code> file for visualisation.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">### *** save output *** ###</span>
+
+dir &lt;- paste0(<span class="hljs-string">"/hpcfs/users/a1235304/atm_passage/output/sbs_bearing_seed"</span>,seed,<span class="hljs-string">"_"</span>,n_base,<span class="hljs-string">"pts_"</span>,format(Sys.time(),<span class="hljs-string">"%Hh%Mm%Ss"</span>),<span class="hljs-string">"/"</span>)
+dir.create(dir, recursive = <span class="hljs-literal">TRUE</span>)
+
+<span class="hljs-comment"># as csv</span>
+<span class="hljs-keyword">library</span>(terra)
+ovr &lt;- rast(ecoflow_bearing_passages_overlay)
+df_ovr &lt;- as.data.frame(ovr, xy = <span class="hljs-literal">TRUE</span>)
+
+<span class="hljs-keyword">library</span>(utils)
+write.csv(df_ovr, file = paste0(dir, <span class="hljs-string">"sbs_bearing_seed"</span>,seed,<span class="hljs-string">"_"</span>,n_base,<span class="hljs-string">"pts_"</span>,format(Sys.time(),<span class="hljs-string">"%Hh%Mm%Ss"</span>),<span class="hljs-string">".csv"</span>))
+          
+<span class="hljs-comment"># as pdf</span>
+
+pdf(file = paste0(dir, <span class="hljs-string">"sbs_bearing_seed"</span>,seed,<span class="hljs-string">"_"</span>,n_base,<span class="hljs-string">"pts_"</span>,format(Sys.time(),<span class="hljs-string">"%Hh%Mm%Ss"</span>),<span class="hljs-string">".pdf"</span>), height = <span class="hljs-number">8.5</span>, width = <span class="hljs-number">11</span>)
+
+colors &lt;- c(<span class="hljs-string">"grey50"</span>, viridis_pal(option=<span class="hljs-string">"inferno"</span>, begin = <span class="hljs-number">0.3</span>, end = <span class="hljs-number">1</span>)(<span class="hljs-number">20</span>))
+ggplot(as.data.frame(ecoflow_bearing_passages_overlay, xy=<span class="hljs-literal">T</span>)) +
+  geom_raster(aes(x=x,y=y,fill=layer)) +
+  scale_fill_gradientn(colors = colors, na.value = <span class="hljs-literal">NA</span>) +
+  <span class="hljs-comment">#geom_point(data=as.data.frame(samp_coords), aes(x=longitude, y=latitude), size=1, col="red") +</span>
+  theme_map() +
+  theme(legend.position = <span class="hljs-string">"right"</span>)
+</div></code></pre>
+
+</body>
+</html>
