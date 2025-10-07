@@ -11,7 +11,7 @@ Our SDM approach is summarised in the diagram below:
 ```mermaid
 flowchart TD;
     A("Occurrence data")
-    style A fill:white,stroke:grey80,color:black
+    style A fill:white,stroke:black,color:black
     B("Environmental layers")
     C("Genetic layer")
     D("Passage probability layer")
