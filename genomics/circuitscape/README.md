@@ -1,1 +1,0 @@
-This directory contains files related to using Circuitscape in Julia.
