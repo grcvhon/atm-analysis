@@ -23,18 +23,18 @@ flowchart TD;
     (GAMM)"]
     I["Ensemble"]
     
-    style A fill:white,stroke:grey,color:black,font-size:12px
-    style B fill:white,stroke:grey,color:black,font-size:12px
-    style C fill:white,stroke:grey,color:black,font-size:12px
-    style D fill:white,stroke:grey,color:black,font-size:12px
-    style E fill:white,stroke:grey,color:black,font-size:12px
-    style F fill:white,stroke:grey,color:black,font-size:12px
-    style G fill:white,stroke:grey,color:black,font-size:12px
-    style H fill:white,stroke:grey,color:black,font-size:12px
-    style I fill:white,stroke:grey,color:black,font-size:12px
+    style A fill:white,stroke:grey,color:black,font-size:14px
+    style B fill:white,stroke:grey,color:black,font-size:14px
+    style C fill:white,stroke:grey,color:black,font-size:14px
+    style D fill:white,stroke:grey,color:black,font-size:14px
+    style E fill:white,stroke:grey,color:black,font-size:14px
+    style F fill:white,stroke:grey,color:black,font-size:14px
+    style G fill:white,stroke:grey,color:black,font-size:14px
+    style H fill:white,stroke:grey,color:black,font-size:14px
+    style I fill:white,stroke:grey,color:black,font-size:14px
 
     A--
-    <p style="font-size:10px">
+    <p style="font-size:13px">
     <b>Species-specific data</b><br> 
     (<i>Aipysurus laevis</i>,<br>
     <i>A. apraefrontalis</i>,<br>
@@ -42,14 +42,14 @@ flowchart TD;
     </p>--->E;
 
     B--
-    <p style="font-size:10px">
+    <p style="font-size:13px">
     Sources:<br>
     UNEP, IMOS,<br> 
     CSIRO, BioOracle
     </p>--->E;
     
     C--
-    <p style="font-size:10px">
+    <p style="font-size:13px">
     Interpolated ancestry<br>
     coefficient values<br>
     for <i>A. laevis</i><br>
@@ -57,7 +57,7 @@ flowchart TD;
     </p>--->E;
     
     D--
-    <p style="font-size:10px">
+    <p style="font-size:13px">
     Mean passage probability<br>
     values based on ocean<br>
     current direction<br>
