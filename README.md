@@ -8,18 +8,18 @@ We look to incorporate genetic information in generating species distribution mo
 
 Our SDM approach is summarised in the diagram below:
 
-<pre>```mermaid
+```mermaid
 flowchart TD;
     A("Occurrence data")
     B("Environmental layers")
-    C("Spatial genetic layer")
-    D("Spatial passage 
-    probabilitylayer")
+    C("Genetic layer")
+    D("Passage probability layer")
     E("SDM analysis")
     F("MaxEnt")
     G("Random Forest")
     H("General Additive 
-    Mixed Models (GAMM)")
+    Mixed Models
+    (GAMM)")
     I("Ensemble")
     
     A-->E;
@@ -30,8 +30,7 @@ flowchart TD;
     E-->G;
     E-->H;
     E-->I;
-```</pre>
-
+```
 
 ##
 <sub>This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.</sub>
