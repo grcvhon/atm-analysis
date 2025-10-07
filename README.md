@@ -7,17 +7,30 @@ Overall, this project aims to 1) determine baseline populations and develop moni
 We look to incorporate genetic information in generating species distribution models. Doing so may progress our understanding of current species-specific distributional ranges as well as identify potential key locations for future surveys.
 
 Our SDM approach is summarised in the diagram below:
-```mermaid
+
+<pre>```mermaid
 flowchart TD;
-    Occurrence_data-->SDM_analysis;
-    Environmental_layers-->SDM_analysis;
-    Spatial_genetic_layer-->SDM_analysis;
-    Spatial_passage_layer-->SDM_analysis;
-    SDM_analysis-->MaxEnt;
-    SDM_analysis-->Random_Forest;
-    SDM_analysis-->GAMM;
-    SDM_analysis-->Ensemble;
-```
+    A("Occurrence data")
+    B("Environmental layers")
+    C("Spatial genetic layer")
+    D("Spatial passage 
+    probabilitylayer")
+    E("SDM analysis")
+    F("MaxEnt")
+    G("Random Forest")
+    H("General Additive 
+    Mixed Models (GAMM)")
+    I("Ensemble")
+    
+    A-->E;
+    B-->E;
+    C-->E;
+    D-->E;
+    E-->F;
+    E-->G;
+    E-->H;
+    E-->I;
+```</pre>
 
 
 ##
