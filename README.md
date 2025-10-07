@@ -40,8 +40,6 @@ flowchart TD;
     E-->G;
     E-->H;
     E-->I;
-
-    linkStyle 1,2,3,4,5,6,7 color:grey;
 ```
 
 ##
