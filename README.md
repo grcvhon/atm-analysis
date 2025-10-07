@@ -32,10 +32,21 @@ flowchart TD;
     style H fill:white,stroke:grey,color:black
     style I fill:white,stroke:grey,color:black
 
-    A-->E;
+    A--
+    Species-specific data
+    (<i>Aipysurus laevis</i>,
+    <i>A. apraefrontalis</i>,
+    <i>A. foliosquama</i>)---->E;
     B-->E;
-    C-->E;
-    D-->E;
+    C--Interpolated ancestry
+    coefficient values
+    for <i>A. laevis</i>
+    (<i>algatr</i>, R)---->E;
+    D--Mean passage probability
+    values based on ocean 
+    current direction 
+    (<i>gdistance</i>, R)
+    ---->E;
     E-->F;
     E-->G;
     E-->H;
