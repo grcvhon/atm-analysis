@@ -10,28 +10,27 @@ Our SDM approach is summarised in the diagram below:
 
 ```mermaid
 flowchart TD;
-    A("Occurrence data")
-    B("Environmental layers")
-    C("Genetic layer")
-    D("Passage probability layer")
-    E("SDM analysis")
-    F("MaxEnt")
-    G("Random Forest")
-    H("General Additive 
+    A["Occurrence data"]
+    B["Environmental layers"]
+    C["Genetic layer"]
+    D["Passage probability layer"]
+    E["SDM analysis"]
+    F["MaxEnt"]
+    G["Random Forest"]
+    H["General Additive 
     Mixed Models
-    (GAMM)")
-    I("Ensemble")
+    (GAMM)"]
+    I["Ensemble"]
     
     style A fill:white,stroke:grey,color:black
-    style B fill:white,stroke:black,color:black
-    style C fill:white,stroke:black,color:black
-    style D fill:white,stroke:black,color:black
-    style E fill:white,stroke:black,color:black
-    style F fill:white,stroke:black,color:black
-    style G fill:white,stroke:#000,color:black
-    style H fill:white,stroke:black,color:black
-    style I fill:white,stroke:black,color:black
-
+    style B fill:white,stroke:grey,color:black
+    style C fill:white,stroke:grey,color:black
+    style D fill:white,stroke:grey,color:black
+    style E fill:white,stroke:grey,color:black
+    style F fill:white,stroke:grey,color:black
+    style G fill:white,stroke:grey,color:black
+    style H fill:white,stroke:grey,color:black
+    style I fill:white,stroke:grey,color:black
 
     A-->E;
     B-->E;
@@ -41,6 +40,8 @@ flowchart TD;
     E-->G;
     E-->H;
     E-->I;
+
+    linkStyle 1,2,3,4,5,6,7 color:grey;
 ```
 
 ##
