@@ -22,7 +22,7 @@ flowchart TD;
     (GAMM)")
     I("Ensemble")
     
-    style A fill:white,stroke:black,color:black
+    style A fill:white,stroke:grey,color:black
     style B fill:white,stroke:black,color:black
     style C fill:white,stroke:black,color:black
     style D fill:white,stroke:black,color:black
