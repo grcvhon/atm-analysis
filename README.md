@@ -69,7 +69,11 @@ flowchart TD;
     E-->H;
     E-->I;
 ```
+##
 
+#### Table of contents
+* [Generate spatial genetic layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/genetic_layer)
+* [Generate spatial passage layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/passage_layer)
 
 ##
-<sub>This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.</sub>
+<sub>This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide (ATM_2023_0715). </sub>
