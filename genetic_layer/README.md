@@ -4,7 +4,7 @@ This directory contains code and input data for generating a spatial genetic lay
 
 The example below uses DArTseq data for <i>Aipysurus laevis</i>. Input files were downloaded from the GitHub repository: [sea-snake-dart](https://github.com/a-lud/sea-snake-dart). Environmental layers were downloaded from MARSPEC (via R). The northwest shelf shapefile was obtained from Vinay Udyawer. 
 
-The northwest shelf is the extent of the spatial genetic layer we will generate.
+We will generate our spatial genetic layer across the extent of the northwest shelf.
 
 ### Prepare sample list
 First, we will prepare a sample list which includes individuals of <i>A. laevis</i> from the northwest shelf.
