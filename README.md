@@ -1,4 +1,4 @@
-## [SNS-TST-P2] Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory
+## [MERIT Project ID: SNS-TST-P2] Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory
 
 This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory</i> (MERIT Project ID: SNS-TST-P2)</b>.
 
