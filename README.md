@@ -1,4 +1,4 @@
-## [MERIT Project ID: SNS-TST-P2] Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory
+## Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory (Saving Native Species Programme)
 
 This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory</i> (MERIT Project ID: SNS-TST-P2)</b>.
 
@@ -77,6 +77,5 @@ flowchart TD;
 
 ##
 <sub>
-MERIT Project ID: SNS-TST-P2 | Programme: Saving Native Species | Sub-programme: Tracking Species Trajectories | Commonwealth Contract Services Reference: ATM_2023_0715<br>
 This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.
 </sub>
