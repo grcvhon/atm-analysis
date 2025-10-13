@@ -1,6 +1,6 @@
-## Monitoring of the short-nosed and Leaf-scaled sea Snakes to track trajectory
+## [SNS-TST-P2] Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory
 
-This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory</i></b>.
+This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory</i> (MERIT Project ID: SNS-TST-P2)</b>.
 
 Overall, this project aims to 1) determine baseline populations and develop monitoring methods through a mark-recapture program; and 2) generate more robust species distribution models for two Critically Endangered sea snake species (EPCB Act 1999): the Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>) and the Leaf-scaled sea snake (<i>A. foliosquama</i>)
 
