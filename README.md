@@ -1,8 +1,8 @@
-## Tracking Species Trajectories: Determining baseline populations and monitoring methods for Critically Endangered sea snake species
+## Monitoring of the short-nosed and Leaf-scaled sea Snakes to track trajectory
 
-This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Tracking species trajectories</i></b>.
+This repository contains input data and code used for developing species distribution models (SDM) for the project: <i><b>Monitoring of the Short-nosed and Leaf-scaled sea snakes to track trajectory</i></b>.
 
-Overall, this project aims to 1) determine baseline populations and develop monitoring methods through mark-recapture methods; and 2) generate more robust species distribution models for two Critically Endangered sea snakes (EPCB Act 1999): the Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>) and the Leaf-scaled sea snake (<i>A. foliosquama</i>)
+Overall, this project aims to 1) determine baseline populations and develop monitoring methods through a mark-recapture program; and 2) generate more robust species distribution models for two Critically Endangered sea snake species (EPCB Act 1999): the Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>) and the Leaf-scaled sea snake (<i>A. foliosquama</i>)
 
 We look to incorporate genetic information in generating species distribution models. Doing so may progress our understanding of current species-specific distributional ranges as well as identify potential key locations for future surveys.
 
@@ -76,4 +76,7 @@ flowchart TD;
 * [Generate spatial passage layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/passage_layer)
 
 ##
-<sub>This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide (ATM_2023_0715). </sub>
+<sub>
+MERIT Project ID: SNS-TST-P2 | Programme: Saving Native Species | Sub-programme: Tracking Species Trajectories | Commonwealth Contract Services Reference: ATM_2023_0715<br>
+This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.
+</sub>
