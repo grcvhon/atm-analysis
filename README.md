@@ -16,29 +16,22 @@ flowchart TD;
     C["Genetic layer"]
     D["Passage probability layer"]
     E["SDM analysis"]
-    F["MaxEnt"]
-    G["Random Forest"]
-    H["General Additive 
-    Mixed Models
-    (GAMM)"]
-    I["Ensemble"]
+   
     
     style A fill:white,stroke:grey,color:black,font-size:15px
     style B fill:white,stroke:grey,color:black,font-size:15px
     style C fill:white,stroke:grey,color:black,font-size:15px
     style D fill:white,stroke:grey,color:black,font-size:15px
     style E fill:white,stroke:grey,color:black,font-size:15px
-    style F fill:white,stroke:grey,color:black,font-size:15px
-    style G fill:white,stroke:grey,color:black,font-size:15px
-    style H fill:white,stroke:grey,color:black,font-size:15px
-    style I fill:white,stroke:grey,color:black,font-size:15px
+
 
     A--
     <p style="font-size:14px">
-    <b>Species-specific data</b><br> 
-    (<i>Aipysurus laevis</i>,<br>
-    <i>A. apraefrontalis</i>,<br>
-    <i>A. foliosquama</i>)
+    <u><b>Species-specific data</b></u><br>
+    Short-nosed sea snake<br> 
+    (<i>Aipysurus apraefrontalis</i>),<br>
+    Leaf-scaled sea snake<br>
+    (<i>A. foliosquama</i>)
     </p>--->E;
 
     B--
@@ -52,7 +45,8 @@ flowchart TD;
     <p style="font-size:14px">
     Interpolated ancestry<br>
     coefficient values<br>
-    for <i>A. laevis</i><br>
+    for Olive sea snake<br>
+    (<i>Aipysurus laevis</i>)<br>
     (<i>algatr</i>, R)
     </p>--->E;
     
@@ -64,10 +58,7 @@ flowchart TD;
     (<i>gdistance</i>, R)
     </p>--->E;
     
-    E-->F;
-    E-->G;
-    E-->H;
-    E-->I;
+
 ```
 ##
 
