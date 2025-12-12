@@ -18,3 +18,52 @@ The occurrence data which we will use were sourced from:<br>
 4. One spreadsheet (KLS Lab catalogue records)
 
 Occurrence data are point coordinates. When captured via trawling (with start and end coordinates), the mid latitude and mid longitude values were used as proxy for point coordinates; and were calculated as the average latitude and longitude values of the start and end coordinates.
+```r
+occurrence <- read_csv("./occurrence-data/ATM_master-occurrence-dataset.csv")
+
+# [function] filter by species
+filter_by_species <- function(species) {
+  occurrence %>%
+    mutate(
+      lat = as.numeric(MidLat),
+      lat = if_else(is.na(lat), as.numeric(Latitude), lat),
+      long = as.numeric(MidLong),
+      long = if_else(is.na(long), as.numeric(Longitude), long)
+      ) %>%
+    filter(Species == species,
+           !is.na(lat),
+           !is.na(long)) %>%
+    clean_names()
+}
+
+# filtered df by species
+short_occ <- filter_by_species("apraefrontalis")
+leaf_occ <- filter_by_species("foliosquama")
+
+# generate sf from df
+short_sf <- 
+  short_occ %>% 
+  st_as_sf(coords = c("long", "lat"), 
+           crs = 4326) %>% 
+  distinct(.keep_all = T)
+
+leaf_sf <- 
+  leaf_occ %>% 
+  st_as_sf(coords = c("long", "lat"), 
+           crs = 4326) %>% 
+  distinct(.keep_all = T)
+
+# map distribution and colour by species
+ggplot() +
+  geom_sf(data = nw_shelf, fill = NA) +
+  geom_sf(data = short_sf, col = "orange", cex = 3, pch = 16) +
+  geom_sf(data = leaf_sf, col = "maroon", cex = 3, pch = 16) + 
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw()
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/plot_occurrence-data.png", width = 75%, height = 75%>
+<div align = "center">
+Plot of occurrence dataset. Short-nosed sea snake (yellow), Leaf-scaled sea snake (maroon).
+</div>
+</p>
