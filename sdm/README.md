@@ -148,6 +148,6 @@ ggplot() +
 <p align = center>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/plot_bias-probability.png", width = 75%, height = 75%>
 <div align = "center">
-Bias layer with probability density (sigma = 0.5).
+Bias layer with probability density (sigma = 0.05).
 </div>
 </p>
