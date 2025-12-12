@@ -87,8 +87,10 @@ leaf_sf <-
 # map distribution and colour by species
 ggplot() +
   geom_sf(data = nw_shelf, fill = NA) +
-  geom_sf(data = short_sf, col = "orange") +
-  geom_sf(data = leaf_sf, col = "maroon")
+  geom_sf(data = short_sf, col = "orange", cex = 3, pch = 16) +
+  geom_sf(data = leaf_sf, col = "maroon", cex = 3, pch = 16) + 
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw()
 
 
 
