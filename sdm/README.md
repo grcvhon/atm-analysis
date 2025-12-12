@@ -3,14 +3,30 @@ This directory contains code and input data for developing an updated species di
 <br>
 The code below, at the moment, displays the SDM workflow so far.
 
-#### 1) Input model extent
+### 1) Input model extent
 ```r
 # Load nwshelf shapefile
 nw_shelf <- st_read("./nw-shelf/NWShelf.shp", quiet = TRUE) %>% 
   st_transform(4326)
 ```
+### 2) Input environmental rasters
+```r
+# Load single environmental raster
+bathymetry <- raster("./predictor-variables/bathymetry.asc")
 
-#### 2) Input occurrence data
+# Load initial set of environmental rasters
+env_init <- stack("./predictor-variables/sal_mean.asc",
+                  "./predictor-variables/sal_amp.asc",
+                  "./predictor-variables/bathymetry.asc",
+                  "./predictor-variables/sst_mean.asc",
+                  "./predictor-variables/sst_amp.asc",
+                  "./predictor-variables/chlor_mean.asc",
+                  "./predictor-variables/DistToLand.asc",
+                  "./predictor-variables/DistToReef.asc",
+                  "./predictor-variables/DistToFW.asc")
+```
+
+### 3) Input occurrence data
 The occurrence data which we will use were sourced from:<br>
 1. `trawled_seasnakes.xlsx`(2009, 2014-2021)<br>
 2. [Atlas of Living Australia](https://ala.org.au) (downloaded on 21 January 2025)
@@ -64,6 +80,7 @@ ggplot() +
 <p align = center>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/plot_occurrence-data.png", width = 75%, height = 75%>
 <div align = "center">
-Plot of occurrence dataset. Short-nosed sea snake (yellow), Leaf-scaled sea snake (maroon).
+Occurrence dataset plotted within northwest shelf extent. Short-nosed sea snake (yellow), Leaf-scaled sea snake (maroon).
 </div>
 </p>
+
