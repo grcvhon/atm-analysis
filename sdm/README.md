@@ -84,3 +84,68 @@ Occurrence dataset plotted within northwest shelf extent. Short-nosed sea snake 
 </div>
 </p>
 
+### 4) Bias layer
+We will generate a bias layer using point occurrences from `2020-05-20_SnakeOcc.csv`
+```r
+# read bias point occurrences
+bias_pts <- read_csv("./bias-layer/2020-05-20_SnakeOcc.csv")
+
+# generate sf object from bias_pts
+bias_sf <- bias_pts %>% 
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = 4326) %>% 
+  distinct(.keep_all = T)
+
+# visualise
+ggplot() +
+  geom_sf(data = bias_sf)
+
+# vectorise bias_sf
+bias_vect <- vect(bias_sf)
+
+# mask bias points with nwshelf boundary
+nw_bias_sf <- mask(bias_vect, mask = vect(nw_shelf)) %>% 
+  st_as_sf()
+
+# visualise
+ggplot() +
+  geom_sf(data = nw_shelf, fill = NA) +
+  geom_sf(data = nw_bias_sf, aes(col = species))
+
+# generate point pattern object
+bias_ppp <- nw_bias_sf %>% 
+  st_transform(crs = 3577) %>% 
+  st_as_sf() %>% 
+  as.ppp()
+
+# calculate probability density of points
+bias_prob <- bias_ppp %>% 
+  density(., sigma = 0.05) %>% 
+  rast()
+
+plot(bias_prob)
+crs(bias_prob) <- "EPSG:3577"
+
+bias_prob <- bias_prob %>% 
+  project(., y= "EPSG:4326") %>% 
+  mask(mask = vect(nw_shelf)) %>% 
+  resample(x = ., y = rast(bathymetry)) %>% 
+  terra::scale()
+  
+bias_prob[values(bias_prob) < 0] <- NA
+
+nx_bias <- minmax(bias_prob)
+bias_prob <- (bias_prob - nx_bias[1,]) / (nx_bias[2,] - nx_bias[1,])
+
+# visualise bias layer
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA)
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/plot_bias-probability.png", width = 75%, height = 75%>
+<div align = "center">
+Bias layer with probability density (sigma = 0.5).
+</div>
+</p>
