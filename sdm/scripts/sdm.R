@@ -153,4 +153,6 @@ bias_prob <- (bias_prob - nx_bias[1,]) / (nx_bias[2,] - nx_bias[1,])
 ggplot() +
   geom_spatraster(data = bias_prob) +
   scale_fill_viridis_c(na.value = "transparent") +
-  geom_sf(data = nw_shelf, fill = NA)
+  geom_sf(data = nw_shelf, fill = NA) + 
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw()
