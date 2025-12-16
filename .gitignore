@@ -35,7 +35,6 @@ sdm/scripts/maxent*
 sdm/scripts/test*
 sdm/SDM_resources.md
 sdm/nw-shelf/
-sdm/occurrence-data/
 sdm/predictor-variables/
 sdm/bias-layer/
 !passage_layer/output/sbs_seed100_100pts_15h53m36s/sbs_seed100_100pts_15h53m36s.csv
