@@ -27,9 +27,9 @@ env_init <- stack("./predictor-variables/sal_mean.asc",
 ```
 
 ### 3) Input occurrence data
-The occurrence data were compiled into a master dataset ([ATM_master-occurrence-dataset.csv](https://github.com/grcvhon/atm-analysis/tree/master/sdm/occurrence-data/ATM_master-occurrence-dataset.csv)). These records of Short-nosed and Leaf-scaled sea snakes were sourced from the following:<br>
-1. `trawled_seasnakes.xlsx`(2009, 2014-2021)<br>
-2. [Atlas of Living Australia](https://ala.org.au) (downloaded on 21 January 2025)
+The occurrence data were compiled into a master dataset ([`ATM_master-occurrence-dataset.csv`](https://github.com/grcvhon/atm-analysis/tree/master/sdm/occurrence-data/ATM_master-occurrence-dataset.csv)). These records of Short-nosed and Leaf-scaled sea snakes were sourced from the following:<br>
+1. `trawled_seasnakes.xlsx`(2009, 2014 - 2021)<br>
+2. Atlas of Living Australia (downloaded on 21 January 2025)
 3. DPIRD Fisheries surveys in Exmouth Gulf and Shark Bay, Western Australia (June 2024 - December 2025)
 4. One spreadsheet (KLS Lab catalogue records)
 
