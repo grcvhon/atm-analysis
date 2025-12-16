@@ -151,3 +151,5 @@ ggplot() +
 Bias layer with probability density (sigma = 0.05).
 </div>
 </p>
+
+### 5) Pseudoabsence layer
