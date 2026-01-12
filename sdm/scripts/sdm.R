@@ -8,7 +8,7 @@ packages <- c("sf","leaflet","readr","janitor","dplyr",
               "mapview","spatstat","tidyverse","raster",
               "dismo","lubridate","SDMtune","readxl",
               "terra","stars","lwgeom","maptools","ggspatial",
-              "prettymapr","tidyterra")
+              "prettymapr","tidyterra","caret")
 
 # load package list all at once
 invisible(lapply(packages, library, character.only = TRUE))
@@ -156,3 +156,137 @@ ggplot() +
   geom_sf(data = nw_shelf, fill = NA) + 
   annotation_scale(mapping = aes(location = "br")) +
   theme_bw()
+
+
+
+#### 5. Background/Pseudoabsence layer ####
+
+# Leaf-scaled sea snake ####
+
+# Generate 1,000 random background points within the bias layer raster 
+# and excludes areas where the leaf-scaled sea snake is known to be present
+# note: different output every time as seed is not set
+
+leaf_bgpts <- 
+  dismo::randomPoints(mask = raster(bias_prob), 
+                      n = 1000, 
+                      p = as_Spatial(leaf_sf), 
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = leaf_bgpts, col = "aquamarine3", cex = 0.01) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Leaf-scaled sea snake within bias layer (excl. presence points)") +
+  theme(plot.title = element_text(size = 11))
+
+
+# Generate 1,000 random points within the nw_shelf
+# note: different output every time as seed is not set
+leaf_bgpts_ext <-
+  spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
+  st_as_sf()
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = leaf_bgpts_ext, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Leaf-scaled sea snake across model extent") +
+  theme(plot.title = element_text(size = 11))
+
+# combine two background points layer
+leaf_bgpts_comb <- rbind(leaf_bgpts, leaf_bgpts_ext)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = leaf_bgpts_comb, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Combined background points for Leaf-scaled sea snake") +
+  theme(plot.title = element_text(size = 11))
+
+# Short-nosed sea snake ####
+
+# Generate 1,000 random background points within the bias layer raster 
+# and excludes areas where the leaf-scaled sea snake is known to be present
+# note: different output every time as seed is not set
+
+short_bgpts <- 
+  dismo::randomPoints(mask = raster(bias_prob), 
+                      n = 1000, 
+                      p = as_Spatial(short_sf), 
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts, col = "aquamarine3", cex = 0.01) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Short-nosed sea snake within bias layer (excl. presence points)") +
+  theme(plot.title = element_text(size = 11))
+
+
+# Generate 1,000 random points within the nw_shelf
+# note: different output every time as seed is not set
+short_bgpts_ext <-
+  spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
+  st_as_sf()
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts_ext, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Short-nosed sea snake across model extent") +
+  theme(plot.title = element_text(size = 11))
+
+# combine two background points layer
+short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts_comb, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Combined background points for Short-nosed sea snake") +
+  theme(plot.title = element_text(size = 11))
+
+
+
+#### 6. Environmental variables ####
+
+# Test for multicollinearity
+env_values <- values(env_init)
+env_corr <- cor(env_values, method = "pearson", use = "complete.obs")
+env_corr
+
+l <- extract(env_init, leaf_sf)
+m <- cor(l, method = "pearson", use = "complete.obs")
+
+# Remove highly correlated variables
+rm_vars <- findCorrelation(env_corr, cutoff = 0.6) # find variables that are correlated ti >|0.6|
+env_stack <- subset(env_corr, rm_vars, negate = T)  ## remove layers that are correlated 
