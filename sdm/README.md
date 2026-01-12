@@ -3,30 +3,29 @@ This directory contains code and input data for developing an updated species di
 <br>
 The numbered steps and code below display the SDM workflow.
 
+<br>
+
+<u>Setup enviroment/Load packages</u>
+```r
+# list of packages
+packages <- c("sf","leaflet","readr","janitor","dplyr",
+              "mapview","spatstat","tidyverse","raster",
+              "dismo","lubridate","SDMtune","readxl",
+              "terra","stars","lwgeom","maptools","ggspatial",
+              "prettymapr","tidyterra","caret","corrplot")
+
+# load package list all at once
+invisible(lapply(packages, library, character.only = TRUE))
+```
+
 ### 1) Input model extent
 ```r
 # Load nwshelf shapefile
 nw_shelf <- st_read("./nw-shelf/NWShelf.shp", quiet = TRUE) %>% 
   st_transform(4326)
 ```
-### 2) Input environmental rasters
-```r
-# Load single environmental raster
-bathymetry <- raster("./predictor-variables/bathymetry.asc")
 
-# Load initial set of environmental rasters
-env_init <- stack("./predictor-variables/sal_mean.asc",
-                  "./predictor-variables/sal_amp.asc",
-                  "./predictor-variables/bathymetry.asc",
-                  "./predictor-variables/sst_mean.asc",
-                  "./predictor-variables/sst_amp.asc",
-                  "./predictor-variables/chlor_mean.asc",
-                  "./predictor-variables/DistToLand.asc",
-                  "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
-```
-
-### 3) Input occurrence data
+### 2) Input occurrence data
 The occurrence data were compiled into a master dataset ([`ATM_master-occurrence-dataset.csv`](https://github.com/grcvhon/atm-analysis/tree/master/sdm/occurrence-data/ATM_master-occurrence-dataset.csv)). These records of Short-nosed and Leaf-scaled sea snakes were sourced from the following:<br>
 1. `trawled_seasnakes.xlsx`(2009, 2014 - 2021)<br>
 2. Atlas of Living Australia (downloaded on 21 January 2025)
@@ -84,7 +83,7 @@ Occurrence dataset plotted within northwest shelf extent. Short-nosed sea snake 
 </div>
 </p>
 
-### 4) Bias layer
+### 3) Bias layer
 We will generate a bias layer using point occurrences from `2020-05-20_SnakeOcc.csv`
 ```r
 # read bias point occurrences
@@ -152,7 +151,7 @@ Bias layer with probability density (sigma = 0.05).
 </div>
 </p>
 
-### 5) Background/Pseudoabsence layer
+### 4) Background/Pseudoabsence layer
 
 We will generate background layers specific for Leaf-scaled and Short-nosed sea snake.
 
@@ -220,3 +219,39 @@ short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
 (Click on image to enlarge)
 </div>
 </p>
+
+
+
+### 5) Input environmental rasters
+```r
+# Load single environmental raster
+bathymetry <- raster("./predictor-variables/bathymetry.asc")
+
+# Load initial set of environmental rasters
+env_init <- stack("./predictor-variables/sal_mean.asc",
+                  "./predictor-variables/sal_amp.asc",
+                  "./predictor-variables/bathymetry.asc",
+                  "./predictor-variables/sst_mean.asc",
+                  "./predictor-variables/sst_amp.asc",
+                  "./predictor-variables/chlor_mean.asc",
+                  "./predictor-variables/DistToLand.asc",
+                  "./predictor-variables/DistToReef.asc",
+                  "./predictor-variables/DistToFW.asc")
+
+# Find correlated variables / Test for multicollinearity
+env_values <- values(env_init)
+env_corr <- cor(env_values, method = "pearson", use = "complete.obs")
+env_corr
+
+# List variable names to remove
+rm_vars <- findCorrelation(env_corr, cutoff = 0.7, names = T)
+rm_vars # "sal_mean"   "sal_amp"    "DistToLand"
+
+# Run again to get column number
+rm_vars <- findCorrelation(env_corr, cutoff = 0.7)
+rm_vars # 1 2 7
+
+# List environmental variables
+env_pass <- colnames(env_corr[, -rm_vars])
+env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+```
