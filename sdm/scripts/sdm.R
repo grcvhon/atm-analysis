@@ -8,7 +8,7 @@ packages <- c("sf","leaflet","readr","janitor","dplyr",
               "mapview","spatstat","tidyverse","raster",
               "dismo","lubridate","SDMtune","readxl",
               "terra","stars","lwgeom","maptools","ggspatial",
-              "prettymapr","tidyterra","caret")
+              "prettymapr","tidyterra","caret","corrplot")
 
 # load package list all at once
 invisible(lapply(packages, library, character.only = TRUE))
@@ -22,23 +22,9 @@ nw_shelf <- st_read("./nw-shelf/NWShelf.shp", quiet = TRUE) %>%
 # preview nwshelf
 plot(nw_shelf)
 
-#### 2. Input environmental rasters ####
 
-# Load single environmental raster
-bathymetry <- raster("./predictor-variables/bathymetry.asc")
 
-# Load initial set of environmental rasters
-env_init <- stack("./predictor-variables/sal_mean.asc",
-                  "./predictor-variables/sal_amp.asc",
-                  "./predictor-variables/bathymetry.asc",
-                  "./predictor-variables/sst_mean.asc",
-                  "./predictor-variables/sst_amp.asc",
-                  "./predictor-variables/chlor_mean.asc",
-                  "./predictor-variables/DistToLand.asc",
-                  "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
-
-#### 3. Input occurrence data ####
+#### 2. Input occurrence data ####
 
 # Occurrence data sources:
 # - `trawled_seasnakes.xlsx` (2009, 2014 - 2021)
@@ -94,7 +80,7 @@ ggplot() +
 
 
 
-#### 4. Bias layer ####
+#### 3. Bias layer ####
 
 # Generate bias layer from point occurrences 
 # using `2020-05-20_SnakeOcc.csv`
@@ -159,7 +145,7 @@ ggplot() +
 
 
 
-#### 5. Background/Pseudoabsence layer ####
+#### 4. Background/Pseudoabsence layer ####
 
 # Leaf-scaled sea snake ####
 
@@ -276,17 +262,44 @@ ggplot() +
   theme(plot.title = element_text(size = 11))
 
 
+#### 5. Input environmental rasters ####
 
-#### 6. Environmental variables ####
+# Load single environmental raster
+bathymetry <- raster("./predictor-variables/bathymetry.asc")
+
+# Load initial set of environmental rasters
+env_init <- stack("./predictor-variables/sal_mean.asc",
+                  "./predictor-variables/sal_amp.asc",
+                  "./predictor-variables/bathymetry.asc",
+                  "./predictor-variables/sst_mean.asc",
+                  "./predictor-variables/sst_amp.asc",
+                  "./predictor-variables/chlor_mean.asc",
+                  "./predictor-variables/DistToLand.asc",
+                  "./predictor-variables/DistToReef.asc",
+                  "./predictor-variables/DistToFW.asc")
+
+
+
+# Find correlated variables
 
 # Test for multicollinearity
 env_values <- values(env_init)
 env_corr <- cor(env_values, method = "pearson", use = "complete.obs")
 env_corr
 
-l <- extract(env_init, leaf_sf)
-m <- cor(l, method = "pearson", use = "complete.obs")
+# List variable names to remove
+rm_vars <- findCorrelation(env_corr, cutoff = 0.7, names = T)
+rm_vars # "sal_mean"   "sal_amp"    "DistToLand"
 
-# Remove highly correlated variables
-rm_vars <- findCorrelation(env_corr, cutoff = 0.6) # find variables that are correlated ti >|0.6|
-env_stack <- subset(env_corr, rm_vars, negate = T)  ## remove layers that are correlated 
+# Run again to get column number
+rm_vars <- findCorrelation(env_corr, cutoff = 0.7)
+rm_vars # 1 2 7
+
+# List environmental variables
+env_pass <- colnames(env_corr[, -rm_vars])
+env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+
+
+
+
+
