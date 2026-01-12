@@ -5,18 +5,21 @@ The numbered steps and code below display the SDM workflow.
 
 <br>
 
-<u>Setup enviroment/Load packages</u>
-```r
-# list of packages
-packages <- c("sf","leaflet","readr","janitor","dplyr",
-              "mapview","spatstat","tidyverse","raster",
-              "dismo","lubridate","SDMtune","readxl",
-              "terra","stars","lwgeom","maptools","ggspatial",
-              "prettymapr","tidyterra","caret","corrplot")
 
-# load package list all at once
-invisible(lapply(packages, library, character.only = TRUE))
-```
+> <i><u>*** Set up environment/Load packages *** </u></i>
+> ```r
+> # list of packages
+> packages <- c("sf","leaflet","readr","janitor","dplyr",
+>               "mapview","spatstat","tidyverse","raster",
+>               "dismo","lubridate","SDMtune","readxl",
+>              "terra","stars","lwgeom","maptools","ggspatial",
+>              "prettymapr","tidyterra","caret","corrplot")
+>
+> # load package list all at once
+> invisible(lapply(packages, library, character.only = TRUE))
+> ```
+
+<br>
 
 ### 1) Input model extent
 ```r
