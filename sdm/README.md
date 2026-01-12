@@ -152,4 +152,63 @@ Bias layer with probability density (sigma = 0.05).
 </div>
 </p>
 
-### 5) Pseudoabsence layer
+### 5) Background/Pseudoabsence layer
+
+We will generate background layers specific for Leaf-scaled and Short-nosed sea snake.
+
+#### <u>Leaf-scaled sea snake</u>
+```r
+# Generate 1,000 random background points within the bias layer raster 
+# and excludes areas where the leaf-scaled sea snake is known to be present
+# note: different output every time as seed is not set
+leaf_bgpts <- 
+  dismo::randomPoints(mask = raster(bias_prob), 
+                      n = 1000, 
+                      p = as_Spatial(leaf_sf), 
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+
+# Generate 1,000 random points within the nw_shelf
+# note: different output every time as seed is not set
+leaf_bgpts_ext <-
+  spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
+  st_as_sf()
+
+
+# combine two background points layer
+leaf_bgpts_comb <- rbind(leaf_bgpts, leaf_bgpts_ext)
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_bg_bias.png", width = 49%, height = 49%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_bg_ext.png", width = 49%, height = 49%>
+<div align = "center">
+</div>
+</p>
+
+
+#### <u>Short-nosed sea snake</u>
+```r
+# Generate 1,000 random background points within the bias layer raster 
+# and excludes areas where the leaf-scaled sea snake is known to be present
+# note: different output every time as seed is not set
+short_bgpts <- 
+  dismo::randomPoints(mask = raster(bias_prob), 
+                      n = 1000, 
+                      p = as_Spatial(short_sf), 
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+
+# Generate 1,000 random points within the nw_shelf
+# note: different output every time as seed is not set
+short_bgpts_ext <-
+  spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
+  st_as_sf()
+
+
+# combine two background points layer
+short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
+```
