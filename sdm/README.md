@@ -184,6 +184,7 @@ leaf_bgpts_comb <- rbind(leaf_bgpts, leaf_bgpts_ext)
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_bg_bias.png", width = 49%, height = 49%>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_bg_ext.png", width = 49%, height = 49%>
 <div align = "center">
+(Click on image to enlarge)
 </div>
 </p>
 
@@ -212,3 +213,10 @@ short_bgpts_ext <-
 # combine two background points layer
 short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
 ```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_bg_bias.png", width = 49%, height = 49%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_bg_ext.png", width = 49%, height = 49%>
+<div align = "center">
+(Click on image to enlarge)
+</div>
+</p>
