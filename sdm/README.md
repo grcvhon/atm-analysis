@@ -171,13 +171,11 @@ leaf_bgpts <-
   as_tibble() %>% 
   st_as_sf(coords = c("x", "y"), crs = 4326)
 
-
 # Generate 1,000 random points within the nw_shelf
 # note: different output every time as seed is not set
 leaf_bgpts_ext <-
   spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
   st_as_sf()
-
 
 # combine two background points layer
 leaf_bgpts_comb <- rbind(leaf_bgpts, leaf_bgpts_ext)
@@ -204,13 +202,11 @@ short_bgpts <-
   as_tibble() %>% 
   st_as_sf(coords = c("x", "y"), crs = 4326)
 
-
 # Generate 1,000 random points within the nw_shelf
 # note: different output every time as seed is not set
 short_bgpts_ext <-
   spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
   st_as_sf()
-
 
 # combine two background points layer
 short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
@@ -257,4 +253,180 @@ rm_vars # 1 2 7
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
 env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+
+# Create new stack of environmental variables retained
+env_use <- stack("./predictor-variables/bathymetry.asc",
+                  "./predictor-variables/sst_mean.asc",
+                  "./predictor-variables/sst_amp.asc",
+                  "./predictor-variables/chlor_mean.asc",
+                  "./predictor-variables/DistToReef.asc",
+                  "./predictor-variables/DistToFW.asc")
+
 ```
+
+
+
+### 6) MaxEnt modelling
+
+The following will be our input data for MaxEnt modelling: 1) environmental variables, 2) background points, 3) occurrence data (Leaf-scaled sea snake).
+
+Let us prepare the input and place them in new R objects.
+```r
+# prepare variables for MaxEnt modelling
+env_in <- env_use
+leaf_in <- leaf_sf %>% as_Spatial()
+bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
+```
+><i>*** From here, need to understand what the following does... ***</i>
+```r
+# hyperparameter tuning
+model_leaf <- prepareSWD(species = "species",
+                         p = coordinates(leaf_in),
+                         a = coordinates(bgpts_in),
+                         # ensure data generated via `terra`
+                         env = terra::rast(env_in))
+
+# create k-folds cross validation
+set_k <- 10
+folds <- randomFolds(data = model_leaf,
+                     k = set_k,
+                     only_presence = T)
+
+# train initial covariance model
+trained_model <- SDMtune::train(method = "Maxent",
+                                data = model_leaf,
+                                folds = folds)
+# *** Warning: File absence has value -9999, treating as no-data value ***
+
+# Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
+hyper <- list(reg = seq(0.5, 5, 0.5), 
+              fc = c("l", "lq", "h", "lqh"))
+
+# Optimise model using a genetic algorithm (quicker than ENMevaluate())
+opt_mod <- optimizeModel(model = trained_model,
+                         hypers = hyper,
+                         metric = "auc")
+# *** Warning: File absence has value -9999, treating as no-data value ***                  
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_opt_mod.png">
+<div align = "center">
+</div>
+</p>
+
+```r
+# Table of tuning results
+opt_mod@results
+
+#     fc reg iter train_AUC  test_AUC    diff_AUC
+# 1  lqh 2.5  500 0.9719776 0.9704499 0.001527697
+# 2  lqh 3.0  500 0.9715633 0.9702944 0.001268863
+# 3  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 4  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 5  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 6  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 7  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 8  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 9  lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 10 lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 11 lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 12 lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 13 lqh 3.5  500 0.9710780 0.9698853 0.001192609
+# 14   h 3.0  500 0.9715691 0.9697221 0.001846983
+# 15 lqh 4.0  500 0.9702383 0.9690385 0.001199793
+# 16   h 3.5  500 0.9707296 0.9688327 0.001896841
+# 17   h 5.0  500 0.9669784 0.9652438 0.001734578
+# 18  lq 3.5  500 0.9561517 0.9548879 0.001263832
+# 19  lq 4.0  500 0.9557663 0.9546249 0.001141385
+# 20   l 3.5  500 0.9472627 0.9453627 0.001899993
+```
+
+```r
+# Select best optimised model
+best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
+
+# ── Object of class: <SDMmodelCV> ──
+# 
+# Method: Maxent
+# 
+# ── Hyperparameters 
+# • fc: "lqh"
+# • reg: 2.5
+# • iter: 500
+# 
+# ── Info 
+# • Species: species
+# • Replicates: 10
+# • Total presence locations: 281
+# • Total absence locations: 1968
+# 
+# ── Variables 
+# • Continuous: "bathymetry", "sst_mean", "sst_amp", 
+#               "chlor_mean", "DistToReef", and "DistToFW"
+# • Categorical: NA
+```
+
+### 7) Model evaluation
+```r
+# ROC curve for best model
+plotROC(best_mod@models[[1]])
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_roc_curv.png">
+<div align = "center">
+</div>
+</p>
+
+```r
+# Model accuracy metrics
+AUC <- auc(best_mod) # 0.9719776
+TSS <- tss(best_mod) # 0.8572921
+
+# Estimate thresholds
+thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
+
+#                                       Threshold Cloglog value Fractional predicted area Training omission rate
+# 1                     Minimum training presence   0.001796622                0.42632114             0.00000000
+# 2    Equal training sensitivity and specificity   0.236274539                0.07469512             0.07539683
+# 3 Maximum training sensitivity plus specificity   0.193356448                0.07571138             0.05952381
+
+# Model evaulation metrics
+mod <-
+  opt_mod@results %>%
+  slice(which.max(opt_mod@results$test_AUC)) %>% 
+  as_tibble() %>%
+  mutate(TSS = thresh[3,2],
+         LPT = thresh[1,2])
+
+#   fc      reg  iter train_AUC test_AUC diff_AUC   TSS     LPT
+# 1 lqh     2.5   500     0.972    0.970  0.00153 0.193 0.00180
+
+# Variable importance
+vi <- maxentVarImp(best_mod)
+```
+
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_var_imp.png", width = 90%>
+<div align = "center">
+</div>
+</p>
+
+```r
+# Response curves
+env_vars <- names(env_in)
+
+for(p in 1:length(env_vars)){
+  if(p %in% 1){
+    plotlist <- list()
+    pb <- txtProgressBar(min = 0, max = length(env_vars), style = 3)}
+  plotlist[[p]] <- plotResponse(best_mod, var = env_vars[p], rug = T)
+  setTxtProgressBar(pb, p)
+}
+
+resp_curves <- ggarrange(plotlist = plotlist)
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_resp_curv.png">
+<div align = "center">
+</div>
+</p>
