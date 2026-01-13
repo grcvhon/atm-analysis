@@ -8,7 +8,8 @@ packages <- c("sf","leaflet","readr","janitor","dplyr",
               "mapview","spatstat","tidyverse","raster",
               "dismo","lubridate","SDMtune","readxl",
               "terra","stars","lwgeom","maptools","ggspatial",
-              "prettymapr","tidyterra","caret","corrplot")
+              "prettymapr","tidyterra","caret","corrplot",
+              "plotROC","ggpubr")
 
 # load package list all at once
 invisible(lapply(packages, library, character.only = TRUE))
@@ -298,6 +299,119 @@ rm_vars # 1 2 7
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
 env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+
+# Load passed environmental rasters to be used
+env_use <- stack("./predictor-variables/bathymetry.asc",
+                  "./predictor-variables/sst_mean.asc",
+                  "./predictor-variables/sst_amp.asc",
+                  "./predictor-variables/chlor_mean.asc",
+                  "./predictor-variables/DistToReef.asc",
+                  "./predictor-variables/DistToFW.asc")
+
+
+#### 6. MaxEnt modelling ####
+
+# visualise input data
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = leaf_bgpts_comb, col = "aquamarine3", cex = 0.8) +
+  geom_sf(data = leaf_sf, col = "maroon", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Map showing 1) Bias layer, 2) Background points, 3) Occurrences for Leaf-scaled sea snake") +
+  theme(plot.title = element_text(size = 11))
+
+# prepare variables for MaxEnt modelling
+env_in <- env_use
+leaf_in <- leaf_sf %>% as_Spatial()
+bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
+
+# hyperparameter tuning
+model_leaf <- prepareSWD(species = "species",
+                         p = coordinates(leaf_in),
+                         a = coordinates(bgpts_in),
+                         # ensure data generated via `terra`
+                         env = terra::rast(env_in))
+
+# create k-folds cross validation
+set_k <- 10
+folds <- randomFolds(data = model_leaf,
+                     k = set_k,
+                     only_presence = T)
+
+# train initial covariance model
+trained_model <- SDMtune::train(method = "Maxent",
+                                data = model_leaf,
+                                folds = folds)
+# *** Warning: File absence has value -9999, treating as no-data value ***
+
+# Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
+hyper <- list(reg = seq(0.5, 5, 0.5), 
+              fc = c("l", "lq", "h", "lqh"))
+
+# Optimise model using a genetic algorithm (quicker than ENMevaluate())
+opt_mod <- optimizeModel(model = trained_model,
+                         hypers = hyper,
+                         metric = "auc")
+# *** Warning: File absence has value -9999, treating as no-data value ***
+
+# Table of tuning results
+opt_mod@results
+
+# Select best optimised model
+best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
+
+
+
+# 7. Model evaluation ####
+
+# ROC curve for best model
+plotROC(best_mod@models[[1]])
+
+# Model accuracy metrics
+AUC <- auc(best_mod) 
+TSS <- tss(best_mod)
+
+# Estimate thresholds
+thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
+
+# Model evaulation metrics
+mod <-
+  opt_mod@results %>%
+  slice(which.max(opt_mod@results$test_AUC)) %>% 
+  as_tibble() %>%
+  mutate(TSS = thresh[3,2],
+         LPT = thresh[1,2])
+mod
+
+# Variable importance
+vi <- maxentVarImp(best_mod)
+
+vi %>%
+  ggplot(aes(x = reorder(Variable, Percent_contribution), y = Percent_contribution)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Variable contribution (%)", x = "", title = expression(italic("Variable importance for Leaf-scaled sea snake "))) +
+       #subtitle = "Spatial and temporal scale") +
+  coord_flip() +
+  theme_bw()
+
+# Response curves
+env_vars <- names(env_in)
+
+for(p in 1:length(env_vars)){
+  if(p %in% 1){
+    plotlist <- list()
+    pb <- txtProgressBar(min = 0, max = length(env_vars), style = 3)}
+  plotlist[[p]] <- plotResponse(best_mod, var = env_vars[p], rug = T)
+  setTxtProgressBar(pb, p)
+}
+
+resp_curves <- ggarrange(plotlist = plotlist)
+resp_curves
+
+
 
 
 
