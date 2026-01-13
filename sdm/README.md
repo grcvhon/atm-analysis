@@ -12,8 +12,9 @@ The numbered steps and code below display the SDM workflow.
 > packages <- c("sf","leaflet","readr","janitor","dplyr",
 >               "mapview","spatstat","tidyverse","raster",
 >               "dismo","lubridate","SDMtune","readxl",
->              "terra","stars","lwgeom","maptools","ggspatial",
->              "prettymapr","tidyterra","caret","corrplot")
+>               "terra","stars","lwgeom","maptools","ggspatial",
+>               "prettymapr","tidyterra","caret","corrplot",
+>               "plotROC","ggpubr")
 >
 > # load package list all at once
 > invisible(lapply(packages, library, character.only = TRUE))
