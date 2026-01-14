@@ -476,15 +476,15 @@ leaf_total_area
 </div>
 </p>
 
-#### Run workflow as a function (`runMaxent`)
+#### Run MaxEnt workflow as a function (`runMaxent`)
 ```r
-##############################################################################
-runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
-          envlyr,   # `env_in` object
-          occdat,   # `leaf_in` or `short_in` object
-          bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
-          k_folds)  # 10
-##############################################################################
+####################################################################################
+#    runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
+#              envlyr,   # `env_in` object
+#              occdat,   # `leaf_in` or `short_in` object
+#              bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
+#              k_folds)  # 10
+####################################################################################
 
 runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
   #hyperparameter tuning
