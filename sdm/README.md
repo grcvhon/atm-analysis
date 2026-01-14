@@ -424,10 +424,198 @@ for(p in 1:length(env_vars)){
   setTxtProgressBar(pb, p)
 }
 
+# Plot curves
 resp_curves <- ggarrange(plotlist = plotlist)
+
+# Label
+annotate_figure(resp_curves, 
+                top = text_grob(paste0("Response curves for Leaf-scaled sea snake"), 
+                                face = "bold", size = 14))
 ```
 <p align = center>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_resp_curv.png">
 <div align = "center">
 </div>
 </p>
+
+### 8) Spatial prediction
+```r
+leaf_predict <- predict(best_mod, data = terra::rast(env_in), 
+                        fun = c("mean", "sd"), 
+                        type = "cloglog", parallel = T)
+
+# Mean and variance in spatial prediction
+leaf_predict_mean <- leaf_predict$mean
+leaf_predict_sd <- leaf_predict$sd
+
+# thresholded models
+leaf_TSS_me <- leaf_predict_mean > mod$TSS
+leaf_LPT_me <- leaf_predict_mean > mod$LPT
+leaf_thresh_me <- raster::cut(raster(leaf_predict_mean), breaks = c(-Inf, 0.25, 0.5, 0.76, Inf))
+
+# Your binary raster
+leaf_r <- leaf_TSS_me  # or thresh if that’s the name
+
+# Count how many TRUE (or 1) cells
+leaf_n_cells <- global(leaf_r, "sum", na.rm = TRUE)
+leaf_n_cells
+
+# Get cell area in km²
+leaf_cell_area <- cellSize(leaf_r, unit = "km")
+
+# Multiply cell area by suitability mask
+leaf_suitable_area <- mask(leaf_cell_area, leaf_r, maskvalues = FALSE)
+
+# Sum total area
+leaf_total_area <- global(leaf_suitable_area, "sum", na.rm = TRUE)
+leaf_total_area
+```
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_meanspat_pred.png">
+<div align = "center">
+</div>
+</p>
+
+#### Run workflow as a function (`runMaxent`)
+```r
+##############################################################################
+runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
+          envlyr,   # `env_in` object
+          occdat,   # `leaf_in` or `short_in` object
+          bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
+          k_folds)  # 10
+##############################################################################
+
+runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
+  #hyperparameter tuning
+  model <- SDMtune::prepareSWD(species = "species",
+                               p = coordinates(occdat),
+                               a = coordinates(bgpts),
+                               env = envlyr)
+  
+  # create k-folds cross validation
+  folds <- randomFolds(data = model,
+                       k = k_folds,
+                       only_presence = T)
+  
+  # train initial cross-validation model
+  # train initial cv model
+  trained_model <- SDMtune::train(method = "Maxent",
+                                  data = model,
+                                  folds = folds)
+  # *** Warning: File absence has value -9999, treating as no-data value ***
+  
+  # Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
+  hyper <- list(reg = seq(0.5, 5, 0.5), 
+                fc = c("l", "lq", "h", "lqh"))
+  
+  # Optimise model using a genetic algorithm (quicker than ENMevaluate())
+  opt_mod <- optimizeModel(model = trained_model,
+                           hypers = hyper,
+                           metric = "auc")
+  # *** Warning: File absence has value -9999, treating as no-data value ***
+  
+  # Table of tuning results
+  tuning_res <- opt_mod@results
+  
+  # Select best optimised model
+  best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
+  
+  # model evaluation
+  # ROC curve for best model
+  roc_plot <- plotROC(best_mod@models[[1]])
+  
+  # Model accuracy metrics
+  AUC <- auc(best_mod)
+  TSS <- tss(best_mod)
+  
+  # Estimate thresholds
+  thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
+  
+  # Model evaulation metrics
+  mod <-
+    opt_mod@results %>%
+    slice(which.max(opt_mod@results$test_AUC)) %>% 
+    as_tibble() %>%
+    mutate(TSS = thresh[3,2],
+           LPT = thresh[1,2])
+  
+  # Variable importance
+  vi <- maxentVarImp(best_mod)
+  
+  vi %>%
+    ggplot(aes(x = reorder(Variable, Percent_contribution), y = Percent_contribution)) +
+    geom_bar(stat = "identity") +
+    labs(y = "Variable contribution (%)", x = "", 
+         title = expression(italic(paste0("Variable importance for ", name)))) +
+    #subtitle = "Spatial and temporal scale") +
+    coord_flip() +
+    theme_bw()
+  
+  # Response curves
+  env_vars <- names(envlyr)
+  
+  for(p in 1:length(env_vars)){
+    if(p %in% 1){
+      plotlist <- list()
+      pb <- txtProgressBar(min = 0, max = length(env_vars), style = 3)}
+    plotlist[[p]] <- plotResponse(best_mod, var = env_vars[p], rug = T)
+    setTxtProgressBar(pb, p)
+  }
+  
+  resp_curves <- ggarrange(plotlist = plotlist)
+  annotate_figure(resp_curves, 
+                  top = text_grob(paste0("Response curves for ", name), 
+                                  face = "bold", size = 14))
+  
+  predict <- predict(best_mod, data = env_in, 
+                     fun = c("mean", "sd"), 
+                     type = "cloglog", parallel = T)
+  
+  # Mean and variance in spatial prediction
+  predict_mean <- predict$mean
+  predict_sd <- predict$sd
+  
+  # thresholded models
+  TSS_me <- predict_mean > mod$TSS
+  LPT_me <- predict_mean > mod$LPT
+  thresh_me <- raster::cut(raster(predict_mean), breaks = c(-Inf, 0.25, 0.5, 0.76, Inf))
+  
+  # Your binary raster
+  r <- TSS_me  # or thresh if that’s the name
+  
+  # Count how many TRUE (or 1) cells
+  n_cells <- global(r, "sum", na.rm = TRUE)
+  n_cells
+  
+  # Get cell area in km²
+  cell_area <- cellSize(r, unit = "km")
+  
+  # Multiply cell area by suitability mask
+  suitable_area <- mask(cell_area, r, maskvalues = FALSE)
+  
+  # Sum total area
+  total_area <- global(suitable_area, "sum", na.rm = TRUE)
+  total_area
+  
+  # output to print
+  print(paste0("Results for ", name))
+  print(best_mod)
+  print(tuning_res)
+  print(roc_plot)
+  print(paste0("AUC: ", AUC))
+  print(paste0("TSS: ", TSS))
+  print(thresh)
+  print(mod)
+  print(vi)
+  annotate_figure(resp_curves, 
+                  top = text_grob(paste0("Response curves for ", name), 
+                                  face = "bold", size = 14))
+  ggplot() +
+    geom_spatraster(data = predict_mean) + 
+    scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
+    annotation_scale(mapping = aes(location = "br")) +
+    theme_bw() +
+    labs(title = paste0("Mean spatial prediction for ", name))
+}
+```
