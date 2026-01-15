@@ -274,7 +274,7 @@ The following will be our input data for MaxEnt modelling: 1) environmental vari
 Let us prepare the input and place them in new R objects.
 ```r
 # prepare variables for MaxEnt modelling
-env_in <- env_use
+env_in <- terra::rast(env_use)
 leaf_in <- leaf_sf %>% as_Spatial()
 bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
 ```
@@ -284,8 +284,7 @@ bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
 model_leaf <- prepareSWD(species = "species",
                          p = coordinates(leaf_in),
                          a = coordinates(bgpts_in),
-                         # ensure data generated via `terra`
-                         env = terra::rast(env_in))
+                         env = env_in)
 
 # create k-folds cross validation
 set_k <- 10
@@ -483,10 +482,16 @@ So far, the output above is only for the Leaf-scaled sea snake. To avoid the nee
 
 Make sure to prepare the following input objects.
 > ```r
-> # Input objects
-> env_in <- env_use                             # environmental layer stack
-> leaf_in <- leaf_sf %>% as_Spatial()           # species occurrence data layer
-> bgpts_in<- leaf_bgpts_comb %>% as_Spatial()   # background points layer
+> # environmental predictors
+> env_in <- terra::rast(env_use)
+> 
+> # occurrence data
+> leaf_in <- leaf_sf %>% as_Spatial()
+> short_in <- short_sf %>% as_Spatial()
+> 
+> # background layer
+> leaf_bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
+> short_bgpts_in<- short_bgpts_comb %>% as_Spatial()
 >
 > ####################################################################################
 > #    runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
