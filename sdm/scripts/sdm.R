@@ -344,7 +344,7 @@ model_leaf <- prepareSWD(species = "species",
                          env = env_in)
 
 # create k-folds cross validation
-set_k <- 10
+set_k <- 5
 folds <- randomFolds(data = model_leaf,
                      k = set_k,
                      only_presence = T)
@@ -425,7 +425,7 @@ resp_curves
 
 # 8. Spatial predictions ####
 
-leaf_predict <- predict(best_mod, data = terra::rast(env_in), 
+leaf_predict <- predict(best_mod, data = env_in, 
                         fun = c("mean", "sd"), 
                         type = "cloglog", parallel = T)
 
