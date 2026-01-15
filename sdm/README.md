@@ -22,14 +22,14 @@ The numbered steps and code below display the SDM workflow.
 
 <br>
 
-### 1) Input model extent
+## 1) Input model extent
 ```r
 # Load nwshelf shapefile
 nw_shelf <- st_read("./nw-shelf/NWShelf.shp", quiet = TRUE) %>% 
   st_transform(4326)
 ```
 
-### 2) Input occurrence data
+## 2) Input occurrence data
 The occurrence data were compiled into a master dataset ([`ATM_master-occurrence-dataset.csv`](https://github.com/grcvhon/atm-analysis/tree/master/sdm/occurrence-data/ATM_master-occurrence-dataset.csv)). These records of Short-nosed and Leaf-scaled sea snakes were sourced from the following:<br>
 1. `trawled_seasnakes.xlsx`(2009, 2014 - 2021)<br>
 2. Atlas of Living Australia (downloaded on 21 January 2025)
@@ -87,7 +87,7 @@ Occurrence dataset plotted within northwest shelf extent. Short-nosed sea snake 
 </div>
 </p>
 
-### 3) Bias layer
+## 3) Bias layer
 We will generate a bias layer using point occurrences from `2020-05-20_SnakeOcc.csv`
 ```r
 # read bias point occurrences
@@ -155,11 +155,11 @@ Bias layer with probability density (sigma = 0.05).
 </div>
 </p>
 
-### 4) Background/Pseudoabsence layer
+## 4) Background/Pseudoabsence layer
 
 We will generate background layers specific for Leaf-scaled and Short-nosed sea snake.
 
-#### <u>Leaf-scaled sea snake</u>
+### <u>Leaf-scaled sea snake</u>
 ```r
 # Generate 1,000 random background points within the bias layer raster 
 # and excludes areas where the leaf-scaled sea snake is known to be present
@@ -190,7 +190,7 @@ leaf_bgpts_comb <- rbind(leaf_bgpts, leaf_bgpts_ext)
 </p>
 
 
-#### <u>Short-nosed sea snake</u>
+### <u>Short-nosed sea snake</u>
 ```r
 # Generate 1,000 random background points within the bias layer raster 
 # and excludes areas where the leaf-scaled sea snake is known to be present
@@ -222,7 +222,7 @@ short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
 
 
 
-### 5) Input environmental rasters
+## 5) Input environmental rasters
 ```r
 # Load single environmental raster
 bathymetry <- raster("./predictor-variables/bathymetry.asc")
@@ -267,7 +267,7 @@ env_use <- stack("./predictor-variables/bathymetry.asc",
 
 
 
-### 6) MaxEnt modelling
+## 6) MaxEnt modelling
 
 The following will be our input data for MaxEnt modelling: 1) environmental variables, 2) background points, 3) occurrence data (Leaf-scaled sea snake).
 
@@ -301,7 +301,7 @@ trained_model <- SDMtune::train(method = "Maxent",
 
 # Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
 hyper <- list(reg = seq(0.5, 5, 0.5), 
-              fc = c("l", "lq", "h", "lqh"))
+              fc = c("lqh","lph","lqph"))
 
 # Optimise model using a genetic algorithm (quicker than ENMevaluate())
 opt_mod <- optimizeModel(model = trained_model,
@@ -319,55 +319,54 @@ opt_mod <- optimizeModel(model = trained_model,
 # Table of tuning results
 opt_mod@results
 
-#     fc reg iter train_AUC  test_AUC    diff_AUC
-# 1  lqh 2.5  500 0.9719776 0.9704499 0.001527697
-# 2  lqh 3.0  500 0.9715633 0.9702944 0.001268863
-# 3  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 4  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 5  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 6  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 7  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 8  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 9  lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 10 lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 11 lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 12 lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 13 lqh 3.5  500 0.9710780 0.9698853 0.001192609
-# 14   h 3.0  500 0.9715691 0.9697221 0.001846983
-# 15 lqh 4.0  500 0.9702383 0.9690385 0.001199793
-# 16   h 3.5  500 0.9707296 0.9688327 0.001896841
-# 17   h 5.0  500 0.9669784 0.9652438 0.001734578
-# 18  lq 3.5  500 0.9561517 0.9548879 0.001263832
-# 19  lq 4.0  500 0.9557663 0.9546249 0.001141385
-# 20   l 3.5  500 0.9472627 0.9453627 0.001899993
+#      fc reg iter train_AUC  test_AUC     diff_AUC
+# 1  lqph 2.5  500 0.9732337 0.9700443  0.003189384
+# 2  lqph 2.5  500 0.9732337 0.9700443  0.003189384
+# 3   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 4   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 5   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 6   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 7   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 8   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 9   lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 10  lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 11  lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 12  lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 13  lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 14  lph 2.5  500 0.9732105 0.9700040  0.003206525
+# 15 lqph 2.0  500 0.9727657 0.9682506  0.004515074
+# 16  lph 5.0  500 0.9658904 0.9643252  0.001565202
+# 17  lqh 1.0  500 0.8671074 0.8526532  0.014454197
+# 18  lph 1.0  500 0.7886383 0.7763765  0.012261750
+# 19  lph 1.0  500 0.7886383 0.7763765  0.012261750
+# 20  lph 0.5  500 0.7823327 0.7869525 -0.004619756
 ```
 
 ```r
 # Select best optimised model
 best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
 
-# ── Object of class: <SDMmodelCV> ──
-# 
-# Method: Maxent
-# 
-# ── Hyperparameters 
-# • fc: "lqh"
-# • reg: 2.5
-# • iter: 500
-# 
-# ── Info 
-# • Species: species
-# • Replicates: 10
-# • Total presence locations: 281
-# • Total absence locations: 1968
-# 
-# ── Variables 
-# • Continuous: "bathymetry", "sst_mean", "sst_amp", 
-#               "chlor_mean", "DistToReef", and "DistToFW"
-# • Categorical: NA
+# ── Object of class: <SDMmodelCV> ──                                           
+#                                                                               
+# Method: Maxent                                                                
+#                                                                               
+# ── Hyperparameters                                                            
+# • fc: "lqph"                                                                  
+# • reg: 2.5                                                                    
+# • iter: 500                                                                   
+#                                                                               
+# ── Info                                                                       
+# • Species: species                                                            
+# • Replicates: 5                                                               
+# • Total presence locations: 281                                               
+# • Total absence locations: 1968                                               
+#                                                                               
+# ── Variables                                                                  
+# • Continuous: "bathymetry", "sst_mean", "sst_amp", "chlor_mean", "DistToReef", and "DistToFW"
+# • Categorical: NA   
 ```
 
-### 7) Model evaluation
+## 7) Model evaluation
 ```r
 # ROC curve for best model
 plotROC(best_mod@models[[1]])
@@ -380,16 +379,16 @@ plotROC(best_mod@models[[1]])
 
 ```r
 # Model accuracy metrics
-AUC <- auc(best_mod) # 0.9719776
-TSS <- tss(best_mod) # 0.8572921
+AUC <- auc(best_mod) # 0.9732337
+TSS <- tss(best_mod) # 0.859125
 
 # Estimate thresholds
 thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
 
 #                                       Threshold Cloglog value Fractional predicted area Training omission rate
-# 1                     Minimum training presence   0.001796622                0.42632114             0.00000000
-# 2    Equal training sensitivity and specificity   0.236274539                0.07469512             0.07539683
-# 3 Maximum training sensitivity plus specificity   0.193356448                0.07571138             0.05952381
+# 1                     Minimum training presence   0.002889094                0.38363821             0.00000000
+# 2    Equal training sensitivity and specificity   0.231626126                0.07571138             0.07589286
+# 3 Maximum training sensitivity plus specificity   0.231626126                0.07571138             0.07589286
 
 # Model evaulation metrics
 mod <-
@@ -400,7 +399,7 @@ mod <-
          LPT = thresh[1,2])
 
 #   fc      reg  iter train_AUC test_AUC diff_AUC   TSS     LPT
-# 1 lqh     2.5   500     0.972    0.970  0.00153 0.193 0.00180
+# 1 lqph    2.5   500     0.973    0.970  0.00319 0.232 0.00289
 
 # Variable importance
 vi <- maxentVarImp(best_mod)
@@ -438,9 +437,9 @@ annotate_figure(resp_curves,
 </div>
 </p>
 
-### 8) Spatial prediction
+## 8) Spatial prediction
 ```r
-leaf_predict <- predict(best_mod, data = terra::rast(env_in), 
+leaf_predict <- predict(best_mod, data = env_in, 
                         fun = c("mean", "sd"), 
                         type = "cloglog", parallel = T)
 
@@ -476,70 +475,92 @@ leaf_total_area
 </div>
 </p>
 
-#### Run MaxEnt workflow as a function (`runMaxent`)
-Make sure to prepare the following input objects before using this function.
+---
+
+
+### Run MaxEnt workflow as a function (`runMaxent`)
+We can also run the entire MaxEnt workflow using a custom function. Make sure to prepare the following input objects.
 
 > ```r
+> # Input objects
 > env_in <- env_use                             # environmental layer stack
 > leaf_in <- leaf_sf %>% as_Spatial()           # species occurrence data layer
 > bgpts_in<- leaf_bgpts_comb %>% as_Spatial()   # background points layer
+>
+> ####################################################################################
+> #    runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
+> #              envlyr,   # `env_in` object
+> #              occdat,   # `leaf_in` or `short_in` object
+> #              bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
+> #              k_folds)  # 5
+> ####################################################################################
 > ```
+When the run is complete, output will be listed and stored in R object: `Leaf_scaled_sea_snake` or `Short_nosed_sea_snake`. Access the list using `$` (e.g., `Leaf_scaled_sea_snake$` or `Short_nosed_sea_snake$`).
+
+<br>
 
 ```r
-####################################################################################
-#    runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
-#              envlyr,   # `env_in` object
-#              occdat,   # `leaf_in` or `short_in` object
-#              bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
-#              k_folds)  # 5
-####################################################################################
-
 runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
+  
+  message("Running `runMaxent` function...")
+  message("Hyperparameter tuning...")
+  
   #hyperparameter tuning
   model <- SDMtune::prepareSWD(species = "species",
                                p = coordinates(occdat),
                                a = coordinates(bgpts),
                                env = envlyr)
   
+  message("Creating k-folds cross validation...")
   # create k-folds cross validation
   folds <- randomFolds(data = model,
                        k = k_folds,
                        only_presence = T)
   
+  message("Training initial model...")
   # train initial cross-validation model
   # train initial cv model
   trained_model <- SDMtune::train(method = "Maxent",
                                   data = model,
                                   folds = folds)
+
   # *** Warning: File absence has value -9999, treating as no-data value ***
   
+  message("Assigning hyperparameters to tune...")
   # Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
-  hyper <- list(reg = seq(0.5, 5, 0.5), 
-                fc = c("l", "lq", "h", "lqh"))
+  hyper <- list(reg = seq(0.5, 5, 0.5),
+                fc = c("lqh","lph","lqph"))
   
+  message("Optimising model using a genetic algorithm...")
   # Optimise model using a genetic algorithm (quicker than ENMevaluate())
   opt_mod <- optimizeModel(model = trained_model,
                            hypers = hyper,
                            metric = "auc")
   # *** Warning: File absence has value -9999, treating as no-data value ***
   
+  message("Generating table of tuning results...")
   # Table of tuning results
   tuning_res <- opt_mod@results
-  
+
+  message("Selecting best optimised model...")  
   # Select best optimised model
   best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
   
+  message("Generating ROC plot...")
   # model evaluation
   # ROC curve for best model
   roc_plot <- plotROC(best_mod@models[[1]])
   
+  message("Calculating AUC and TSS...")
   # Model accuracy metrics
   AUC <- auc(best_mod)
   TSS <- tss(best_mod)
   
+  message("Estimating thresholds...")
   # Estimate thresholds
   thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
   
+  message("Calculating model evaluation metrics...")
   # Model evaulation metrics
   mod <-
     opt_mod@results %>%
@@ -548,6 +569,7 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
     mutate(TSS = thresh[3,2],
            LPT = thresh[1,2])
   
+  message("Determining variable importance...")
   # Variable importance
   vi <- maxentVarImp(best_mod)
   
@@ -560,6 +582,7 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
     coord_flip() +
     theme_bw()
 
+  message("Generating response curves...")
   # Response curves
   env_vars <- names(envlyr)
   
@@ -577,6 +600,7 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
                     top = text_grob(paste0("Response curves for ", name), 
                                     face = "bold", size = 14))
   
+  message("Performing spatial prediction...")
   predict <- predict(best_mod, data = env_in, 
                      fun = c("mean", "sd"), 
                      type = "cloglog", parallel = T)
@@ -617,7 +641,7 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
   
   # output to print
   
-  print(paste0("Generating output objects for ", name))
+  message(paste0("Generating output objects for ", name,"."))
   
   name_friendly <- gsub(" ", "_", name)
   name_friendly <- gsub("-", "_", name_friendly)
@@ -636,18 +660,7 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
                       mean_predict_plot = mean_pred_plot),
          envir = .GlobalEnv)
   
-    print(paste0("Output complete."))
+    message(paste0("Output stored in `", name_friendly, "`. Access output with ", name_friendly, "$"))
+    message("Complete.")
 }
-
-# runMaxEnt(name = "Short-nosed sea snake",
-#           envlyr = env_in,
-#           occdat = short_in,
-#           bgpts = short_bgpts_in,
-#           k_folds = 5)
-# 
-# runMaxEnt(name = "Leaf-scaled sea snake",
-#           envlyr = env_in,
-#           occdat = leaf_in,
-#           bgpts = leaf_bgpts_in,
-#           k_folds = 5)
 ```
