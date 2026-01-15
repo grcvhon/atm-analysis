@@ -324,16 +324,24 @@ ggplot() +
   theme(plot.title = element_text(size = 11))
 
 # prepare variables for MaxEnt modelling
-env_in <- env_use
+
+# environmental predictors
+env_in <- terra::rast(env_use)
+
+# occurrence data
 leaf_in <- leaf_sf %>% as_Spatial()
-bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
+short_in <- short_sf %>% as_Spatial()
+
+# background layer
+leaf_bgpts_in<- leaf_bgpts_comb %>% as_Spatial()
+short_bgpts_in<- short_bgpts_comb %>% as_Spatial()
 
 # hyperparameter tuning
 model_leaf <- prepareSWD(species = "species",
                          p = coordinates(leaf_in),
                          a = coordinates(bgpts_in),
                          # ensure data generated via `terra`
-                         env = terra::rast(env_in))
+                         env = env_in)
 
 # create k-folds cross validation
 set_k <- 10
@@ -341,7 +349,7 @@ folds <- randomFolds(data = model_leaf,
                      k = set_k,
                      only_presence = T)
 
-# train initial covariance model
+# train initial cv model
 trained_model <- SDMtune::train(method = "Maxent",
                                 data = model_leaf,
                                 folds = folds)
@@ -349,7 +357,7 @@ trained_model <- SDMtune::train(method = "Maxent",
 
 # Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
 hyper <- list(reg = seq(0.5, 5, 0.5), 
-              fc = c("l", "lq", "h", "lqh"))
+              fc = c("lqh","lph","lqph"))
 
 # Optimise model using a genetic algorithm (quicker than ENMevaluate())
 opt_mod <- optimizeModel(model = trained_model,
@@ -409,11 +417,230 @@ for(p in 1:length(env_vars)){
 }
 
 resp_curves <- ggarrange(plotlist = plotlist)
+annotate_figure(resp_curves, 
+                top = text_grob(paste0("Response curves for Leaf-scaled sea snake"), 
+                                face = "bold", size = 14))
 resp_curves
 
 
+# 8. Spatial predictions ####
+
+leaf_predict <- predict(best_mod, data = terra::rast(env_in), 
+                        fun = c("mean", "sd"), 
+                        type = "cloglog", parallel = T)
+
+# Mean and variance in spatial prediction
+leaf_predict_mean <- leaf_predict$mean
+leaf_predict_sd <- leaf_predict$sd
+
+# thresholded models
+leaf_TSS_me <- leaf_predict_mean > mod$TSS
+leaf_LPT_me <- leaf_predict_mean > mod$LPT
+leaf_thresh_me <- raster::cut(raster(leaf_predict_mean), breaks = c(-Inf, 0.25, 0.5, 0.76, Inf))
+
+# Your binary raster
+leaf_r <- leaf_TSS_me  # or thresh if that’s the name
+
+# Count how many TRUE (or 1) cells
+leaf_n_cells <- global(leaf_r, "sum", na.rm = TRUE)
+leaf_n_cells
+
+# Get cell area in km²
+leaf_cell_area <- cellSize(leaf_r, unit = "km")
+
+# Multiply cell area by suitability mask
+leaf_suitable_area <- mask(leaf_cell_area, leaf_r, maskvalues = FALSE)
+
+# Sum total area
+leaf_total_area <- global(leaf_suitable_area, "sum", na.rm = TRUE)
+leaf_total_area
+
+ggplot() +
+  geom_spatraster(data = leaf_predict_mean) + 
+  scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Mean spatial prediction for Leaf-scaled sea snake")
 
 
+
+# * MaxEnt workflow function ####
+
+runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
+  
+  message("Running `runMaxent` function...")
+  message("Hyperparameter tuning...")
+  
+  #hyperparameter tuning
+  model <- SDMtune::prepareSWD(species = "species",
+                               p = coordinates(occdat),
+                               a = coordinates(bgpts),
+                               env = envlyr)
+  
+  message("Creating k-folds cross validation...")
+  # create k-folds cross validation
+  folds <- randomFolds(data = model,
+                       k = k_folds,
+                       only_presence = T)
+  
+  message("Training initial model...")
+  # train initial cross-validation model
+  # train initial cv model
+  trained_model <- SDMtune::train(method = "Maxent",
+                                  data = model,
+                                  folds = folds)
+
+  # *** Warning: File absence has value -9999, treating as no-data value ***
+  
+  message("Assigning hyperparameters to tune...")
+  # Assign hyperparameters to tune (replicate ENMevaluate() function parameters)
+  hyper <- list(reg = seq(0.5, 5, 0.5),
+                fc = c("lqh","lph","lqph"))
+  
+  message("Optimising model using a genetic algorithm...")
+  # Optimise model using a genetic algorithm (quicker than ENMevaluate())
+  opt_mod <- optimizeModel(model = trained_model,
+                           hypers = hyper,
+                           metric = "auc")
+  # *** Warning: File absence has value -9999, treating as no-data value ***
+  
+  message("Generating table of tuning results...")
+  # Table of tuning results
+  tuning_res <- opt_mod@results
+
+  message("Selecting best optimised model...")  
+  # Select best optimised model
+  best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
+  
+  message("Generating ROC plot...")
+  # model evaluation
+  # ROC curve for best model
+  roc_plot <- plotROC(best_mod@models[[1]])
+  
+  message("Calculating AUC and TSS...")
+  # Model accuracy metrics
+  AUC <- auc(best_mod)
+  TSS <- tss(best_mod)
+  
+  message("Estimating thresholds...")
+  # Estimate thresholds
+  thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
+  
+  message("Calculating model evaluation metrics...")
+  # Model evaulation metrics
+  mod <-
+    opt_mod@results %>%
+    slice(which.max(opt_mod@results$test_AUC)) %>% 
+    as_tibble() %>%
+    mutate(TSS = thresh[3,2],
+           LPT = thresh[1,2])
+  
+  message("Determining variable importance...")
+  # Variable importance
+  vi <- maxentVarImp(best_mod)
+  
+  vi_plot <- vi %>%
+    ggplot(aes(x = reorder(Variable, Percent_contribution), y = Percent_contribution)) +
+    geom_bar(stat = "identity") +
+    labs(y = "Variable contribution (%)", x = "", 
+         title = paste0("Variable importance for ", name)) +
+    #subtitle = "Spatial and temporal scale") +
+    coord_flip() +
+    theme_bw()
+
+  message("Generating response curves...")
+  # Response curves
+  env_vars <- names(envlyr)
+  
+  for(p in 1:length(env_vars)){
+    if(p %in% 1){
+      plotlist <- list()
+      pb <- txtProgressBar(min = 0, max = length(env_vars), style = 3)}
+    plotlist[[p]] <- plotResponse(best_mod, var = env_vars[p], rug = T)
+    setTxtProgressBar(pb, p)
+  }
+  
+  resp_curves <- ggarrange(plotlist = plotlist)
+  resp_curv_plot <- 
+    annotate_figure(resp_curves, 
+                    top = text_grob(paste0("Response curves for ", name), 
+                                    face = "bold", size = 14))
+  
+  message("Performing spatial prediction...")
+  predict <- predict(best_mod, data = env_in, 
+                     fun = c("mean", "sd"), 
+                     type = "cloglog", parallel = T)
+  
+  # Mean and variance in spatial prediction
+  predict_mean <- predict$mean
+  predict_sd <- predict$sd
+  
+  # thresholded models
+  TSS_me <- predict_mean > mod$TSS
+  LPT_me <- predict_mean > mod$LPT
+  thresh_me <- raster::cut(raster(predict_mean), breaks = c(-Inf, 0.25, 0.5, 0.76, Inf))
+  
+  # Your binary raster
+  r <- TSS_me  # or thresh if that’s the name
+  
+  # Count how many TRUE (or 1) cells
+  n_cells <- global(r, "sum", na.rm = TRUE)
+  n_cells
+  
+  # Get cell area in km²
+  cell_area <- cellSize(r, unit = "km")
+  
+  # Multiply cell area by suitability mask
+  suitable_area <- mask(cell_area, r, maskvalues = FALSE)
+  
+  # Sum total area
+  total_area <- global(suitable_area, "sum", na.rm = TRUE)
+  total_area
+  
+  mean_pred_plot <- 
+    ggplot() +
+    geom_spatraster(data = predict_mean) + 
+    scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
+    annotation_scale(mapping = aes(location = "br")) +
+    theme_bw() +
+    labs(title = paste0("Mean spatial prediction for ", name))
+  
+  # output to print
+  
+  message(paste0("Generating output objects for ", name,"."))
+  
+  name_friendly <- gsub(" ", "_", name)
+  name_friendly <- gsub("-", "_", name_friendly)
+  
+  assign(x = name_friendly, 
+         value = list(best_mod = best_mod,
+                      tuning_res = tuning_res,
+                      AUC = AUC,
+                      TSS = TSS,
+                      thresh = thresh,
+                      mod_eval_metrics = mod,
+                      var_importance = vi,
+                      roc_plot = roc_plot,
+                      vi_plot = vi_plot,
+                      response_curv = resp_curv_plot,
+                      mean_predict_plot = mean_pred_plot),
+         envir = .GlobalEnv)
+  
+    message(paste0("Output stored in `", name_friendly, "`. Access output with ", name_friendly, "$"))
+    message("Complete.")
+}
+
+runMaxEnt(name = "Short-nosed sea snake",
+          envlyr = env_in,
+          occdat = short_in,
+          bgpts = short_bgpts_in,
+          k_folds = 5)
+
+runMaxEnt(name = "Leaf-scaled sea snake",
+          envlyr = env_in,
+          occdat = leaf_in,
+          bgpts = leaf_bgpts_in,
+          k_folds = 5)
 
 
 
