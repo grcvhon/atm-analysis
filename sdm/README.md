@@ -478,9 +478,10 @@ leaf_total_area
 ---
 
 
-### Run MaxEnt workflow as a function (`runMaxent`)
-We can also run the entire MaxEnt workflow using a custom function. Make sure to prepare the following input objects.
+### <i>Run MaxEnt workflow as a function</i> (`runMaxent`)
+So far, the output above is only for the Leaf-scaled sea snake. To avoid the need to change the code, line-by-line, with input for a different species (i.e. Short-nosed sea snake), we can run the entire MaxEnt workflow contained as a custom function. 
 
+Make sure to prepare the following input objects.
 > ```r
 > # Input objects
 > env_in <- env_use                             # environmental layer stack
@@ -495,7 +496,7 @@ We can also run the entire MaxEnt workflow using a custom function. Make sure to
 > #              k_folds)  # 5
 > ####################################################################################
 > ```
-When the run is complete, output will be listed and stored in R object: `Leaf_scaled_sea_snake` or `Short_nosed_sea_snake`. Access the list using `$` (e.g., `Leaf_scaled_sea_snake$` or `Short_nosed_sea_snake$`).
+When the run is complete, output will be listed and stored in an R object with the `name` (e.g,`Leaf_scaled_sea_snake` or `Short_nosed_sea_snake`). Access the list using `$` (e.g., `Leaf_scaled_sea_snake$` or `Short_nosed_sea_snake$`).
 
 <br>
 
