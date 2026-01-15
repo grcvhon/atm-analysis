@@ -477,13 +477,21 @@ leaf_total_area
 </p>
 
 #### Run MaxEnt workflow as a function (`runMaxent`)
+Make sure to prepare the following input objects before using this function.
+
+> ```r
+> env_in <- env_use                             # environmental layer stack
+> leaf_in <- leaf_sf %>% as_Spatial()           # species occurrence data layer
+> bgpts_in<- leaf_bgpts_comb %>% as_Spatial()   # background points layer
+> ```
+
 ```r
 ####################################################################################
 #    runMaxent(name,     # "Leaf-scaled sea snake" or "Short-nosed sea snake"
 #              envlyr,   # `env_in` object
 #              occdat,   # `leaf_in` or `short_in` object
 #              bgpts,    # `leaf_bgpts_in` or `short_bgpts_in`
-#              k_folds)  # 10
+#              k_folds)  # 5
 ####################################################################################
 
 runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
@@ -543,15 +551,15 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
   # Variable importance
   vi <- maxentVarImp(best_mod)
   
-  vi %>%
+  vi_plot <- vi %>%
     ggplot(aes(x = reorder(Variable, Percent_contribution), y = Percent_contribution)) +
     geom_bar(stat = "identity") +
     labs(y = "Variable contribution (%)", x = "", 
-         title = expression(italic(paste0("Variable importance for ", name)))) +
+         title = paste0("Variable importance for ", name)) +
     #subtitle = "Spatial and temporal scale") +
     coord_flip() +
     theme_bw()
-  
+
   # Response curves
   env_vars <- names(envlyr)
   
@@ -564,9 +572,10 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
   }
   
   resp_curves <- ggarrange(plotlist = plotlist)
-  annotate_figure(resp_curves, 
-                  top = text_grob(paste0("Response curves for ", name), 
-                                  face = "bold", size = 14))
+  resp_curv_plot <- 
+    annotate_figure(resp_curves, 
+                    top = text_grob(paste0("Response curves for ", name), 
+                                    face = "bold", size = 14))
   
   predict <- predict(best_mod, data = env_in, 
                      fun = c("mean", "sd"), 
@@ -598,24 +607,47 @@ runMaxEnt <- function(name, envlyr, occdat, bgpts, k_folds){
   total_area <- global(suitable_area, "sum", na.rm = TRUE)
   total_area
   
-  # output to print
-  print(paste0("Results for ", name))
-  print(best_mod)
-  print(tuning_res)
-  print(roc_plot)
-  print(paste0("AUC: ", AUC))
-  print(paste0("TSS: ", TSS))
-  print(thresh)
-  print(mod)
-  print(vi)
-  annotate_figure(resp_curves, 
-                  top = text_grob(paste0("Response curves for ", name), 
-                                  face = "bold", size = 14))
-  ggplot() +
+  mean_pred_plot <- 
+    ggplot() +
     geom_spatraster(data = predict_mean) + 
     scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
     annotation_scale(mapping = aes(location = "br")) +
     theme_bw() +
     labs(title = paste0("Mean spatial prediction for ", name))
+  
+  # output to print
+  
+  print(paste0("Generating output objects for ", name))
+  
+  name_friendly <- gsub(" ", "_", name)
+  name_friendly <- gsub("-", "_", name_friendly)
+  
+  assign(x = name_friendly, 
+         value = list(best_mod = best_mod,
+                      tuning_res = tuning_res,
+                      AUC = AUC,
+                      TSS = TSS,
+                      thresh = thresh,
+                      mod_eval_metrics = mod,
+                      var_importance = vi,
+                      roc_plot = roc_plot,
+                      vi_plot = vi_plot,
+                      response_curv = resp_curv_plot,
+                      mean_predict_plot = mean_pred_plot),
+         envir = .GlobalEnv)
+  
+    print(paste0("Output complete."))
 }
+
+# runMaxEnt(name = "Short-nosed sea snake",
+#           envlyr = env_in,
+#           occdat = short_in,
+#           bgpts = short_bgpts_in,
+#           k_folds = 5)
+# 
+# runMaxEnt(name = "Leaf-scaled sea snake",
+#           envlyr = env_in,
+#           occdat = leaf_in,
+#           bgpts = leaf_bgpts_in,
+#           k_folds = 5)
 ```
