@@ -24,8 +24,35 @@ Estimated mean passage probability across the northwest shelf based on ocean cur
 </div>
 </p>
 
+<br>
 
+In order to make the output usable in our species distribution modelling, let us write it as an `ascii` file.
+```r
+# import output csv into R
+passage_layer <- 
+  read.csv(
+    "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/sbs_bearing_seed100_100pts_03h49m31s.csv",
+    header = T, sep = ",")
 
+# remove first column
+passage_layer <- passage_layer[,-1]
+
+# rasterise and assign projection
+passage_layer <- terra::rast(passage_layer,
+                             type = "xyz",
+                             crs = "EPSG:4326")
+
+# ensure same extent as with other predictor variables
+passage_layer <- 
+  passage_layer %>% 
+  mask(mask = vect(nw_shelf)) %>% 
+  resample(x = ., y = rast(bathymetry))
+
+# write to ascii file
+terra::writeRaster(
+  passage_layer,
+  filename = "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc")
+```
 ---
 <br>
 From here, I go through the R code.
