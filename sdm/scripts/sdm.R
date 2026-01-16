@@ -263,21 +263,28 @@ ggplot() +
   theme(plot.title = element_text(size = 11))
 
 
-#### 5. Input environmental rasters ####
+#### 5. Input predictor rasters ####
 
-# Load single environmental raster
-bathymetry <- raster("./predictor-variables/bathymetry.asc")
-
-# Load initial set of environmental rasters
-env_init <- stack("./predictor-variables/sal_mean.asc",
-                  "./predictor-variables/sal_amp.asc",
-                  "./predictor-variables/bathymetry.asc",
-                  "./predictor-variables/sst_mean.asc",
-                  "./predictor-variables/sst_amp.asc",
-                  "./predictor-variables/chlor_mean.asc",
-                  "./predictor-variables/DistToLand.asc",
-                  "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
+# Load initial set of predictor rasters
+env_init <- stack(
+  
+  # environmental variables
+  "./predictor-variables/sal_mean.asc",
+  "./predictor-variables/sal_amp.asc",
+  "./predictor-variables/bathymetry.asc",
+  "./predictor-variables/sst_mean.asc",
+  "./predictor-variables/sst_amp.asc",
+  "./predictor-variables/chlor_mean.asc",
+  "./predictor-variables/DistToLand.asc",
+  "./predictor-variables/DistToReef.asc",
+  "./predictor-variables/DistToFW.asc",
+  
+  # genetic layer
+  "../genetic_layer/laevis/output/genetic_layer.asc",
+  
+  # passage layer
+  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc"
+  )
 
 
 
@@ -290,15 +297,15 @@ env_corr
 
 # List variable names to remove
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7, names = T)
-rm_vars # "sal_mean"   "sal_amp"    "DistToLand"
+rm_vars # "sal_amp"    "sal_mean"   "DistToFW"   "DistToLand"
 
 # Run again to get column number
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7)
-rm_vars # 1 2 7
+rm_vars # 2 1 9 7
 
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
-env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "K2"
 
 # Load passed environmental rasters to be used
 env_use <- stack("./predictor-variables/bathymetry.asc",
@@ -306,22 +313,11 @@ env_use <- stack("./predictor-variables/bathymetry.asc",
                   "./predictor-variables/sst_amp.asc",
                   "./predictor-variables/chlor_mean.asc",
                   "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
+                  "../genetic_layer/laevis/output/genetic_layer.asc",
+                  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc")
 
 
 #### 6. MaxEnt modelling ####
-
-# visualise input data
-ggplot() +
-  geom_spatraster(data = bias_prob) +
-  scale_fill_viridis_c(na.value = "transparent") +
-  geom_sf(data = nw_shelf, fill = NA) + 
-  geom_sf(data = leaf_bgpts_comb, col = "aquamarine3", cex = 0.8) +
-  geom_sf(data = leaf_sf, col = "maroon", cex = 0.8) +
-  annotation_scale(mapping = aes(location = "br")) +
-  theme_bw() +
-  labs(title = "Map showing 1) Bias layer, 2) Background points, 3) Occurrences for Leaf-scaled sea snake") +
-  theme(plot.title = element_text(size = 11))
 
 # prepare variables for MaxEnt modelling
 
