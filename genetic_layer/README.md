@@ -201,5 +201,28 @@ anc <- raster::raster(z_krig_sh_admix$K2) # take either K; K1 is inverse of K2
 anc <- terra::rast(anc)
 anc <- terra::project(anc, "+proj=longlat +datum=WGS84")
 df_anc <- as.data.frame(anc, xy = TRUE)
-write.csv(df_anc, file = paste0("./genetic_layer/output/laevis_K",laevis_bestK,".csv"))
+write.csv(df_anc, file = paste0("./genetic_layer/laevis/output/laevis_K",laevis_bestK,".csv"))
+```
+In order to make it usable in our species distribution modelling, let us write it as an `ascii` file.
+```r
+# import csv file
+genetic_layer <- read.csv("./genetic_layer/laevis/output/laevis_K2.csv", header = T, sep = ",")
+
+# remove first column
+genetic_layer <- genetic_layer[,-1]
+
+# rasterise using terra package and provide projection
+genetic_layer <- terra::rast(genetic_layer,
+                             type = "xyz",
+                             crs = "EPSG:4326")
+
+# ensure to have the same extent as other environmental layers (use bathymetry)
+genetic_layer <- genetic_layer %>% 
+  mask(mask = vect(nw_shelf)) %>% 
+  resample(x = ., y = rast(bathymetry)) %>% 
+  terra::scale()
+
+# write ascii file 
+terra::writeRaster(genetic_layer,
+  filename = "./genetic_layer/laevis/output/genetic_layer.asc")
 ```
