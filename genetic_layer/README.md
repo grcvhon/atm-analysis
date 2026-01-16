@@ -219,8 +219,7 @@ genetic_layer <- terra::rast(genetic_layer,
 # ensure to have the same extent as other environmental layers (use bathymetry)
 genetic_layer <- genetic_layer %>% 
   mask(mask = vect(nw_shelf)) %>% 
-  resample(x = ., y = rast(bathymetry)) %>% 
-  terra::scale()
+  resample(x = ., y = rast(bathymetry))
 
 # write ascii file 
 terra::writeRaster(genetic_layer,
