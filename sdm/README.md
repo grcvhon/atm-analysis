@@ -222,54 +222,68 @@ short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
 
 
 
-## 5) Input environmental rasters
+## 5) Input predictor rasters
 ```r
-# Load single environmental raster
-bathymetry <- raster("./predictor-variables/bathymetry.asc")
+# Load initial set of predictor rasters
+env_init <- stack(
+  
+  # environmental variables
+  "./predictor-variables/sal_mean.asc",
+  "./predictor-variables/sal_amp.asc",
+  "./predictor-variables/bathymetry.asc",
+  "./predictor-variables/sst_mean.asc",
+  "./predictor-variables/sst_amp.asc",
+  "./predictor-variables/chlor_mean.asc",
+  "./predictor-variables/DistToLand.asc",
+  "./predictor-variables/DistToReef.asc",
+  "./predictor-variables/DistToFW.asc",
+  
+  # genetic layer
+  "../genetic_layer/laevis/output/genetic_layer.asc",
+  
+  # passage layer
+  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc"
+  )
 
-# Load initial set of environmental rasters
-env_init <- stack("./predictor-variables/sal_mean.asc",
-                  "./predictor-variables/sal_amp.asc",
-                  "./predictor-variables/bathymetry.asc",
-                  "./predictor-variables/sst_mean.asc",
-                  "./predictor-variables/sst_amp.asc",
-                  "./predictor-variables/chlor_mean.asc",
-                  "./predictor-variables/DistToLand.asc",
-                  "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
+# Find correlated variables
 
-# Find correlated variables / Test for multicollinearity
+# Test for multicollinearity
 env_values <- values(env_init)
 env_corr <- cor(env_values, method = "pearson", use = "complete.obs")
 env_corr
 
 # List variable names to remove
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7, names = T)
-rm_vars # "sal_mean"   "sal_amp"    "DistToLand"
+rm_vars # "sal_amp" "sal_mean" "DistToFW" "DistToLand"
 
 # Run again to get column number
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7)
-rm_vars # 1 2 7
+rm_vars # 2 1 9 7
 
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
-env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "DistToFW"
+env_pass # "bathymetry" "sst_mean" "sst_amp" "chlor_mean" "DistToReef" "K2" "layer"
 
-# Create new stack of environmental variables retained
+# Load passed environmental rasters to be used
 env_use <- stack("./predictor-variables/bathymetry.asc",
                   "./predictor-variables/sst_mean.asc",
                   "./predictor-variables/sst_amp.asc",
                   "./predictor-variables/chlor_mean.asc",
                   "./predictor-variables/DistToReef.asc",
-                  "./predictor-variables/DistToFW.asc")
-
+                  "../genetic_layer/laevis/output/genetic_layer.asc",
+                  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc")
 ```
 
 
 
 ## 6) MaxEnt modelling
 
-The following will be our input data for MaxEnt modelling: 1) environmental variables, 2) background points, 3) occurrence data (Leaf-scaled sea snake).
+><i>NB: Below provides a demonstration of the workflow and presentation of example output when running the MaxEnt modelling script. All output are representative and not for final reporting. See [link] for latest results.</i>
+
+The following will be our input data for MaxEnt modelling: 
+1) predictor variables (environmental, genetic, and passage layers)
+2) background points
+3) occurrence data (Leaf-scaled sea snake data for demonstration)
 
 Let us prepare the input and place them in new R objects.
 ```r
@@ -365,13 +379,13 @@ best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
 # • Categorical: NA   
 ```
 
-## 7) Model evaluation
+### 6.1) Model evaluation
 ```r
 # ROC curve for best model
 plotROC(best_mod@models[[1]])
 ```
 <p align = center>
-<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_roc_curv.png">
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_roc_curv.png", width = 80%, height = 80%>
 <div align = "center">
 </div>
 </p>
@@ -405,7 +419,7 @@ vi <- maxentVarImp(best_mod)
 ```
 
 <p align = center>
-<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_var_imp.png", width = 90%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_var_imp.png", width = 80%, height = 80%>
 <div align = "center">
 </div>
 </p>
@@ -436,7 +450,7 @@ annotate_figure(resp_curves,
 </div>
 </p>
 
-## 8) Spatial prediction
+### 6.2) Spatial prediction
 ```r
 leaf_predict <- predict(best_mod, data = env_in, 
                         fun = c("mean", "sd"), 
