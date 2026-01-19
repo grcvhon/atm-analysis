@@ -305,7 +305,7 @@ rm_vars # 2 1 9 7
 
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
-env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "K2"
+env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "K2" "layer"
 
 # Load passed environmental rasters to be used
 env_use <- stack("./predictor-variables/bathymetry.asc",
