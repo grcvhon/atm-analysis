@@ -631,12 +631,13 @@ runMaxEnt(name = "Short-nosed sea snake",
           occdat = short_in,
           bgpts = short_bgpts_in,
           k_folds = 5)
+Short_nosed_sea_snake
 
 runMaxEnt(name = "Leaf-scaled sea snake",
           envlyr = env_in,
           occdat = leaf_in,
           bgpts = leaf_bgpts_in,
           k_folds = 5)
-
+Leaf_scaled_sea_snake
 
 
