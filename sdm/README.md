@@ -385,7 +385,7 @@ best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
 plotROC(best_mod@models[[1]])
 ```
 <p align = center>
-<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_roc_curv.png", width = 80%, height = 80%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_roc_curv.png", width = 60%, height = 60%>
 <div align = "center">
 </div>
 </p>
@@ -419,7 +419,7 @@ vi <- maxentVarImp(best_mod)
 ```
 
 <p align = center>
-<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_var_imp.png", width = 80%, height = 80%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_var_imp.png", width = 60%, height = 60%>
 <div align = "center">
 </div>
 </p>
