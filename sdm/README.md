@@ -332,51 +332,51 @@ opt_mod <- optimizeModel(model = trained_model,
 # Table of tuning results
 opt_mod@results
 
-#      fc reg iter train_AUC  test_AUC     diff_AUC
-# 1  lqph 2.5  500 0.9732337 0.9700443  0.003189384
-# 2  lqph 2.5  500 0.9732337 0.9700443  0.003189384
-# 3   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 4   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 5   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 6   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 7   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 8   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 9   lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 10  lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 11  lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 12  lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 13  lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 14  lph 2.5  500 0.9732105 0.9700040  0.003206525
-# 15 lqph 2.0  500 0.9727657 0.9682506  0.004515074
-# 16  lph 5.0  500 0.9658904 0.9643252  0.001565202
-# 17  lqh 1.0  500 0.8671074 0.8526532  0.014454197
-# 18  lph 1.0  500 0.7886383 0.7763765  0.012261750
-# 19  lph 1.0  500 0.7886383 0.7763765  0.012261750
-# 20  lph 0.5  500 0.7823327 0.7869525 -0.004619756
+#     fc reg iter train_AUC  test_AUC    diff_AUC
+# 1  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 2  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 3  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 4  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 5  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 6  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 7  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 8  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 9  lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 10 lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 11 lqh 2.5  500 0.9729030 0.9712408 0.001662190
+# 12 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 13 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 14 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 15 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 16 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 17 lqh 3.0  500 0.9725264 0.9709984 0.001528022
+# 18 lph 4.0  500 0.9689837 0.9669827 0.002000985
+# 19 lqh 5.0  500 0.9669752 0.9658110 0.001164198
+# 20 lqh 0.5  500 0.9561944 0.9449431 0.011251285
 ```
 
 ```r
 # Select best optimised model
 best_mod <- opt_mod@models[[which.max(opt_mod@results$test_AUC)]]
 
-# ── Object of class: <SDMmodelCV> ──                                           
-#                                                                               
-# Method: Maxent                                                                
-#                                                                               
-# ── Hyperparameters                                                            
-# • fc: "lqph"                                                                  
-# • reg: 2.5                                                                    
-# • iter: 500                                                                   
-#                                                                               
-# ── Info                                                                       
-# • Species: species                                                            
-# • Replicates: 5                                                               
-# • Total presence locations: 281                                               
-# • Total absence locations: 1968                                               
-#                                                                               
-# ── Variables                                                                  
-# • Continuous: "bathymetry", "sst_mean", "sst_amp", "chlor_mean", "DistToReef", and "DistToFW"
-# • Categorical: NA   
+# ── Object of class: <SDMmodelCV> ──                       
+#                                                           
+# Method: Maxent                                            
+#                                                           
+# ── Hyperparameters                                        
+# • fc: "lqh"                                               
+# • reg: 2.5                                                
+# • iter: 500                                               
+#                                                           
+# ── Info                                                   
+# • Species: species                                        
+# • Replicates: 5                                           
+# • Total presence locations: 281                           
+# • Total absence locations: 1965                           
+#                                                           
+# ── Variables                                              
+# • Continuous: "bathymetry", "sst_mean", "sst_amp", "chlor_mean", "DistToReef", "K2", and "layer"
+# • Categorical: NA    
 ```
 
 ### 6.1) Model evaluation
@@ -392,16 +392,16 @@ plotROC(best_mod@models[[1]])
 
 ```r
 # Model accuracy metrics
-AUC <- auc(best_mod) # 0.9732337
-TSS <- tss(best_mod) # 0.859125
+AUC <- auc(best_mod) # 0.972903
+TSS <- tss(best_mod) # 0.8525789
 
 # Estimate thresholds
 thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
 
 #                                       Threshold Cloglog value Fractional predicted area Training omission rate
-# 1                     Minimum training presence   0.002889094                0.38363821             0.00000000
-# 2    Equal training sensitivity and specificity   0.231626126                0.07571138             0.07589286
-# 3 Maximum training sensitivity plus specificity   0.231626126                0.07571138             0.07589286
+# 1                     Minimum training presence   0.004278896                0.37201018             0.00000000
+# 2    Equal training sensitivity and specificity   0.155240629                0.08193384             0.07589286
+# 3 Maximum training sensitivity plus specificity   0.091269143                0.09363868             0.06250000
 
 # Model evaulation metrics
 mod <-
@@ -411,8 +411,8 @@ mod <-
   mutate(TSS = thresh[3,2],
          LPT = thresh[1,2])
 
-#   fc      reg  iter train_AUC test_AUC diff_AUC   TSS     LPT
-# 1 lqph    2.5   500     0.973    0.970  0.00319 0.232 0.00289
+#   fc      reg  iter train_AUC test_AUC diff_AUC    TSS     LPT
+# 1 lqh     2.5   500     0.973    0.971  0.00166 0.0913 0.00428
 
 # Variable importance
 vi <- maxentVarImp(best_mod)
