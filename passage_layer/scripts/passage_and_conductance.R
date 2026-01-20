@@ -76,6 +76,8 @@ ggplot() +
     palette = c("black","grey20","grey40","grey60","cyan"), 
     na.value = "transparent") +
   geom_sf(data = leaf_mean_pts, col = "cyan") +
+  annotation_scale(mapping = aes(location = "br")) +
+  labs(title = "Conductance map for Leaf-scaled sea snake") +
   theme_bw()
 
 ###############################
@@ -128,6 +130,8 @@ ggplot() +
     palette = c("black","grey20","grey40","grey60","cyan"), 
     na.value = "transparent") +
   geom_sf(data = short_mean_pts, col = "cyan") +
+  annotation_scale(mapping = aes(location = "br")) +
+  labs(title = "Conductance map for Short-nosed sea snake") +
   theme_bw()
 
 
