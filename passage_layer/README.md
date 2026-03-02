@@ -6,6 +6,8 @@ Mean passage probability was estimated based on the ocean current bearing (direc
 
 The code was written in R and executed using the University of Adelaide High Performance Computer (Phoenix HPC).
 
+We also generated conductance maps for each species based on the passage probability map. See [README](https://github.com/grcvhon/atm-analysis/tree/master/passage_layer/circuitscape/README.md) in `passage_layer/circuitscape/`
+
 *<sub>Spatially balanced points plus manually selected points in Shark Bay and Exmouth Gulf to explicitly include such localities.</sub>
 
 ##
