@@ -8,20 +8,85 @@ We then use this output to generate a surface that presents all possible pairwis
 
 Typically, Circuitscape will use "resistance" as input to infer how movement between focal nodes is "resisted" by the environmental variables and find all possible routes around the resistant surface. In our case, we will treat our input as conductance since it represents probability of passage. In population genomics/landscape genomics, the values of resistance or conductance can be used in correlating with genetic fixation indices to infer the presence of Isolation-by-Resistance. For our purpose, we will use the generated conductance surface, the pairwise inference of how focal nodes are likely connected, as a predictor variable in our SDM.<br>
 
-Let us a generate the raster input for Circuitscape. Again, this input will typically represent resistance values but since it represents passage probability, we will flag that the input represents conductance values.
-
-<p align = center>
-<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/circuitscape/misc/cs_gui.png", width = 75%, height = 75%>
-<div align = "center">
-Tick box selected: Data represent conductances instead of resistances
-</div>
-</p>
+Let us a generate the input for Circuitscape: 1) raster file, 2) focal node file. 
 
 ```r
 # Generate raster input for Circuitscape
 
+# set working directory
+setwd("C:/Users/a1235304/Dropbox/Short-nosed and Leaf-scaled sea snake TSSC/atm-analysis/passage_layer/")
+
+# import passage layer asc file
+passage_asc <- terra::rast(x = "output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc")
+plot(passage_asc)
+
+values(passage_asc)[is.nan(values(passage_asc))] <- NA
+
+# write new asc file
+terra::writeRaster(
+  x = passage_asc,
+  filename = "./circuitscape/cs_input/passage_layer_9999.asc",
+  NAflag = -9999, overwrite = TRUE
+  )
+
+# focal node file for Leaf-scaled sea snake
+# take cols of interest
+leaf_uniq <- (unique(leaf_occ[, c(7,8,9,12,13)]))
+leaf_uniq <- as.data.frame(leaf_uniq)
+
+# create columns with long and lat values
+leaf_vals <- t(apply(leaf_uniq[, 2:5], 1, function(x) x[!is.na(x)]))
+leaf_uniq <- cbind(leaf_uniq, leaf_vals)
+leaf_uniq <- leaf_uniq[,c(1,7,6)]
+write_tsv(leaf_uniq, file = "./circuitscape/cs_input/leaf_uniq.txt")
+
+# Change localities/regions to focal node numbers
+# *** Take note that not NAs are Ashmore Reef 
+# *** Edit in Notepad++
+
+# after editing outside R for locality info of NAs, read in txt file
+leaf_uniq_edit <- read_tsv("./circuitscape/cs_input/leaf_uniq_edit.txt", col_names = F)
+
+# average coordinates of samples
+mean_SB <- colMeans(as.matrix(leaf_uniq_edit[leaf_uniq_edit$X1 == "Shark Bay", 2:3]))
+mean_EG <- colMeans(as.matrix(leaf_uniq_edit[leaf_uniq_edit$X1 == "Exmouth Gulf", 2:3]))
+mean_PB <- colMeans(as.matrix(leaf_uniq_edit[leaf_uniq_edit$X1 == "Pilbara", 2:3]))
+mean_AR <- colMeans(as.matrix(leaf_uniq_edit[leaf_uniq_edit$X1 == "Ashmore Reef", 2:3]))
+
+# prepare focal node file
+leaf_mean_loc <- rbind(mean_SB,mean_EG,mean_PB,mean_AR)
+leaf_mean_loc <- cbind(X1 = c(1,2,3,4), leaf_mean_loc)
+leaf_mean_loc <- as.data.frame(leaf_mean_loc)
+write_tsv(leaf_mean_loc, file = "leaf_mean_loc.txt", col_names = F)
+
+# read tsv
+leaf_mean_pts <- read_tsv("./circuitscape/cs_input/leaf_mean_loc.txt", col_names = F)
+leaf_mean_pts <- (as.data.frame(leaf_mean_pts[,c(2,3)]))
+colnames(leaf_mean_pts) <- c("x","y")
+leaf_mean_pts <- st_as_sf(leaf_mean_pts, coords = c("x", "y"), crs = 4326)
+
+# The input for Circuitscape are as follows:
+# *** 1) raster (conductance): passage_layer_9999.asc
+# *** 2) focal node: leaf_mean_loc.txt (1 = SB, 2 = EG, 3 = PB, 4 = AR)
 ```
+With the input files ready, we can go to the Circuitscape GUI and provide input. Our input is a raster file. We want to model conductance routes "Pairwise: iterate across all pairs in focal node file." We then supply the raster resistance map. This map corresponds to the conductance file we just generated. Again, this input will typically represent resistance values but since it represents passage probability, we will flag that the input represents conductance values.<br>
 
+We supply the rest of the required fields: focal node file (one we just prepared too) and provide output file name and location. (We do the same for Short-nosed sea snake)
 
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/circuitscape/misc/cs_gui.png", width = 75%, height = 75%>
+<div align = "center">
+</div>
+</p>
+
+---
+
+Output conductance maps:
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_plot.png", width = 49%, height = 49%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/passage_layer/circuitscape/cs_output/short_cs_main/short_cs_main_plot.png", width = 49%, height = 49%>
+<div align = "center">
+</div>
+</p>
 
 
