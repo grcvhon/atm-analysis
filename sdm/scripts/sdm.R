@@ -87,7 +87,9 @@ ggplot() +
 # using `2020-05-20_SnakeOcc.csv`
 
 # read bias point occurrences
-bias_pts <- read_csv("./bias-layer/2020-05-20_SnakeOcc.csv")
+bias_pts <- read_csv("./bias-layer/2024-12-01_SnakeOcc(02).csv")
+bias_pts$longitude <- as.numeric(bias_pts$longitude)
+bias_pts <- na.omit(bias_pts)
 
 # generate sf object from bias_pts
 bias_sf <- bias_pts %>% 
