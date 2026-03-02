@@ -84,7 +84,7 @@ ggplot() +
 #### 3. Bias layer ####
 
 # Generate bias layer from point occurrences 
-# using `2020-05-20_SnakeOcc.csv`
+# using `2020-05-20_SnakeOcc.csv` -- * updated to 2024-12-01_SnakeOcc(02).csv
 
 # read bias point occurrences
 bias_pts <- read_csv("./bias-layer/2024-12-01_SnakeOcc(02).csv")
