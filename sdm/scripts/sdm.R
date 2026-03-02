@@ -273,7 +273,7 @@ env_init <- stack(
   "./predictor-variables/sal_amp.asc",
   "./predictor-variables/bathymetry.asc",
   "./predictor-variables/sst_mean.asc",
-  "./predictor-variables/sst_amp.asc",
+  #"./predictor-variables/sst_amp.asc",
   "./predictor-variables/chlor_mean.asc",
   "./predictor-variables/DistToLand.asc",
   "./predictor-variables/DistToReef.asc",
@@ -283,7 +283,10 @@ env_init <- stack(
   "../genetic_layer/laevis/output/genetic_layer.asc",
   
   # passage layer
-  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc"
+  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
+  
+  # conductance layer
+  "../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc"
   )
 
 
@@ -310,11 +313,12 @@ env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "K2"
 # Load passed environmental rasters to be used
 env_use <- stack("./predictor-variables/bathymetry.asc",
                   "./predictor-variables/sst_mean.asc",
-                  "./predictor-variables/sst_amp.asc",
+                  #"./predictor-variables/sst_amp.asc",
                   "./predictor-variables/chlor_mean.asc",
                   "./predictor-variables/DistToReef.asc",
                   "../genetic_layer/laevis/output/genetic_layer.asc",
-                  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc")
+                  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
+                  "../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
 
 
 #### 6. MaxEnt modelling ####
