@@ -211,29 +211,85 @@ ggplot() +
 
 #### 5. Input predictor rasters ####
 
-# Load initial set of predictor rasters
+# environmental variables
+sal_mean <- terra::rast("./predictor-variables/sal_mean.asc")
+names(sal_mean) <- "Mean salinity"
+
+sal_amp <- terra::rast("./predictor-variables/sal_amp.asc")
+names(sal_amp) <- "Salinity amplitude"
+
+bathymetry <- terra::rast("./predictor-variables/bathymetry.asc")
+names(bathymetry) <- "Bathymetry"
+
+sst_mean <- terra::rast("./predictor-variables/sst_mean.asc")
+names(sst_mean) <- "Mean SST"
+
+sst_amp <- terra::rast("./predictor-variables/sst_amp.asc")
+names(sst_amp) <- "SST amplitude"
+
+chlor_mean <- terra::rast("./predictor-variables/chlor_mean.asc")
+names(chlor_mean) <- "Mean chlorophyll"
+
+disttoland <- terra::rast("./predictor-variables/DistToLand.asc")
+names(disttoland) <- "Distance to land"
+
+disttoreef <- terra::rast("./predictor-variables/DistToReef.asc")
+names(disttoreef) <- "Distance to reef"
+
+disttofw <- terra::rast("./predictor-variables/DistToFW.asc")
+names(disttofw) <- "Distance to freshwater"
+
+# genetic layer
+anc_coeff <- terra::rast("../genetic_layer/laevis/output/genetic_layer.asc")
+names(anc_coeff) <- "Ancestry coefficient"
+
+# scaled passage layer
+scld_pass <- terra::rast("../passage_layer/output/scaled_passage.asc")
+names(scld_pass) <- "Scaled passage probability"
+
 env_init <- stack(
-  
-  # environmental variables
-  "./predictor-variables/sal_mean.asc",
-  "./predictor-variables/sal_amp.asc",
-  "./predictor-variables/bathymetry.asc",
-  "./predictor-variables/sst_mean.asc",
-  #"./predictor-variables/sst_amp.asc",
-  "./predictor-variables/chlor_mean.asc",
-  "./predictor-variables/DistToLand.asc",
-  "./predictor-variables/DistToReef.asc",
-  "./predictor-variables/DistToFW.asc",
-  
-  # genetic layer
-  "../genetic_layer/laevis/output/genetic_layer.asc",
-  
-  # passage layer
-  "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
-  
-  # conductance layer
-  "../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc"
-)
+  raster(sal_mean),
+  raster(sal_amp),
+  raster(bathymetry),
+  raster(sst_mean),
+  raster(sst_amp),
+  raster(chlor_mean),
+  raster(disttoland),
+  raster(disttoreef),
+  raster(disttofw),
+  raster(anc_coeff),
+  raster(scld_pass)
+  )
+
+## Load initial set of predictor rasters
+#env_init <- stack(
+#  
+#  # environmental variables
+#  "./predictor-variables/sal_mean.asc",
+#  #"./predictor-variables/sal_amp.asc",
+#  "./predictor-variables/bathymetry.asc",
+#  "./predictor-variables/sst_mean.asc",
+#  #"./predictor-variables/sst_amp.asc",
+#  "./predictor-variables/chlor_mean.asc",
+#  "./predictor-variables/DistToLand.asc",
+#  "./predictor-variables/DistToReef.asc",
+#  "./predictor-variables/DistToFW.asc",
+#  
+#  # genetic layer
+#  "../genetic_layer/laevis/output/genetic_layer.asc",
+#  
+#  # passage layer
+#  #"../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
+#  
+#  # scaled passage layer
+#  "../passage_layer/output/scaled_passage.asc")
+#  
+#  # scaled non-passage layer
+#  #"../passage_layer/output/scaled_nonpass.asc",
+#  
+#  # conductance layer
+#  #"../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc"
+##)
 
 
 
@@ -263,8 +319,9 @@ env_use <- stack("./predictor-variables/bathymetry.asc",
                  "./predictor-variables/chlor_mean.asc",
                  "./predictor-variables/DistToReef.asc",
                  "../genetic_layer/laevis/output/genetic_layer.asc",
-                 "../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
-                 "../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
+                 #"../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
+                 "../passage_layer/output/scaled_passage.asc")
+                 #"../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
 
 
 
