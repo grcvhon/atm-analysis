@@ -38,3 +38,17 @@ terra::writeRaster(
   x = scaled_nonpass,
   filename = "./output/scaled_nonpass.asc")
 
+
+
+
+
+
+# leaf conductance layer
+leaf_conduct <- terra::rast("../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
+plot(leaf_conduct)
+
+plot(1-leaf_conduct)
+
+# scale leaf conduct layer
+scaled_leaf_conduct <- raster01(leaf_conduct)
+plot(scaled_leaf_conduct)
