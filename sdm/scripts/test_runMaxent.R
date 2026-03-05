@@ -150,7 +150,7 @@ ggplot() +
 
 #### 4. Background/Pseudoabsence layer ####
 
-# Leaf-scaled sea snake ####
+##### Background: Leaf-scaled sea snake #####
 
 # Generate 1,000 random background points within the bias layer raster 
 # and excludes areas where the leaf-scaled sea snake is known to be present
@@ -209,6 +209,66 @@ ggplot() +
 
 
 
+##### Background: Short-nosed sea snake #####
+
+# Generate 1,000 random background points within the bias layer raster 
+# and excludes areas where the leaf-scaled sea snake is known to be present
+# note: different output every time as seed is not set
+
+short_bgpts <- 
+  dismo::randomPoints(mask = raster(bias_prob), 
+                      n = 1000, 
+                      p = as_Spatial(short_sf), 
+                      prob = TRUE) %>% 
+  as_tibble() %>% 
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts, col = "aquamarine3", cex = 0.01) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Short-nosed sea snake within bias layer (excl. presence points)") +
+  theme(plot.title = element_text(size = 11))
+
+
+# Generate 1,000 random points within the nw_shelf
+# note: different output every time as seed is not set
+short_bgpts_ext <-
+  spsample(x = as_Spatial(nw_shelf), n = 1000, type = "random") %>%
+  st_as_sf()
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts_ext, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Background points for Short-nosed sea snake across model extent") +
+  theme(plot.title = element_text(size = 11))
+
+# combine two background points layer
+short_bgpts_comb <- rbind(short_bgpts, short_bgpts_ext)
+
+# visualise
+ggplot() +
+  geom_spatraster(data = bias_prob) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  geom_sf(data = nw_shelf, fill = NA) + 
+  geom_sf(data = short_bgpts_comb, col = "aquamarine3", cex = 0.8) +
+  annotation_scale(mapping = aes(location = "br")) +
+  theme_bw() +
+  labs(title = "Combined background points for Short-nosed sea snake") +
+  theme(plot.title = element_text(size = 11))
+
+
+
+
 #### 5. Input predictor rasters ####
 
 # environmental variables
@@ -251,6 +311,12 @@ names(scld_pass) <- "Scaled passage probability"
 scld_nonpass <- terra::rast("../passage_layer/output/scaled_nonpass.asc")
 names(scld_nonpass) <- "Scaled non-passage probability"
 
+# leaf conductance layer
+leaf_conduct <- terra::rast("../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
+names(leaf_conduct) <- "Spatial conductance"
+
+
+
 env_init <- stack(
   raster(sal_mean),
   raster(bathy_layer),
@@ -260,8 +326,9 @@ env_init <- stack(
   raster(disttoreef),
   raster(disttofw),
   raster(anc_coeff),
-  #raster(scld_pass),
-  raster(scld_nonpass)
+  raster(scld_pass),
+  raster(scld_nonpass),
+  raster(leaf_conduct)
   )
 
 # Find correlated variables
@@ -297,22 +364,47 @@ env_in <- terra::rast(env_use)
 
 # occurrence data
 leaf_in <- leaf_sf %>% as_Spatial()
-#short_in <- short_sf %>% as_Spatial()
+short_in <- short_sf %>% as_Spatial()
 
 # background layer
 leaf_bgpts_in <- leaf_bgpts_comb %>% as_Spatial()
-#short_bgpts_in<- short_bgpts_comb %>% as_Spatial()
+short_bgpts_in<- short_bgpts_comb %>% as_Spatial()
 
 
 
 
 ### test function ####
 
+# run function on Leaf-scaled sea snake input
 test_runMaxEnt(name = "Leaf-scaled sea snake",
                envlyr = env_in,
                occdat = leaf_in,
                bgpts = leaf_bgpts_in,
                k_folds = 5)
+
+# run function on Short-nosed sea snake input
+test_runMaxEnt(name = "Short-nosed sea snake",
+               envlyr = env_in,
+               occdat = short_in,
+               bgpts = short_bgpts_in,
+               k_folds = 5)
+
+## run in a for-loop instead --- but problematic for specific conductance layers
+#species_tbl <- tibble(
+#  name = c("Leaf-scaled sea snake", "Short-nosed sea snake"),
+#  occ  = list(leaf_in, short_in),
+#  bg   = list(leaf_bgpts_in, short_bgpts_in)
+#)
+#
+#for (i in seq_len(nrow(species_tbl))) {
+#  test_runMaxEnt(
+#    name   = species_tbl$name[[i]],
+#    envlyr = env_in,
+#    occdat = species_tbl$occ[[i]],
+#    bgpts  = species_tbl$bg[[i]],
+#    k_folds = 5
+#  )
+#}
 
 
 
