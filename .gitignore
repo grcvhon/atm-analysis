@@ -54,7 +54,10 @@ passage_layer/scripts/regular_*
 passage_layer/output/sbs_seed100_100pts_15h53m36s
 passage_layer/output/scaled_non*
 passage_layer/output/scaled_pass*
+passage_layer/circuitscape/cs_input/scaled*
+passage_layer/circuitscape/cs_input/nonpass*
 passage_layer/circuitscape/cs_output/leaf_cs_test*
+passage_layer/circuitscape/cs_output/leaf_cs_scaled*
 !passage_layer/circuitscape/misc
 
 
