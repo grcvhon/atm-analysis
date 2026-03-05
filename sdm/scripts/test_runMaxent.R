@@ -215,17 +215,17 @@ ggplot() +
 sal_mean <- terra::rast("./predictor-variables/sal_mean.asc")
 names(sal_mean) <- "Mean salinity"
 
-sal_amp <- terra::rast("./predictor-variables/sal_amp.asc")
-names(sal_amp) <- "Salinity amplitude"
+#sal_amp <- terra::rast("./predictor-variables/sal_amp.asc")
+#names(sal_amp) <- "Salinity amplitude"
 
-bathymetry <- terra::rast("./predictor-variables/bathymetry.asc")
-names(bathymetry) <- "Bathymetry"
+bathy_layer <- terra::rast("./predictor-variables/bathymetry.asc")
+names(bathy_layer) <- "Bathymetry"
 
 sst_mean <- terra::rast("./predictor-variables/sst_mean.asc")
 names(sst_mean) <- "Mean SST"
 
-sst_amp <- terra::rast("./predictor-variables/sst_amp.asc")
-names(sst_amp) <- "SST amplitude"
+#sst_amp <- terra::rast("./predictor-variables/sst_amp.asc")
+#names(sst_amp) <- "SST amplitude"
 
 chlor_mean <- terra::rast("./predictor-variables/chlor_mean.asc")
 names(chlor_mean) <- "Mean chlorophyll"
@@ -247,51 +247,22 @@ names(anc_coeff) <- "Ancestry coefficient"
 scld_pass <- terra::rast("../passage_layer/output/scaled_passage.asc")
 names(scld_pass) <- "Scaled passage probability"
 
+# scaled non-passage layer
+scld_nonpass <- terra::rast("../passage_layer/output/scaled_nonpass.asc")
+names(scld_nonpass) <- "Scaled non-passage probability"
+
 env_init <- stack(
   raster(sal_mean),
-  raster(sal_amp),
-  raster(bathymetry),
+  raster(bathy_layer),
   raster(sst_mean),
-  raster(sst_amp),
   raster(chlor_mean),
   raster(disttoland),
   raster(disttoreef),
   raster(disttofw),
   raster(anc_coeff),
-  raster(scld_pass)
+  #raster(scld_pass),
+  raster(scld_nonpass)
   )
-
-## Load initial set of predictor rasters
-#env_init <- stack(
-#  
-#  # environmental variables
-#  "./predictor-variables/sal_mean.asc",
-#  #"./predictor-variables/sal_amp.asc",
-#  "./predictor-variables/bathymetry.asc",
-#  "./predictor-variables/sst_mean.asc",
-#  #"./predictor-variables/sst_amp.asc",
-#  "./predictor-variables/chlor_mean.asc",
-#  "./predictor-variables/DistToLand.asc",
-#  "./predictor-variables/DistToReef.asc",
-#  "./predictor-variables/DistToFW.asc",
-#  
-#  # genetic layer
-#  "../genetic_layer/laevis/output/genetic_layer.asc",
-#  
-#  # passage layer
-#  #"../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
-#  
-#  # scaled passage layer
-#  "../passage_layer/output/scaled_passage.asc")
-#  
-#  # scaled non-passage layer
-#  #"../passage_layer/output/scaled_nonpass.asc",
-#  
-#  # conductance layer
-#  #"../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc"
-##)
-
-
 
 # Find correlated variables
 
@@ -302,7 +273,7 @@ env_corr
 
 # List variable names to remove
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7, names = T)
-rm_vars # "sal_amp"    "sal_mean"   "DistToFW"   "DistToLand"
+rm_vars
 
 # Run again to get column number
 rm_vars <- findCorrelation(env_corr, cutoff = 0.7)
@@ -310,18 +281,10 @@ rm_vars
 
 # List environmental variables
 env_pass <- colnames(env_corr[, -rm_vars])
-env_pass # "bathymetry" "sst_mean"   "sst_amp"    "chlor_mean" "DistToReef" "K2" "layer"
+env_pass
 
-# Load passed environmental rasters to be used
-env_use <- stack("./predictor-variables/bathymetry.asc",
-                 "./predictor-variables/sst_mean.asc",
-                 #"./predictor-variables/sst_amp.asc",
-                 "./predictor-variables/chlor_mean.asc",
-                 "./predictor-variables/DistToReef.asc",
-                 "../genetic_layer/laevis/output/genetic_layer.asc",
-                 #"../passage_layer/output/sbs_bearing_seed100_100pts_03h49m31s/passage_layer.asc",
-                 "../passage_layer/output/scaled_passage.asc")
-                 #"../passage_layer/circuitscape/cs_output/leaf_cs_main/leaf_cs_main_cum_curmap.asc")
+# subset predictors which passed multicollinearity test from the initial stack of predictors
+env_use <- subset(env_init, env_pass)
 
 
 
