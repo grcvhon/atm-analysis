@@ -203,6 +203,24 @@ anc <- terra::project(anc, "+proj=longlat +datum=WGS84")
 df_anc <- as.data.frame(anc, xy = TRUE)
 write.csv(df_anc, file = paste0("./genetic_layer/laevis/output/laevis_K",laevis_bestK,".csv"))
 ```
+We can also write them into separate files.
+```r
+### write: save as csv each K value ###
+
+#### for k1 ####
+k1 <- raster::raster(z_krig_sh_admix$K1)
+k1 <- terra::rast(k1)
+k1 <- terra::project(k1, "+proj=longlat +datum=WGS84")
+df_k1 <- as.data.frame(k1, xy = TRUE)
+write.csv(df_k1, file = paste0("./genetic_layer/laevis/output/ala_k1.csv"))
+
+#### for k2 ####
+k2 <- raster::raster(z_krig_sh_admix$K2)
+k2 <- terra::rast(k2)
+k2 <- terra::project(k2, "+proj=longlat +datum=WGS84")
+df_k2 <- as.data.frame(k2, xy = TRUE)
+write.csv(df_k2, file = paste0("./genetic_layer/laevis/output/ala_k2.csv"))
+```
 In order to make it usable in our species distribution modelling, let us write it as an `ascii` file.
 ```r
 # import csv file
@@ -224,4 +242,43 @@ genetic_layer <- genetic_layer %>%
 # write ascii file 
 terra::writeRaster(genetic_layer,
   filename = "./genetic_layer/laevis/output/genetic_layer.asc")
+```
+Similarly, we can slso generate separate `ascii` files, one for each K value.
+```r
+### write: save as ascii ###
+
+# import csv file
+k1_layer <- read.csv("./genetic_layer/laevis/output/ala_K1.csv", header = T, sep = ",")
+k2_layer <- read.csv("./genetic_layer/laevis/output/ala_K2.csv", header = T, sep = ",")
+
+# remove first column
+k1_layer <- k1_layer[,-1]
+k2_layer <- k2_layer[,-1]
+
+# rasterise using terra package and provide projection
+k1_layer <- terra::rast(k1_layer,
+                        type = "xyz",
+                        crs = "EPSG:4326")
+
+k2_layer <- terra::rast(k2_layer,
+                        type = "xyz",
+                        crs = "EPSG:4326")
+
+#bathymetry <- terra::rast("./data/predictor-variables/bathymetry.asc")
+# ensure to have the same extent as other environmental layers (use bathymetry)
+k1_layer <- k1_layer %>% 
+  mask(mask = terra::vect(nw_shelf)) %>% 
+  resample(x = ., y = terra::rast(bathymetry))
+
+k2_layer <- k2_layer %>% 
+  mask(mask = terra::vect(nw_shelf)) %>% 
+  resample(x = ., y = terra::rast(bathymetry))
+
+# write ascii file 
+terra::writeRaster(k1_layer,
+                   filename = "./genetic_layer/laevis/output/k1_layer.asc")
+
+# write ascii file 
+terra::writeRaster(k2_layer,
+                   filename = "./genetic_layer/laevis/output/k2_layer.asc")
 ```
