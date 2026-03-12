@@ -303,6 +303,14 @@ names(disttofw) <- "Distance to freshwater"
 anc_coeff <- terra::rast("../genetic_layer/laevis/output/genetic_layer.asc")
 names(anc_coeff) <- "Ancestry coefficient"
 
+# K1 only
+k1_clust <- terra::rast("../genetic_layer/laevis/output/k1_layer.asc")
+names(k1_clust) <- "Ancestry coefficient K1"
+
+# K2 only
+k2_clust <- terra::rast("../genetic_layer/laevis/output/k2_layer.asc")
+names(k2_clust) <- "Ancestry coefficient K2"
+
 # scaled passage layer
 scld_pass <- terra::rast("../passage_layer/output/scaled_passage.asc")
 names(scld_pass) <- "Scaled passage probability"
