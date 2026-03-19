@@ -47,15 +47,15 @@ An initial stack of predictor variables was generated using the following:<br>
 * Distance to freshwater
 * Non-passage probability (scaled 0-1)
 * Ancestry coefficient (scaled to represent two clusters in same layer, -1 to 0 to 1)
+
+These variables were tested for multicollinearity. The final rasterstack of predictor variables was written to file.
 <br>
 
-More on the ancestry coefficient layer: the values were scaled between -1 to 1 to represent the two clusters in the same layer. That is, anything between 0 and 1 belongs to cluster 1 (coastal) and anything between -1 and 0 belongs to cluster 2. By doing this, all of K1 values (0-1, blue in right plot) and all of K2 values (0-1, red in right plot) are represented in the genetic layer for the SDM. It also avoids constraining what’s coastal or offshore based on 0.5 value.
+<b>More on the ancestry coefficient layer</b>: values for this layer were scaled between -1 to 1 to represent the two clusters in the same layer. That is, anything between 0 and 1 belongs to cluster 1 (coastal) and anything between -1 and 0 belongs to cluster 2. By doing this, all of K1 values (0-1, blue in right plot) and all of K2 values (0-1, red in right plot) are represented in the genetic layer for the SDM.
 
 <p align = center>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/clust.png">
 </p>
-
-These variables were tested for multicollinearity. The final rasterstack of predictor variables was written to file.<br>
 <br>
 
 ## 2) Modelling step
@@ -85,4 +85,31 @@ Variable importance plots and response curves for each species are shown below:<
 ## 3) Prediction step
 This step is where the optimised model is used to predict species distribution. The ancestry coefficient layer is also modified here in order to predict distributions in coastal and offshore locations.
 
-Recall that the ancestry coefficient layer has a 
+To isolate and predict for coastal distribution, ancestry coefficient values of less than 0.0 (= offshore) were changed to a value of 0.
+
+To isolate and predict for offshore distribution, ancestry coefficient values of greater than 0.0 (= coastal) were changed to a value of 0.
+
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/clust2.png">
+</p>
+<br>
+
+
+Prediction step output:
+<div align = "center">
+<b>Leaf-scaled sea snake (<i>Aipysurus foliosquama</i>)</b>
+</div>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_coastal_mean_pred.png", width = 49%, height = 49%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/leaf_offshore_mean_pred.png", width = 49%, height = 49%>
+</p>
+<br>
+
+<div align = "center">
+<b>Short-nosed sea snake (<i>Aipysurus apraefrontalis</i>)</b>
+</div>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_coastal_mean_pred.png", width = 49%, height = 49%>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_offshore_mean_pred.png", width = 49%, height = 49%>
+</p>
+<br>
