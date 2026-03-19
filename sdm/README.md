@@ -4,7 +4,7 @@ This directory contains code and input data for developing an updated species di
 The scripts were divided into three sequential files (so far). Scripts will have steps that will write the output into file to avoid need of running it from the start every time.<br>
 <br>
 The scripts are as follows:<br>
-1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/01_generate_modelling_input.R)
+1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/d82593a6f2071a102a0136b19a38de0e01aac8c5/sdm/scripts/01_generate_modelling_input.R)
 2) [Modelling step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
 3) [Prediction step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
 <br>
