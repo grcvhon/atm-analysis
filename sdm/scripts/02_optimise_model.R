@@ -125,23 +125,23 @@ for (file_name in model_files) {
   model_files_without_ext <- sub("\\.rds$", "", file_name)
 
   tuning_res <- model_obj@results
-  write.csv(tuning_res, paste0("./model_out/", model_files_without_ext,"_tuning_results.csv"))
+  #write.csv(tuning_res, paste0("./model_out/", model_files_without_ext,"_tuning_results.csv"))
 
   best_mod <- model_obj@models[[which.max(model_obj@results$test_AUC)]]
   bstmdl <- capture.output(print(best_mod), type = "message")
-  writeLines(bstmdl, con = file.path(paste0("./model_out/", model_files_without_ext,"_best_model.txt")))
+  #writeLines(bstmdl, con = file.path(paste0("./model_out/", model_files_without_ext,"_best_model.txt")))
 
   roc_plot <- plotROC(best_mod@models[[1]])
-  ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_roc_plot.png")), plot = roc_plot, width = 8, height = 6, dpi = 300)
+  #ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_roc_plot.png")), plot = roc_plot, width = 8, height = 6, dpi = 300)
 
   AUC <- auc(best_mod)
-  write.csv(AUC, paste0("./model_out/", model_files_without_ext,"_AUC.csv"))
+  #write.csv(AUC, paste0("./model_out/", model_files_without_ext,"_AUC.csv"))
 
   TSS <- tss(best_mod)
-  write.csv(AUC, paste0("./model_out/", model_files_without_ext,"_TSS.csv"))
+  #write.csv(AUC, paste0("./model_out/", model_files_without_ext,"_TSS.csv"))
 
   thresh <- thresholds(best_mod@models[[1]], type = "cloglog")
-  write.csv(thresh, paste0("./model_out/", model_files_without_ext,"_thresholds.csv"))
+  #write.csv(thresh, paste0("./model_out/", model_files_without_ext,"_thresholds.csv"))
 
   mod <- 
     model_obj@results %>%
@@ -151,10 +151,10 @@ for (file_name in model_files) {
       TSS = thresh[3,2],
       LPT = thresh[1,2]
     )
-  write.csv(mod, paste0("./model_out/", model_files_without_ext,"_model_evaluation_metrics.csv"))
+  #write.csv(mod, paste0("./model_out/", model_files_without_ext,"_model_evaluation_metrics.csv"))
   
   vi <- maxentVarImp(best_mod)
-  write.csv(vi, paste0("./model_out/", model_files_without_ext,"_variable_importance.csv"))
+  #write.csv(vi, paste0("./model_out/", model_files_without_ext,"_variable_importance.csv"))
 
   vi_plot <- vi %>%
     ggplot(aes(x = reorder(Variable, Percent_contribution), y = Percent_contribution)) +
@@ -162,7 +162,7 @@ for (file_name in model_files) {
     labs(y = "Variable contribution (%)", x = "", title = paste0("Variable importance (", model_files_without_ext, ")")) +
     coord_flip() +
     theme_bw()
-  ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_variable_importance_plot.png")), plot = vi_plot, width = 8, height = 6, dpi = 300)
+  #ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_variable_importance_plot.png")), plot = vi_plot, width = 8, height = 6, dpi = 300)
 
   env_vars <- names(env_in)
   
@@ -181,7 +181,7 @@ for (file_name in model_files) {
     annotate_figure(resp_curves, 
                     top = text_grob(paste0("Response curves for ", model_files_without_ext), 
                                     face = "bold", size = 14))
-  ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_response_curve_plot.png")), plot = resp_curv_plot, width = 8, height = 6, dpi = 300)
+  #ggsave(file.path(paste0("./model_out/", model_files_without_ext,"_response_curve_plot.png")), plot = resp_curv_plot, width = 8, height = 6, dpi = 300)
  
   
   # Store in list with name
