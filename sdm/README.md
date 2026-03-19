@@ -5,8 +5,8 @@ The scripts were divided into three sequential files (so far). Scripts will have
 <br>
 The scripts are as follows:<br>
 1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/01_generate_modelling_input.R)
-2) [Modelling step](https://github.com/grcvhon/atm-analysis/tree/master/sdm/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
-3) [Prediction step](https://github.com/grcvhon/atm-analysis/tree/master/sdm/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
+2) [Modelling step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
+3) [Prediction step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
 <br>
 
 ## 1) Generating input for modelling step
