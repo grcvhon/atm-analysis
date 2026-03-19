@@ -62,14 +62,65 @@ for (location in names(env_predict_list)) {
   string <- location
   last_part <- sub(".*_", "", string)
   
+  # Mean and variance in spatial prediction
+  prediction_mean <- prediction$mean
+  prediction_sd <- prediction$sd
+
+  # thresholded models
+  TSS_me <- prediction_mean > results_list$leaf_scaled_opt_mod.rds$model_evaluation_metrics$TSS
+  LPT_me <- prediction_mean > results_list$leaf_scaled_opt_mod.rds$model_evaluation_metrics$LPT
+  thresh_me <- raster::cut(raster(prediction_mean), breaks = c(-Inf, 0.25, 0.5, 0.76, Inf))
+  
+  # Your binary raster
+  r <- TSS_me  # or thresh if that’s the name
+  
+  # Count how many TRUE (or 1) cells
+  n_cells <- global(r, "sum", na.rm = TRUE)
+  n_cells
+  
+  # Get cell area in km²
+  cell_area <- cellSize(r, unit = "km")
+  
+  # Multiply cell area by suitability mask
+  suitable_area <- mask(cell_area, r, maskvalues = FALSE)
+  
+  # Sum total area
+  total_area <- global(suitable_area, "sum", na.rm = TRUE)
+  total_area
+
   predict_plot <- ggplot() + 
     geom_spatraster(data = prediction$mean) +
     scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
     labs(title = paste0("Mean spatial prediction for Leaf-scaled sea snake (", last_part, ")")) +
     theme_bw()
 
-   leaf_scaled_predict_list[[last_part]] <- predict_plot
+  thresh_me_df <- as.data.frame(thresh_me, xy = TRUE, na.rm = TRUE)
+
+  thresh_me_plot <- ggplot(thresh_me_df, aes(x = x, y = y, fill = layer)) +
+    geom_tile() +
+    scale_fill_distiller(palette = "Spectral", na.value = "transparent") + 
+    labs(title = paste0("Threshold prediction for Leaf-scaled sea snake (", last_part, ")")) +    
+    coord_fixed() +
+    theme_bw()
+
+  leaf_scaled_predict_list[[last_part]] <- 
+    list(
+      prediction_mean = prediction_mean,
+      prediction_sd = prediction_sd, 
+      TSS_me = TSS_me,
+      LPT_me = LPT_me,
+      threshold_me = thresh_me,
+      binary_raster = r,
+      number_TRUE_cells = n_cells,
+      cell_area_km2 = cell_area,
+      suitable_area = suitable_area,
+      total_area = total_area,
+      mean_prediction_plot = predict_plot,
+      threshold_plot = thresh_me_plot
+    )
 }
+
+
 
 # predict: Short-nosed sea snake - generates two prediction maps
 short_nosed_predict_list <- list()
@@ -85,13 +136,62 @@ for (location in names(env_predict_list)) {
   string <- location
   last_part <- sub(".*_", "", string)
   
+  # Mean and variance in spatial prediction
+  prediction_mean <- prediction$mean
+  prediction_sd <- prediction$sd
+
+  # thresholded models
+  TSS_me <- prediction_mean > results_list$short_nosed_opt_mod.rds$model_evaluation_metrics$TSS
+  LPT_me <- prediction_mean > results_list$short_nosed_opt_mod.rds$model_evaluation_metrics$LPT
+  thresh_me <- raster::cut(raster(prediction_mean), breaks = c(-Inf, 0.25, 0.5, 0.75, Inf))
+  
+  # Your binary raster
+  r <- TSS_me  # or thresh if that’s the name
+  
+  # Count how many TRUE (or 1) cells
+  n_cells <- global(r, "sum", na.rm = TRUE)
+  n_cells
+  
+  # Get cell area in km²
+  cell_area <- cellSize(r, unit = "km")
+  
+  # Multiply cell area by suitability mask
+  suitable_area <- mask(cell_area, r, maskvalues = FALSE)
+  
+  # Sum total area
+  total_area <- global(suitable_area, "sum", na.rm = TRUE)
+  total_area
+
   predict_plot <- ggplot() + 
     geom_spatraster(data = prediction$mean) +
     scale_fill_distiller(palette = "Spectral", na.value = "transparent") +
     labs(title = paste0("Mean spatial prediction for Short-nosed sea snake (", last_part, ")")) +
     theme_bw()
 
-   short_nosed_predict_list[[last_part]] <- predict_plot
+  thresh_me_df <- as.data.frame(thresh_me, xy = TRUE, na.rm = TRUE)
+
+  thresh_me_plot <- ggplot(thresh_me_df, aes(x = x, y = y, fill = layer)) +
+    geom_tile() +
+    scale_fill_distiller(palette = "Spectral", na.value = "transparent") + 
+    labs(title = paste0("Threshold prediction for Short-nosed sea snake (", last_part, ")")) +    
+    coord_fixed() +
+    theme_bw()
+
+  short_nosed_predict_list[[last_part]] <- 
+    list(
+      prediction_mean = prediction_mean,
+      prediction_sd = prediction_sd, 
+      TSS_me = TSS_me,
+      LPT_me = LPT_me,
+      threshold_me = thresh_me,
+      binary_raster = r,
+      number_TRUE_cells = n_cells,
+      cell_area_km2 = cell_area,
+      suitable_area = suitable_area,
+      total_area = total_area,
+      mean_prediction_plot = predict_plot,
+      threshold_plot = thresh_me_plot
+    )
 }
 
 
