@@ -7,59 +7,13 @@ Overall, this project aims to 1) determine baseline populations and develop moni
 We look to incorporate genetic information in generating species distribution models. Doing so may progress our understanding of current species-specific distributional ranges as well as identify potential key locations for future surveys.
 
 Our SDM approach is summarised in the diagram below:
+<br>
+<br>
 
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/flowchart.png", width = 70%, height = 70%>
+</p>
 
-```mermaid
-flowchart TD;
-    A["Occurrence data"]
-    B["Habitat/environment layers"]
-    C["Genetic layer"]
-    D["Passage probability layer"]
-    E["SDM analysis"]
-   
-    
-    style A fill:white,stroke:grey,color:black,font-size:15px
-    style B fill:white,stroke:grey,color:black,font-size:15px
-    style C fill:white,stroke:grey,color:black,font-size:15px
-    style D fill:white,stroke:grey,color:black,font-size:15px
-    style E fill:white,stroke:grey,color:black,font-size:15px
-
-
-    A--
-    <p style="font-size:14px">
-    <u><b>Species-specific data</b></u><br>
-    Short-nosed sea snake<br> 
-    (<i>Aipysurus apraefrontalis</i>),<br>
-    Leaf-scaled sea snake<br>
-    (<i>A. foliosquama</i>)
-    </p>--->E;
-
-    B--
-    <p style="font-size:14px">
-    Sources:<br>
-    UNEP, IMOS,<br> 
-    CSIRO, BioOracle
-    </p>--->E;
-    
-    C--
-    <p style="font-size:14px">
-    Interpolated ancestry<br>
-    coefficient values<br>
-    for Olive sea snake<br>
-    (<i>Aipysurus laevis</i>)<br>
-    (<i>algatr</i>, R)
-    </p>--->E;
-    
-    D--
-    <p style="font-size:14px">
-    Mean passage probability<br>
-    values based on ocean<br>
-    current direction<br>
-    (<i>gdistance</i>, R)
-    </p>--->E;
-    
-
-```
 ##
 
 #### List of contents
