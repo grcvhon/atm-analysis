@@ -112,4 +112,4 @@ Prediction step output:
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_coastal_mean_pred.png", width = 49%, height = 49%>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_offshore_mean_pred.png", width = 49%, height = 49%>
 </p>
-<br>
+<br> 
