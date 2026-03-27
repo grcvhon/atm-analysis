@@ -3,11 +3,11 @@ This directory contains code and input data for developing an updated species di
 <br>
 The scripts were divided into three sequential files (so far). Scripts will have steps that will write the output into file to avoid need of running it from the start every time.<br>
 <br>
-The scripts are as follows: (see [sdm_workflow](https://github.com/grcvhon/atm-analysis/tree/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts) directory)<br>
-1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/01_generate_modelling_input.R)
-2) [Modelling step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
-3) [Prediction step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
-4) [Threshold step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/04_thresholding.R) (where suitable and non-suitable areas are delineated, including overlap with significant regions)
+The scripts are as follows: (see [sdm_workflow](https://github.com/grcvhon/atm-analysis/tree/master/sdm_workflow/scripts) directory)<br>
+1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/tree/master/sdm_workflow/scripts/01_generate_modelling_input.R)
+2) [Modelling step](https://github.com/grcvhon/atm-analysis/tree/master/sdm_workflow/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
+3) [Prediction step](https://github.com/grcvhon/atm-analysis/tree/master/sdm_workflow/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
+4) [Threshold step](https://github.com/grcvhon/atm-analysis/tree/master/sdm_workflow/scripts/04_thresholding.R) (where suitable and non-suitable areas are delineated, including overlap with significant regions)
 <br>
  
 ## 1) Generating input for modelling step
