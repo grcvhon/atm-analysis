@@ -19,6 +19,7 @@ Our SDM approach is summarised in the diagram below:
 #### List of contents
 * [Generate spatial genetic layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/genetic_layer)
 * [Generate spatial passage layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/passage_layer)
+* [Species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/sdm)
 
 ##
 <sub>
