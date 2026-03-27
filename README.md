@@ -20,7 +20,7 @@ Our SDM approach is summarised in the diagram below:
 * [Generate spatial genetic layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/genetic_layer)
 * [Generate spatial passage layer for species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/passage_layer)
 * [Species distribution modelling](https://github.com/grcvhon/atm-analysis/tree/master/sdm)
-
+ 
 ##
 <sub>
 This project is funded by the Australian Government’s Saving Native Species Program and delivered by the University of Adelaide.
