@@ -42,6 +42,9 @@ sdm/scripts/maxent*
 sdm/scripts/test*
 sdm/scripts/mess_dismo.R
 sdm/scripts/thresholding.R
+sdm/scripts/01_generate*
+sdm/scripts/02_optimise_model.R
+sdm/scripts/03_predict.R
 !sdm/scripts/test_runMaxent.R
 sdm/SDM_resources.md
 sdm/nw-shelf/
