@@ -3,12 +3,13 @@ This directory contains code and input data for developing an updated species di
 <br>
 The scripts were divided into three sequential files (so far). Scripts will have steps that will write the output into file to avoid need of running it from the start every time.<br>
 <br>
-The scripts are as follows:<br>
-1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/d82593a6f2071a102a0136b19a38de0e01aac8c5/sdm/scripts/01_generate_modelling_input.R)
-2) [Modelling step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
-3) [Prediction step](https://github.com/grcvhon/atm-analysis/blob/b86915b87133145658a11a1411aab8e990bc08bc/sdm/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
+The scripts are as follows: (see [sdm_workflow](https://github.com/grcvhon/atm-analysis/tree/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts) directory)<br>
+1) [Generating input for modelling step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/01_generate_modelling_input.R)
+2) [Modelling step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/02_optimise_model.R) (where the optimised model is chosen, variable importance calculated, and response curves plotted)
+3) [Prediction step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/03_predict.R) (where the optimised model is used to predict species distribution)<br>
+4) [Threshold step](https://github.com/grcvhon/atm-analysis/blob/a3d5ad2ceb7dcb562b8726c040b51a99fc574bfd/sdm_workflow/scripts/04_thresholding.R) (where suitable and non-suitable areas are delineated, including overlap with significant regions)
 <br>
-
+ 
 ## 1) Generating input for modelling step
 This section processes and generates the following input required for the modelling step:
 
@@ -112,4 +113,36 @@ Prediction step output:
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_coastal_mean_pred.png", width = 49%, height = 49%>
 <img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/short_offshore_mean_pred.png", width = 49%, height = 49%>
 </p>
-<br> 
+<br>
+
+## 4) Threshold step
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/lsss_suitable_overlap.png">
+<div align = "left">
+Threshold map showing suitable areas (red and pink) for the Leaf-scaled sea snake. Empty polygons within the model extent are Commonwealth and State park boundaries. Areas which overlap with these protected zones are shown in red.
+</div>
+</p>
+<br>
+<br>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/snss_suitable_overlap.png">
+<div align = "left">
+Threshold map showing suitable areas (red and pink) for the Short-nosed sea snake. Empty polygons within the model extent are Commonwealth and State park boundaries. Areas which overlap with these protected zones are shown in red.
+</div>
+</p>
+<br>
+<br>
+<p align = center>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/eg_fish.png">
+<div align = "left">
+Suitable areas (red) predicted for the Leaf-scaled sea snake (left) and Short-nosed sea snake (right) which fall within the fishing zones of the Exmouth Gulf Prawn Managed Fishery (blue border).
+</div>
+</p>
+<br>
+<br>
+<p>
+<img src="https://raw.githubusercontent.com/grcvhon/atm-analysis/master/sdm/plots/sb_fish.png">
+<div align = "left">
+Suitable areas (red) predicted for the Leaf-scaled sea snake (left) and Short-nosed sea snake (right) which fall within the fishing zones of the Shark Bay Prawn Managed Fishery (blue border).
+</div>
+</p>
